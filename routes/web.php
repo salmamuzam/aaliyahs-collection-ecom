@@ -1,0 +1,29 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
+
+// When a user is logged in, /home is called instead of /dashboard
+// It was modified in fortify.php
+// It will also call the index function in the Home Controller
+// The index function will check the user_type
+Route::get('/home', [HomeController::class, 'index']);
+
+// When /adminpage is accessed, this will check whether the user is logged in
+// If the user is not logged in, it will send the user to the login page
+Route::get('/adminpage', [HomeController::class, 'page'])->middleware(['auth',  'admin']);
+
