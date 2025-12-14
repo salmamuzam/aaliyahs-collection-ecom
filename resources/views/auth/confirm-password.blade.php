@@ -3,7 +3,7 @@
         <x-slot name="logo">
             <x-authentication-card-logo />
         </x-slot>
-
+<h1 class="mb-4 text-lg font-bold text-center text-white">CONFIRM PASSWORD</h1>
         <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
             {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
         </div>
@@ -15,14 +15,12 @@
 
             <div>
                 <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" autofocus />
+                <x-input id="password" placeholder="••••••••" class="block w-full mt-1" type="password" name="password" required autocomplete="current-password" autofocus />
             </div>
 
-            <div class="flex justify-end mt-4">
-                <x-button class="ms-4">
+              <x-button class="justify-center w-full mt-4">
                     {{ __('Confirm') }}
                 </x-button>
-            </div>
         </form>
     </x-authentication-card>
 </x-guest-layout>
