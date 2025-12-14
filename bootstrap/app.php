@@ -15,8 +15,12 @@ return Application::configure(basePath: dirname(__DIR__))
         // Register Admin.php (Middleware)
         $middleware -> alias([
             'admin' => \App\Http\Middleware\Admin::class,
+            // alias for custom EnsurePasswordIsConfirmed middleware
+            // this is used to confirm the password of the user
+            'password.confirm' => \App\Http\Middleware\EnsurePasswordIsConfirmed::class,
         ]);
     })
+
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();
