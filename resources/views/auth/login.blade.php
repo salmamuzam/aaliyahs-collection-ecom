@@ -45,9 +45,14 @@
                     {{ __('Log in') }}
                 </x-button>
             </div>
-            <div>
+            <div class="mt-4 mb-4">
                 {{-- Route/Url from web.php --}}
-                <a class="text-black bg-white" href="{{ url('auth/google') }}">LOG IN WITH GOOGLE</a>
+                <a href="{{ url('auth/google') }}">
+                    <x-secondary-button aria-label="Log in with Google" class="justify-center w-full mt-5">
+                        <img src="images/icons/google.png" alt="google" class="w-5 h-5">
+                        <p class="ml-4 font-medium text-white">Log in with Google</p>
+                    </x-secondary-button>
+                </a>
             </div>
         </form>
     </x-authentication-card>
