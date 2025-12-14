@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\GoogleController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,3 +28,7 @@ Route::get('/home', [HomeController::class, 'index']);
 // If the user is not logged in, it will send the user to the login page
 Route::get('/adminpage', [HomeController::class, 'page'])->middleware(['auth',  'admin']);
 
+// When log in with google button is called, this route calls the function 'googlepage'
+Route::get('auth/google', [GoogleController::class, 'googlepage']);
+// Then if I select an account, this route calls the function 'googleback'
+Route::get('auth/google/callback', [GoogleController::class, 'googlecallback']);

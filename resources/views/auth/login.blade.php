@@ -16,7 +16,7 @@
             @csrf
 
             {{-- Email or Username --}}
-            
+
             <div>
                 <x-label for="login" value="{{ __('Email or Username') }}" />
                 <x-input id="login" class="block w-full mt-1" type="text" name="login" :value="old('login')" required autofocus autocomplete="username" />
@@ -44,6 +44,10 @@
                 <x-button class="ms-4">
                     {{ __('Log in') }}
                 </x-button>
+            </div>
+            <div>
+                {{-- Route/Url from web.php --}}
+                <a class="text-black bg-white" href="{{ url('auth/google') }}">LOG IN WITH GOOGLE</a>
             </div>
         </form>
     </x-authentication-card>
