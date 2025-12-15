@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\CategoryForm;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GoogleController;
@@ -36,5 +37,5 @@ Route::get('auth/google/callback', [GoogleController::class, 'googlecallback']);
 
 // Livewire Components
 
-Route::get('categories', CategoryList::class)->name('categories');
+Route::get('categories', CategoryForm::class)->name('categories');
 
