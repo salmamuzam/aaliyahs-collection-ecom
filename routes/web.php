@@ -32,3 +32,5 @@ Route::get('/adminpage', [HomeController::class, 'page'])->middleware(['auth',  
 Route::get('auth/google', [GoogleController::class, 'googlepage']);
 // Then if I select an account, this route calls the function 'googleback'
 Route::get('auth/google/callback', [GoogleController::class, 'googlecallback']);
+
+
