@@ -1,7 +1,7 @@
 @props(['id' => null, 'maxWidth' => null])
 
 <x-modal :id="$id" :maxWidth="$maxWidth" {{ $attributes }}>
-    <div class="px-4 pt-5 pb-4 bg-white dark:bg-gray-800 sm:p-6 sm:pb-4">
+    <div class="px-4 pt-5 pb-4 bg-white dark:bg-[#1A1A1A] sm:p-6 sm:pb-4">
         <div class="sm:flex sm:items-start">
             <div class="flex items-center justify-center mx-auto rounded-full shrink-0 size-12 bg-rose-100 sm:mx-0 sm:size-10">
                 <svg class="text-rose-600 size-6 dark:text-rose-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">

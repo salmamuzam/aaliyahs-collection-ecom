@@ -12,7 +12,7 @@
 
             {{-- First Name --}}
 <h1 class="text-lg font-bold text-center text-white-900">CREATE AN ACCOUNT</h1>
-            <p class="mt-4 text-sm text-center text-white">Already have an account? <a href="{{ route('login') }}" class="ml-1 font-semibold text-gray-400 hover:underline whitespace-nowrap">Login here</a></p>
+            <p class="mt-4 text-sm text-center text-[#1A1A1A]">Already have an account? <a href="{{ route('login') }}" class="ml-1 font-semibold text-[#1A1A1A] hover:underline whitespace-nowrap">Login here</a></p>
             <div class="grid gap-8 sm:grid-cols-2">
             <div class="mt-4">
                 <x-label for="first_name" value="{{ __('First Name') }}" />
@@ -57,8 +57,8 @@
 
                             <div class="ms-2">
                                 {!! __('I agree to the :terms_of_service and :privacy_policy', [
-                                        'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" class="text-sm text-gray-600 underline rounded-md dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">'.__('Terms of Service').'</a>',
-                                        'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'" class="text-sm text-gray-600 underline rounded-md dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">'.__('Privacy Policy').'</a>',
+                                        'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" class="text-sm text-gray-600 underline rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">'.__('Terms of Service').'</a>',
+                                        'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'" class="text-sm text-gray-600 underline rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">'.__('Privacy Policy').'</a>',
                                 ]) !!}
                             </div>
                         </div>

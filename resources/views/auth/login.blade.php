@@ -15,7 +15,7 @@
         <form method="POST" action="{{ route('login') }}">
             @csrf
  <h1 class="text-lg font-bold text-center text-white-900">LOG IN TO YOUR ACCOUNT</h1>
-            <p class="mt-4 text-sm text-center text-white">Don't have an account? <a href="{{ route('register') }}" class="ml-1 font-semibold text-gray-400 hover:underline whitespace-nowrap">Register here</a></p>
+            <p class="mt-4 text-sm text-center text-[#1A1A1A]">Don't have an account? <a href="{{ route('register') }}" class="ml-1 font-semibold text-[#1A1A1A] hover:underline whitespace-nowrap">Register here</a></p>
 
             {{-- Email or Username --}}
 
@@ -36,10 +36,10 @@
             <div class="flex items-center justify-between gap-4 mt-5">
                 <label for="remember_me" class="flex items-center">
                     <x-checkbox id="remember_me" name="remember" />
-                    <span class="text-sm text-gray-600 ms-2 dark:text-gray-400">{{ __('Remember me') }}</span>
+                    <span class="text-sm text-gray-600 ms-2">{{ __('Remember me') }}</span>
                 </label>
                 @if (Route::has('password.request'))
-                    <a class="text-sm text-gray-600 underline rounded-md dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
+                    <a class="text-sm text-gray-600 underline rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
                         {{ __('Forgot your password?') }}
                     </a>
                 @endif
