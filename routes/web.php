@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GoogleController;
+use App\Livewire\CategoryList;
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,4 +34,7 @@ Route::get('auth/google', [GoogleController::class, 'googlepage']);
 // Then if I select an account, this route calls the function 'googleback'
 Route::get('auth/google/callback', [GoogleController::class, 'googlecallback']);
 
+// Livewire Components
+
+Route::get('categories', CategoryList::class)->name('categories');
 
