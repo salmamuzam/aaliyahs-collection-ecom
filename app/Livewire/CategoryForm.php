@@ -17,8 +17,6 @@ class CategoryForm extends Component
     #[Rule('nullable|sometimes|image|max:1024')]
     public $image;
 
-    public $search;
-
     public function createCategory()
     {
         // Validate
@@ -39,8 +37,6 @@ class CategoryForm extends Component
 
     public function render()
     {
-        return view('livewire.category-form', [
-            'categories' => Category::latest()->get()
-        ]);
+        return view('livewire.category-form');
     }
 }

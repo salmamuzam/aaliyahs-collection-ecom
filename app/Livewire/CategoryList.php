@@ -2,12 +2,14 @@
 
 namespace App\Livewire;
 
+use App\Models\Category;
 use Livewire\Component;
 
 class CategoryList extends Component
 {
     public function render()
     {
-        return view('livewire.category-list');
+        $categories = Category::orderBy('id', 'DESC')->get();
+        return view('livewire.category-list', ['categories' => $categories]);
     }
 }

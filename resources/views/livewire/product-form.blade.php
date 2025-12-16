@@ -1,4 +1,4 @@
-<div class="mt-10 p-5 mx-auto sm:w-full sm:max-w-sm shadow border-[#004D61] border-t-2">
+<div class="m-10 p-5 mx-auto sm:w-full sm:max-w-sm shadow rounded-lg border-[#004D61] border-t-2">
     <div class="flex">
         <h2 class="font-semibold text-center text-2x text-[#1A1A1A] mb-5">Add New Product</h2>
     </div>
@@ -6,9 +6,10 @@
         <span class="text-emerald-500">{{ session('success') }}</span>
     @endif
     <form wire:submit="createProduct" action="" class="">
+
         <label class="mt-3 block text-sm font-medium leading-6 text-[#1A1A1A]">Name</label>
         <input wire:model="name" type="text" id="name" placeholder="Luxury Rich Wineberry Velvet Embellished Cape"
-            class="ring-1 ring-inset ring-[#004D61] bg-[#F0F0F0] text-[#1A1A1A] text-sm rounded-lg block w-full">
+            class="mt-2 ring-1 ring-inset ring-[#004D61] bg-[#F0F0F0] text-[#1A1A1A] text-sm rounded-lg block w-full">
         @error('name')
             <span class="text-xs text-rose-500">{{ $message }}</span>
         @enderror
@@ -16,29 +17,33 @@
             <label for="description" class="block mb-2 text-sm font-medium text-[#1A1A1A]">Description</label>
             <textarea wire:model="description" id="description"
                 placeholder="The luxurious velvet drapes beautifully, creating a flowing, graceful silhouette that enhances your movement. Each embellishment is thoughtfully placed, subtly elevating the piece to reflect the artistry behind its creation."
-                rows="6" class="block p-2.5 w-full text-sm text-[#1A1A1A] bg-[#F0F0F0] rounded-lg shadow-sm"></textarea>
+                rows="6"
+                class="ring-1 ring-inset ring-[#004D61] bg-[#F0F0F0] text-[#1A1A1A] text-sm rounded-lg block w-full"></textarea>
             @error('description')
                 <span class="text-xs text-rose-500"> {{ $message }}</span>
             @enderror
         </div>
+
         <div class="mt-3">
             <label for="category" class="mt-3 block text-sm font-medium leading-6 text-[#1A1A1A]">Category</label>
-            <select class="" aria-label="Select Category" id="category" wire:model="category_id">
-                <option>--Select Category--</option>
-                {{-- @foreach($categories as $cat => $message)
-                <option value="{{ $cat }}">{{ $message }}</option>
-                @endforeach --}}
+            <select
+                class="mt-2 ring-1 ring-inset ring-[#004D61] bg-[#F0F0F0] text-[#1A1A1A] text-sm rounded-lg block w-full"
+                aria-label="Select Category" id="category" wire:model="category_id">
+                <option>-- Select Category --</option>
+                {{-- @foreach --}}
+                <option value=""></option>
+                {{-- @endforeach --}}
             </select>
         </div>
-  <label class="mt-3 block text-sm font-medium leading-6 text-[#1A1A1A]">Price</label>
+        <label class="mt-3 block text-sm font-medium leading-6 text-[#1A1A1A]">Price</label>
         <input wire:model="price" type="number" id="price" placeholder="Rs. 69,600"
-            class="ring-1 ring-inset ring-[#004D61] bg-[#F0F0F0] text-[#1A1A1A] text-sm rounded-lg block w-full">
+            class="mt-2 ring-1 ring-inset ring-[#004D61] bg-[#F0F0F0] text-[#1A1A1A] text-sm rounded-lg block w-full">
         @error('price')
             <span class="text-xs text-rose-500">{{ $message }}</span>
         @enderror
         <label class="mt-3 block text-sm font-medium leading-6 text-[#1A1A1A]">Images</label>
         <input multiple wire:model="images" accept="image/png, image/jpeg, image/webp, image/jpg" type="file" id="image"
-            class="ring-1 ring-inset ring-[#004D61] bg-[#F0F0F0] text-[#1A1A1A] text-sm rounded-lg block w-full">
+            class="mt-2 ring-1 ring-inset ring-[#004D61] bg-[#F0F0F0] text-[#1A1A1A] text-sm rounded-lg block w-full">
         @error('images')
             <span class="text-xs text-rose-500">{{ $message }}</span>
         @enderror

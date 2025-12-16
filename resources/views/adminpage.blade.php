@@ -22,7 +22,7 @@
 
 <body>
     <div id="content" class="mx-auto">
-        @livewire('product-form')
+        @livewire('category-list')
     </div>
 </body>
 
