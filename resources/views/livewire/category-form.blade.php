@@ -25,7 +25,10 @@
         <div wire:loading wire:target="image">
             <span class="text-emerald-500">Uploading ...</span>
         </div>
-        <button type="submit"
+        <div wire:loading.delay>
+            <span class="text-emerald-500">Sending ...</span>
+        </div>
+        <button wire:loading.class="bg-[#004D61]" wire:loading.attr="disabled" type="submit"
             class="block px-4 py-2 mt-3 bg-[#3E5641] text-white font-semibold rounded-lg hover:bg-[#822659]">Create
             +</button>
     </form>
