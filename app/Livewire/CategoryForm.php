@@ -17,6 +17,9 @@ class CategoryForm extends Component
     #[Rule('nullable|sometimes|image|max:1024')]
     public $image;
 
+    public $category;
+
+
     public function createCategory()
     {
         // Validate
@@ -35,7 +38,7 @@ class CategoryForm extends Component
         session()->flash('success', 'A new category has been created successfully!');
     }
 
-  
+
 
     public function render()
     {

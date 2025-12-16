@@ -52,7 +52,7 @@
                         <td class="p-3 text-sm text-[#1A1A1A] text-center">{{ $category->name }}</td>
                         <td class="p-3 text-sm text-[#1A1A1A] text-center">
                             <div class="flex items-center justify-center space-x-2">
-                                 <button class="mr-1 text-sm font-semibold rounded text-emerald-500 hover:text-amber-800">
+                                 <button wire:click="editCategory({{ $category->id }})" wire:navigate href="{{ route('categories.edit', $category->id) }}" class="mr-1 text-sm font-semibold rounded text-emerald-500 hover:text-amber-800">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="" stroke="currentColor" class="w-5 h-5">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                     </svg>

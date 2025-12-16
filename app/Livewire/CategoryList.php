@@ -8,7 +8,17 @@ use Livewire\Component;
 
 class CategoryList extends Component
 {
+        public $EditingCategoryID;
+    public $EditingCategoryName;
+    public $EditingCategoryImage;
+
     public $search = '';
+
+        public function editCategory($categoryID){
+        $this->EditingCategoryID = $categoryID;
+$this->EditingCategoryName = Category::find($categoryID)->name;
+$this->EditingCategoryImage = Category::find($categoryID)->image;
+    }
 
     public function deleteCategory($categoryID)
     {
