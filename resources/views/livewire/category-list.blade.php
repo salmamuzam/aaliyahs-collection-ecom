@@ -1,5 +1,21 @@
 <div class="h-screen p-5">
-    <h1 class="mb-2 text-xl">Categories</h1>
+    <div class="flex items-center justify-between flex-1 mb-2 space-x-2">
+        <h1 class="text-xl">All Categories</h1>
+        <button type="submit" wire:navigate href="{{ route('categories.create') }}"
+            class="block px-4 py-2  mt-3 bg-[#3E5641] text-white font-semibold rounded-lg hover:bg-[#822659]">Create
+            Category </button>
+    </div>
+    <div class="mb-2 w-full flex overflow-hidden border-2 rounded-lg border-[#004D61]">
+        <input wire:model.live.debounce.300ms="search" type="text" placeholder="Search for Categories ..."
+            class="w-full px-4 py-3 text-sm text-[#1A1A1A] bg-[#F0F0F0] outline-none" />
+        <button type='button' class="flex items-center justify-center bg-[#004D61] px-5">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192.904 192.904" width="16px" class="fill-[#F0F0F0]">
+                <path
+                    d="m190.707 180.101-47.078-47.077c11.702-14.072 18.752-32.142 18.752-51.831C162.381 36.423 125.959 0 81.191 0 36.422 0 0 36.423 0 81.193c0 44.767 36.422 81.187 81.191 81.187 19.688 0 37.759-7.049 51.831-18.751l47.079 47.078a7.474 7.474 0 0 0 5.303 2.197 7.498 7.498 0 0 0 5.303-12.803zM15 81.193C15 44.694 44.693 15 81.191 15c36.497 0 66.189 29.694 66.189 66.193 0 36.496-29.692 66.187-66.189 66.187C44.693 147.38 15 117.689 15 81.193z">
+                </path>
+            </svg>
+        </button>
+    </div>
     <div class="hidden overflow-auto rounded-lg shadow md:block">
         <table class="w-full">
             <thead class="border-b-2 border-[#822659] bg-[#004D61] text-white">
@@ -17,11 +33,12 @@
             </thead>
             <tbody class="divide-y divide-[#1A1A1A]">
                 @foreach($categories as $category)
-                <tr class="bg-[#F0F0F0]">
-                    <td class="p-3 text-sm text-[#1A1A1A] text-center"></td>
-                    <td class="p-3 text-sm text-[#1A1A1A] text-center">{{ $category->name }}</td>
-                    <td class="p-3 text-sm text-[#1A1A1A] text-center">Edit</td>
-                </tr>
+                    <tr class="bg-[#F0F0F0]">
+                        <td class="p-3 text-sm text-[#1A1A1A]"><img class="w-auto h-24 mx-auto rounded-lg"
+                                src="{{ Storage::url($category['image']) }}"></td>
+                        <td class="p-3 text-sm text-[#1A1A1A] text-center">{{ $category->name }}</td>
+                        <td class="p-3 text-sm text-[#1A1A1A] text-center">Edit</td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>

@@ -1,6 +1,8 @@
 <div class="mt-10 p-5 mx-auto sm:w-full sm:max-w-sm shadow border-[#004D61] border-t-2">
-    <div class="flex">
-        <h2 class="font-semibold text-center text-2x text-[#1A1A1A] mb-5">Create New Category</h2>
+     <div class="flex items-center justify-between flex-1 mb-2 space-x-2">
+        <h2 class="font-semibold text-center text-2xl text-[#1A1A1A]">Create New Category</h2>
+         <button wire:loading.class="bg-[#004D61]" wire:loading.attr="disabled" type="submit"
+            class="block px-4 py-2 mt-3 bg-[#3E5641] text-white font-semibold rounded-lg hover:bg-[#822659]">Back</button>
     </div>
     @if(session('success'))
         <span class="text-emerald-500">{{ session('success') }}</span>
