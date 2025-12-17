@@ -8,26 +8,25 @@ use Livewire\Component;
 
 class CategoryList extends Component
 {
-        public $EditingCategoryID;
+    public $EditingCategoryID;
     public $EditingCategoryName;
     public $EditingCategoryImage;
 
     public $search = '';
 
-        public function editCategory($categoryID){
+    public function editCategory($categoryID)
+    {
         $this->EditingCategoryID = $categoryID;
-$this->EditingCategoryName = Category::find($categoryID)->name;
-$this->EditingCategoryImage = Category::find($categoryID)->image;
+        $this->EditingCategoryName = Category::find($categoryID)->name;
+        $this->EditingCategoryImage = Category::find($categoryID)->image;
     }
 
     public function deleteCategory($categoryID)
     {
-        try{
+        try {
             Category::findOrFail($categoryID)->delete();
             session()->flash('success', 'The category has been deleted successfully!');
-        }
-
-        catch(Exception $e){
+        } catch (Exception $e) {
             session()->flash('error', 'Failed to delete the category!');
             return;
         }

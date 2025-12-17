@@ -28,7 +28,7 @@ Route::get('/home', [HomeController::class, 'index']);
 
 // When /adminpage is accessed, this will check whether the user is logged in
 // If the user is not logged in, it will send the user to the login page
-Route::get('/adminpage', [HomeController::class, 'page'])->middleware(['auth',  'admin']);
+Route::get('/adminpage', [HomeController::class, 'page'])->middleware(['auth', 'admin']);
 
 // When log in with google button is called, this route calls the function 'googlepage'
 Route::get('auth/google', [GoogleController::class, 'googlepage']);
@@ -36,7 +36,6 @@ Route::get('auth/google', [GoogleController::class, 'googlepage']);
 Route::get('auth/google/callback', [GoogleController::class, 'googlecallback']);
 
 // Livewire Components
-
 Route::get('categories', CategoryList::class)->name('categories');
 Route::get('categories/create', CategoryForm::class)->name('categories.create');
 //Route::get('categories/{category}/view', CategoryForm::class)->name('categories.view');
