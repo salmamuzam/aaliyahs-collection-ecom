@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ 'Admin Dashboard |' ?? $title }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -23,7 +23,7 @@
     <x-banner />
     {{-- Include the navbar --}}
     @include('components.layouts.partials.sidebar')
-    <main class="p-4 sm:ml-64 mt-14">
+    <main class="p-4 sm:ml-64  bg-[#F3EDE8]">
         {{ $slot }}
     </main>
 

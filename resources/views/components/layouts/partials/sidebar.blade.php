@@ -1,4 +1,4 @@
-<nav class="bg-[#004D61] h-screen fixed top-0 left-0 min-w-[260px] py-6 px-4 flex flex-col overflow-auto">
+<nav class="bg-[#004D61] h-screen fixed top-0 left-0 min-w-[260px] py-6 px-4 flex flex-col overflow-auto hidden lg:block">
     <div class="flex flex-col flex-wrap items-center justify-center cursor-pointer">
 
         <img class="flex items-center justify-center w-12 h-12 text-xl font-bold text-[#1A1A1A] bg-gray-300 rounded-full"
