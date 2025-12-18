@@ -39,7 +39,7 @@ class CategoryForm extends Component
             // Time stamp
             $imageName = time() . '.' . $this->image->extension();
             // Store the image with the timestamp name
-            $imagePath = $this->image->storeAs('public/uploads', $imageName);
+            $imagePath = $this->image->storeAs('uploads', $imageName, 'public');
         }
 
         // Insert the data into the category table
