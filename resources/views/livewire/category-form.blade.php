@@ -1,37 +1,45 @@
-<div class="mt-10 p-5 mx-auto sm:w-full sm:max-w-sm shadow border-[#004D61] border-t-2">
-    <div class="flex items-center justify-between flex-1 mb-2 space-x-2">
-        <h2 class="font-semibold text-center text-2xl text-[#1A1A1A]">{{ $category ? 'Edit' : 'Create' }} Category</h2>
-        <button wire:loading.class="bg-[#004D61]" wire:loading.attr="disabled" type="submit"
-            class="block px-4 py-2 mt-3 bg-[#3E5641] text-white font-semibold rounded-lg hover:bg-[#822659]">Back</button>
+<div>
+    <div class="w-full rounded-lg bg-gradient-to-r from-[#004D61] to-[#822659] h-36"></div>
+    <div class="px-4 mb-6 -mt-20">
+        <div class="relative max-w-6xl p-8 mx-auto bg-white rounded-lg shadow-lg">
+            <div class="flex items-center justify-between space-x-4">
+                <h2 class="text-xl font-semibold text-slate-900">Add new category</h2>
+                <a wire:navigate href="{{ route('categories') }}" type='button'
+                    class="text-white font-medium w-max bg-[#004D61] hover:bg-[#3E5641] rounded-lg text-[15px] px-4 py-2.5 !mt-4 tracking-wide cursor-pointer">
+                    Back
+                </a>
+            </div>
+            <form wire:submit="saveCategory" class="grid gap-5 mt-8">
+                <div>
+                    <label class='block mb-2 text-sm font-medium text-[#1A1A1A]'>Name</label>
+                    <input wire:model="name" type='text' placeholder='Abaya'
+                        class="w-full rounded-lg py-2.5 px-4 border border-slate-300 focus:border-[#822659] text-sm outline-none" />
+                    {{-- Capture Error Messages --}}
+                    @error('name')
+                        <p class="mt-2 text-sm font-medium text-rose-600">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-[#1A1A1A]">Upload image</label>
+                    <input wire:model="image" type="file"
+                        class="w-full text-sm font-medium bg-white  border  border-slate-300  rounded-lg cursor-pointer text-slate-500 file:cursor-pointer file:border-0 file:py-2.5 file:px-4 file:mr-4 file:bg-gray-100 file:hover:bg-gray-200 file:text-slate-500" />
+                    <p class="mt-2 text-xs text-slate-500">JPG, JPEG, PNG, SVG, and WEP are allowed.</p>
+                    {{-- Preview Image --}}
+                    @if($image)
+                        <div class="my-2">
+                            <img src="{{ $image->temporaryUrl() }}" class="h-auto rounded-lg shadow-lg w-200">
+                        </div>
+                    @endif
+                    {{-- Capture Error Messages --}}
+                    @error('image')
+                        <p class="mt-2 text-sm font-medium text-rose-600"">{{ $message }}</p>
+                    @enderror
+                </div>
+                <button type=" submit"
+                        class="text-white font-medium w-max bg-[#3E5641] hover:bg-[#004D61] rounded-lg text-[15px] px-4 py-2.5 !mt-4 tracking-wide cursor-pointer">
+                        Save
+                        </button>
+            </form>
+        </div>
     </div>
-    @if(session('success'))
-        <span class="text-emerald-500">{{ session('success') }}</span>
-    @endif
-    <form wire:submit="createCategory" action="" class="">
-        <label class="mt-3 block text-sm font-medium leading-6 text-[#1A1A1A]">Name</label>
-        <input wire:model="name" type="text" id="name" placeholder="Abaya"
-            class="ring-1 ring-inset ring-[#004D61] bg-[#F0F0F0] text-[#1A1A1A] text-sm rounded-lg block w-full">
-        @error('name')
-            <span class="text-xs text-rose-500">{{ $message }}</span>
-        @enderror
-        <label class="mt-3 block text-sm font-medium leading-6 text-[#1A1A1A]">Image</label>
-        <input wire:model="image" accept="image/png, image/jpeg, image/webp, image/jpg" type="file" id="image"
-            class="ring-1 ring-inset ring-[#004D61] bg-[#F0F0F0] text-[#1A1A1A] text-sm rounded-lg block w-full">
-        @error('image')
-            <span class="text-xs text-rose-500">{{ $message }}</span>
-        @enderror
-        {{-- Image Preview --}}
-        @if($image)
-            <img class="block w-10 h-10 mt-5 rounded-lg" src="{{ $image->temporaryUrl() }}" alt="">
-        @endif
-        <div wire:loading wire:target="image">
-            <span class="text-emerald-500">Uploading ...</span>
-        </div>
-        <div wire:loading.delay>
-            <span class="text-emerald-500">Sending ...</span>
-        </div>
-        <button wire:loading.class="bg-[#004D61]" wire:loading.attr="disabled" type="submit"
-            class="block px-4 py-2 mt-3 bg-[#3E5641] text-white font-semibold rounded-lg hover:bg-[#822659]">{{ $category ? 'Update' : 'Save'}}
-        </button>
-    </form>
 </div>

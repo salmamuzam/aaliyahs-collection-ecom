@@ -23,7 +23,7 @@
     <x-banner />
     {{-- Include the navbar --}}
     @include('components.layouts.partials.sidebar')
-    <main class="p-4 sm:ml-64  bg-[#F3EDE8]">
+    <main class="p-4 h-screen sm:ml-64  bg-[#F3EDE8]">
         {{ $slot }}
     </main>
 
