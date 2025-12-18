@@ -135,8 +135,8 @@
             </tbody>
         </table>
     </div>
-
-    <div class="mx-auto overflow-hidden bg-white rounded-lg shadow-lg md:hidden">
+ @forelse($categories as $category)
+    <div class="mx-auto mb-4 overflow-hidden bg-white rounded-lg shadow-lg  md:hidden">
         <!-- Card Image -->
         <img class="object-cover w-full h-auto rounded-lg" src="{{ asset('storage/' . $category->image) }}">
 
@@ -181,4 +181,6 @@
             </div>
         </div>
     </div>
+    @empty
+    @endforelse
 </div>
