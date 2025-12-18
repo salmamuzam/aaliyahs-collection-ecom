@@ -1,18 +1,47 @@
 <div class="h-screen p-5">
-    <h1 class="mb-2 text-xl">All categories</h1>
+    <div class="flex items-center justify-between mb-4 space-x-4">
+        <h1 class="mb-2 text-xl">All categories</h1>
+
+        <button type="button" id="createProductModalButton" data-modal-target="createProductModal"
+            data-modal-toggle="createProductModal"
+            class="flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300">
+            <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true">
+                <path clip-rule="evenodd" fill-rule="evenodd"
+                    d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
+            </svg>
+            Add product
+        </button>
+    </div>
+    <form class="flex items-center mb-4">
+        <label for="simple-search" class="sr-only">Search</label>
+        <div class="relative w-full">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg aria-hidden="true" class="w-5 h-5 text-black" fill="currentColor" viewbox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                        clip-rule="evenodd" />
+                </svg>
+            </div>
+            <input type="text" id="simple-search"
+                class="block w-full p-2 pl-10 text-sm text-[#1A1A1A] border border-gray-300 rounded-lg bg-white focus:ring-[#822659]-500 focus:border-[#822659]"
+                placeholder="Search for a category ..." required="">
+        </div>
+    </form>
     <div class="hidden overflow-auto rounded-lg shadow md:block">
         <table class="w-full">
             <thead class="border-b-2 text-white border-[#822659] bg-[#3E5641]">
                 <tr>
                     <th class="w-20 p-3 text-sm font-semibold tracking-wide text-center">Image</th>
                     <th class="p-3 text-sm font-semibold tracking-wide text-center">Name</th>
-                    <th class="w-24 p-3 text-sm font-semibold tracking-wide text-left">Actions</th>
+                    <th class="w-24 p-3 text-sm font-semibold tracking-wide text-center">Actions</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
-                <tr class="bg-[#F0F0F0]">
+                <tr class="bg-white">
                     <td class="p-3 text-sm text-center text-gray-700 whitespace-nowrap">
-                        <a href="#" class="font-bold text-blue-500 hover:underline">10001</a>
+                        <img src="images/icons/dark_logo.png">
                     </td>
                     <td class="p-3 text-sm text-center text-gray-700 whitespace-nowrap">
                         Kring New Fit office chair, mesh + PU, black
@@ -21,7 +50,7 @@
                         <div class="flex items-center space-x-4">
                             <button type="button" data-drawer-target="drawer-update-product"
                                 data-drawer-show="drawer-update-product" aria-controls="drawer-update-product"
-                                class="flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300">
+                                class="flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-indigo-700 rounded-lg hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 -ml-0.5" viewbox="0 0 20 20"
                                     fill="currentColor" aria-hidden="true">
                                     <path
@@ -62,7 +91,7 @@
     </div>
 
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:hidden">
-        <div class="p-4 space-y-3 bg-[#F0F0F0] rounded-lg shadow">
+        <div class="p-4 space-y-3 bg-white rounded-lg shadow">
             <div class="flex items-center space-x-2 text-sm">
 
                 <div>
@@ -71,12 +100,12 @@
                 </div>
             </div>
             <div class="text-sm text-gray-700">
-                Kring New Fit office chair, mesh + PU, black
+                <img src="images/icons/dark_logo.png" class="w-20">
             </div>
             <div class="flex items-center space-x-4">
                 <button type="button" data-drawer-target="drawer-update-product"
                     data-drawer-show="drawer-update-product" aria-controls="drawer-update-product"
-                    class="flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300">
+                    class="flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-indigo-700 rounded-lg hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 -ml-0.5" viewbox="0 0 20 20"
                         fill="currentColor" aria-hidden="true">
                         <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
