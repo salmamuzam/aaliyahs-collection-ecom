@@ -10,6 +10,7 @@
                     clip-rule="evenodd" />
             </svg>
         </div>
+        {{-- Live search --}}
         <input wire:model.live.debounce.300ms="search" type="text" id="simple-search"
             class="block w-full p-2 pl-10 text-sm text-[#1A1A1A] border border-gray-300 rounded-lg bg-white focus:ring-[#822659]-500 focus:border-[#822659]"
             placeholder="Search for a category ..." required="">

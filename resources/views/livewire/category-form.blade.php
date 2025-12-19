@@ -1,4 +1,4 @@
-<div>
+<div class="pt-16 m-4 lg:pt-0">
     <div class="w-full rounded-lg bg-gradient-to-r from-[#004D61] to-[#822659] h-36"></div>
     <div class="px-4 mb-6 -mt-20">
         <div class="relative max-w-6xl p-8 mx-auto bg-white rounded-lg shadow-lg">
@@ -34,7 +34,7 @@
 
                         <input wire:model="image" type="file"
                             class="w-full text-sm font-medium bg-white  border  border-slate-300  rounded-lg cursor-pointer text-slate-500 file:cursor-pointer file:border-0 file:py-2.5 file:px-4 file:mr-4 file:bg-gray-100 file:hover:bg-gray-200 file:text-slate-500" />
-                        <p class="mt-2 text-xs text-slate-500">JPG, JPEG, PNG, SVG, and WEP are allowed.</p>
+                        <p class="mt-2 text-xs text-slate-500">JPG, JPEG, PNG, SVG, and WEBP are allowed.</p>
                         {{-- Preview Image --}}
                         @if($image)
                             <div class="my-2">
@@ -45,7 +45,7 @@
                         @error('image')
                             <p class="mt-2 text-sm font-medium text-rose-600"">{{ $message }}</p>
                         @enderror
-                        </div>
+                            </div>
                 @endif
                   @if(!$isView)
                     <button type=" submit"

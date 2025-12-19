@@ -12,7 +12,6 @@ class CategoryList extends Component
     #[Title('Admin Dashboard | Categories')]
     public $search = '';
 
-
     public function render()
     {
         $categories = Category::where('name', 'like', '%' . $this->search . '%')

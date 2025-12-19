@@ -1,6 +1,6 @@
-<div class="h-screen p-5">
-    <div class="flex items-center justify-between mb-4 space-x-4">
-        <h1 class="mb-2 text-xl">All categories</h1>
+<div class="p-5 lg:p-5 pt-0 lg:pt-5">
+    <div class=" flex items-center justify-between mb-4 space-x-4 pt-16 lg:pt-0">
+    <h1 class="text-xl">All categories</h1>
         <a wire:navigate href="{{ route('categories.create') }}" type="button" data-modal-toggle="createProductModal"
             class="flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300">
             <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
