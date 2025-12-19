@@ -11,6 +11,9 @@ class CategoryForm extends Component
 {
     use WithFileUploads;
 
+    public $category = null;
+    public $isView = false;
+
     // Define properties based on data input binding
     // Name Field Validation with customized message
     #[Validate('required', message: 'Category name is required!')]
@@ -24,6 +27,22 @@ class CategoryForm extends Component
     #[Validate('mimes:jpg,jpeg,png,svg,webp', message: 'Category image accepts only jpg, jpeg, png, svg, and webp!')]
     #[Validate('max:2048', message: 'Category image must not be larger than 2MB!')]
     public $image;
+
+    // Capture the route model binding instead of id
+    // Fetch the categories of the given id based on the model
+    public function mount(Category $category)
+    {
+        // check whether the route is view
+        // When the preview button is clicked, admin will be redirected to the category view page
+        // this has been captured here, and set to true
+        $this->isView = request()->routeIs('categories.view');
+        // Check whether the category data exists
+        if ($category->id) {
+            $this->category = $category;
+            // Assign the name to the public properties
+            $this->name = $category->name;
+        }
+    }
 
     // Form submission
     public function saveCategory()

@@ -38,6 +38,6 @@ Route::get('auth/google/callback', [GoogleController::class, 'googlecallback']);
 // Livewire Components
 Route::get('categories', CategoryList::class)->name('categories');
 Route::get('categories/create', CategoryForm::class)->name('categories.create');
-//Route::get('categories/{category}/view', CategoryForm::class)->name('categories.view');
+Route::get('categories/{category}/view', CategoryForm::class)->name('categories.view');
 Route::get('categories/{category}/edit', CategoryForm::class)->name('categories.edit');
 
