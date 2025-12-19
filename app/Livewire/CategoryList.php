@@ -5,9 +5,11 @@ namespace App\Livewire;
 use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Livewire\Attributes\Title;
 
 class CategoryList extends Component
 {
+    #[Title('Admin Dashboard | Categories')]
     public $categories;
 
     // Fetch the categories from the table

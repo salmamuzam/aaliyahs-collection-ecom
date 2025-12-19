@@ -6,10 +6,13 @@ use App\Models\Category;
 use Livewire\Component;
 use Livewire\Attributes\Validate;
 use Livewire\WithFileUploads;
+use Livewire\Attributes\Title;
 
 class CategoryForm extends Component
 {
     use WithFileUploads;
+
+    #[Title('Admin Dashboard | Manage Categories')]
 
     public $category = null;
     public $isView = false;
