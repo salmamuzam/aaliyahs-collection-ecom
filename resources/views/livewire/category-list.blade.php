@@ -119,7 +119,7 @@
                                     </svg>
                                     Preview
                                 </a>
-                                <a href type="button" data-modal-target="delete-modal" data-modal-toggle="delete-modal"
+                                <button wire:click="deleteCategory({{ $category->id }})" wire:confirm="Are you sure, you want to delete?" type="button" data-modal-target="delete-modal" data-modal-toggle="delete-modal"
                                     class="flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-rose-700 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 -ml-0.5" viewbox="0 0 20 20"
                                         fill="currentColor" aria-hidden="true">
@@ -128,7 +128,7 @@
                                             clip-rule="evenodd" />
                                     </svg>
                                     Delete
-                                </a>
+                                </button>
                             </div>
                         </td>
                     </tr>

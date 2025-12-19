@@ -18,4 +18,10 @@ class CategoryList extends Component
     {
         return view('livewire.category-list');
     }
+
+    // Delete functionality
+
+    public function deleteCategory(Category $category){
+        dd($category);
+    }
 }
