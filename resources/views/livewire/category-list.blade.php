@@ -92,8 +92,9 @@
                         </td>
                         <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
                             <div class="flex items-center space-x-4">
-                                <a href type="button" data-drawer-target="drawer-update-product"
-                                    data-drawer-show="drawer-update-product" aria-controls="drawer-update-product"
+                                <a wire:navigate href="{{ route('categories.edit', $category->id) }}" type="button"
+                                    data-drawer-target="drawer-update-product" data-drawer-show="drawer-update-product"
+                                    aria-controls="drawer-update-product"
                                     class="flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-indigo-700 rounded-lg hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 -ml-0.5" viewbox="0 0 20 20"
                                         fill="currentColor" aria-hidden="true">

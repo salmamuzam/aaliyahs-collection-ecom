@@ -3,7 +3,8 @@
     <div class="px-4 mb-6 -mt-20">
         <div class="relative max-w-6xl p-8 mx-auto bg-white rounded-lg shadow-lg">
             <div class="flex items-center justify-between space-x-4">
-                <h2 class="text-xl font-semibold text-slate-900">{{ $isView ? 'View' : 'Add'}} category</h2>
+                <h2 class="text-xl font-semibold text-slate-900">{{ $isView ? 'View' : ($category ? 'Edit' : 'Add')}}
+                    category</h2>
                 <a wire:navigate href="{{ route('categories') }}" type='button'
                     class="text-white font-medium w-max bg-[#004D61] hover:bg-[#3E5641] rounded-lg text-[15px] px-4 py-2.5 !mt-4 tracking-wide cursor-pointer">
                     Back
@@ -44,13 +45,13 @@
                         @error('image')
                             <p class="mt-2 text-sm font-medium text-rose-600"">{{ $message }}</p>
                         @enderror
-                    </div>
+                        </div>
                 @endif
                   @if(!$isView)
                     <button type=" submit"
-                            class="text-white font-medium w-max bg-[#3E5641] hover:bg-[#004D61] rounded-lg text-[15px] px-4 py-2.5 !mt-4 tracking-wide cursor-pointer">
-                            Save
-                            </button>
+                        class="text-white font-medium w-max bg-[#3E5641] hover:bg-[#004D61] rounded-lg text-[15px] px-4 py-2.5 !mt-4 tracking-wide cursor-pointer">
+                        {{ $category ? 'Update' : 'Save' }}
+                        </button>
                 @endif
             </form>
         </div>
