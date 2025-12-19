@@ -10,17 +10,35 @@ use Livewire\Attributes\Title;
 class CategoryList extends Component
 {
     #[Title('Admin Dashboard | Categories')]
-    public $categories;
+    public $search = '';
 
-    // Fetch the categories from the table
-    public function mount()
-    {
-        $this->categories = Category::all();
-    }
+
     public function render()
     {
-        return view('livewire.category-list');
+        $categories = Category::where('name', 'like', '%' . $this->search . '%')
+            ->orderBy('id', 'DESC')
+            ->get();
+
+        return view('livewire.category-list', [
+            'categories' => $categories
+        ]);
     }
+    // public $categories;
+
+    // // Fetch the categories from the table
+    // public function mount()
+    // {
+    //     $this->categories = Category::all();
+    // }
+    // public function render()
+    // {
+    //     $categories = Category::where('name', 'like', '%' . $this->search . '%')
+    //                  ->get();
+
+    //     return view('livewire.category-list', [
+    //         'categories' => $categories
+    //     ]);
+    // }
 
     // Delete functionality
 
