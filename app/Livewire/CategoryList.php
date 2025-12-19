@@ -12,10 +12,27 @@ class CategoryList extends Component
     #[Title('Admin Dashboard | Categories')]
     public $search = '';
 
+    public $sortColumn = 'id';
+
+    public $sortOrder = 'asc';
+
+    public function sortBy($columnName)
+    {
+        if ($this->sortColumn === $columnName) {
+            // Assign sort order
+            // Check current sort order
+            $this->sortOrder = $this->sortOrder === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortColumn = $columnName;
+            $this->sortOrder = 'asc';
+
+        }
+    }
+
     public function render()
     {
         $categories = Category::where('name', 'like', '%' . $this->search . '%')
-            ->orderBy('id', 'DESC')
+            ->orderBy($this->sortColumn, $this->sortOrder)
             ->get();
 
         return view('livewire.category-list', [
