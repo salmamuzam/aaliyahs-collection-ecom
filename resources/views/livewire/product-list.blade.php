@@ -65,49 +65,50 @@
                     <th class="p-3 text-sm font-semibold tracking-wide text-center">Name<span class="cursor-pointer"
                             wire:click="sortBy('name')">
                             {{-- @if($sortColumn === 'name')
-                                @if($sortOrder === 'asc') --}}
-                                    <i class="fa-solid fa-sort-up"></i>
-                                {{-- @else --}}
-                                    <i class="fa-solid fa-sort-down"></i>
-                                {{-- @endif --}}
+                            @if($sortOrder === 'asc') --}}
+                            <i class="fa-solid fa-sort-up"></i>
                             {{-- @else --}}
-                                <i class="fa-solid fa-sort"></i>
+                            <i class="fa-solid fa-sort-down"></i>
+                            {{-- @endif --}}
+                            {{-- @else --}}
+                            <i class="fa-solid fa-sort"></i>
                             {{-- @endif --}}
                         </span></th>
                     <th class="p-3 text-sm font-semibold tracking-wide text-center"">Description<span
-                            class="cursor-pointer" wire:click="sortBy('description')">
-                            {{-- @if($sortColumn === 'description')
-                                @if($sortOrder === 'asc') --}}
-                                    <i class="fa-solid fa-sort-up"></i>
-                                {{-- @else --}}
-                                    <i class="fa-solid fa-sort-down"></i>
-                                {{-- @endif --}}
-                            {{-- @else --}}
-                                <i class="fa-solid fa-sort"></i>
-                            {{-- @endif --}}
-                        </span></th>
-                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Category<span
-                            class="cursor-pointer" wire:click="sortBy('category')">
+                            class=" cursor-pointer" wire:click="sortBy('description')">
+                        {{-- @if($sortColumn === 'description')
+                        @if($sortOrder === 'asc') --}}
+                        <i class="fa-solid fa-sort-up"></i>
+                        {{-- @else --}}
+                        <i class="fa-solid fa-sort-down"></i>
+                        {{-- @endif --}}
+                        {{-- @else --}}
+                        <i class="fa-solid fa-sort"></i>
+                        {{-- @endif --}}
+                        </span>
+                    </th>
+                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Category<span class="cursor-pointer"
+                            wire:click="sortBy('category')">
                             {{-- @if($sortColumn === 'category')
-                                @if($sortOrder === 'asc') --}}
-                                    <i class="fa-solid fa-sort-up"></i>
-                                {{-- @else --}}
-                                    <i class="fa-solid fa-sort-down"></i>
-                                {{-- @endif
+                            @if($sortOrder === 'asc') --}}
+                            <i class="fa-solid fa-sort-up"></i>
+                            {{-- @else --}}
+                            <i class="fa-solid fa-sort-down"></i>
+                            {{-- @endif
                             @else --}}
-                                <i class="fa-solid fa-sort"></i>
+                            <i class="fa-solid fa-sort"></i>
                             {{-- @endif --}}
                         </span></th>
-                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Price<span
-                            class="cursor-pointer" wire:click="sortBy('price')">
+                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Price<span class="cursor-pointer"
+                            wire:click="sortBy('price')">
                             {{-- @if($sortColumn === 'price')
-                                @if($sortOrder === 'asc') --}}
-                                    <i class="fa-solid fa-sort-up"></i>
-                                {{-- @else --}}
-                                    <i class="fa-solid fa-sort-down"></i>
-                                {{-- @endif
+                            @if($sortOrder === 'asc') --}}
+                            <i class="fa-solid fa-sort-up"></i>
+                            {{-- @else --}}
+                            <i class="fa-solid fa-sort-down"></i>
+                            {{-- @endif
                             @else --}}
-                                <i class="fa-solid fa-sort"></i>
+                            <i class="fa-solid fa-sort"></i>
                             {{-- @endif --}}
                         </span></th>
                     <th class="w-24 p-3 text-sm font-semibold tracking-wide text-center">Actions</th>
@@ -115,14 +116,14 @@
             </thead>
             <tbody class="divide-y divide-gray-100">
                 {{-- @forelse($products as $product) --}}
-                    @include('livewire.includes.product-row')
+                @include('livewire.includes.product-row')
                 {{-- @empty
                 @endforelse --}}
             </tbody>
         </table>
     </div>
     {{-- @forelse($products as $product) --}}
-        @include('livewire.includes.product-card')
+    @include('livewire.includes.product-card')
     {{-- @empty
     @endforelse --}}
 </div>
