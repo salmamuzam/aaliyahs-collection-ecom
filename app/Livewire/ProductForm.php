@@ -18,7 +18,7 @@ class ProductForm extends Component
     #[Validate('required', message: 'Product description is required!')]
     #[Validate('min:10', message: 'Product description must be minimum 10 characters long!')]
     public $description;
-    public $category;
+    public $category_id;
     public $price;
 
     // Dynamic validation

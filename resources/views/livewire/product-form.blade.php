@@ -27,38 +27,13 @@ Rose glow Abaya'
                         class="w-full rounded-lg py-2.5 px-4 border border-slate-300 focus:border-[#822659] text-sm outline-none"></textarea>
                 </div>
                 <div class="relative w-full">
-                    <label class="block mb-2 text-sm font-medium text-slate-800">Category</label>
-                    <button type="button" id="dropdownToggle"
-                        class="text-left w-full px-5 py-2.5 rounded-lg border border-gray-300 cursor-pointer text-slate-900 text-sm font-medium outline-none bg-white hover:bg-gray-50">
-                       Select Category
-                        <svg xmlns="http://www.w3.org/2000/svg" class="inline w-3 ml-2 fill-gray-500"
-                            viewBox="0 0 24 24">
-                            <path fill-rule="evenodd"
-                                d="M11.99997 18.1669a2.38 2.38 0 0 1-1.68266-.69733l-9.52-9.52a2.38 2.38 0 1 1 3.36532-3.36532l7.83734 7.83734 7.83734-7.83734a2.38 2.38 0 1 1 3.36532 3.36532l-9.52 9.52a2.38 2.38 0 0 1-1.68266.69734z"
-                                clip-rule="evenodd" data-original="#000000" />
-                        </svg>
-                    </button>
-
-                    <ul id="dropdownMenu"
-                        class='absolute hidden rounded-lg [box-shadow:0_8px_19px_-7px_rgba(215,215,215,1)] bg-white py-2 z-[1000] min-w-full w-max divide-y divide-gray-200 max-h-96 overflow-auto'>
-
-                        <li
-                            class='dropdown-item px-5 py-2.5 hover:bg-gray-50 text-slate-600 text-sm font-medium cursor-pointer'>
-                            Abaya
-                        </li>
-                           <li
-                            class='dropdown-item px-5 py-2.5 hover:bg-gray-50 text-slate-600 text-sm font-medium cursor-pointer'>
-                            Dress
-                        </li>
-                        <li
-                            class='dropdown-item px-5 py-2.5 hover:bg-gray-50 text-slate-600 text-sm font-medium cursor-pointer'>
-                            Hijab
-                        </li>
-                        <li
-                            class='dropdown-item px-5 py-2.5 hover:bg-gray-50 text-slate-600 text-sm font-medium cursor-pointer'>
-                            Accessory
-                        </li>
-                    </ul>
+                     <label for="countries" class="block mb-2 text-sm font-medium text-slate-800">Category</label>
+  <select wire:model="category_id" id="categories" class="w-full rounded-lg py-2.5 px-4 border border-slate-300 focus:border-[#822659] text-sm outline-none">
+    <option hidden selected>Select a category</option>
+    @foreach($categories as $category)
+    <option value="{{ $category->id }}">{{ $_ENVcategory->name }}</option>
+@endforeach
+  </select>
                 </div>
                 <div>
                     <label class='block mb-2 text-sm font-medium text-[#1A1A1A]'>Price</label>
