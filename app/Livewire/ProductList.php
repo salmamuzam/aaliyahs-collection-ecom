@@ -7,11 +7,15 @@ use Livewire\Component;
 use Livewire\withPagination;
 use Livewire\WithoutUrlPagination;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\Title;
+
 
 
 class ProductList extends Component
 {
     use withPagination, WithoutUrlPagination;
+
+    #[Title('Admin Dashboard | Products')]
 
     public function render()
     {

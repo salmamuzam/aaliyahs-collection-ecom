@@ -7,10 +7,13 @@ use App\Models\Product;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\Attributes\Title;
 
 class ProductForm extends Component
 {
     use WithFileUploads;
+
+    #[Title('Admin Dashboard | Manage Products')]
 
     public $product = null;
 
