@@ -2,39 +2,38 @@
 
 namespace App\Livewire;
 
-use Livewire\Attributes\Rule;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
-use Livewire\WithFileUploads;
+
 
 class ProductForm extends Component
 {
-    use WithFileUploads;
+    // Define properties based on input binding
 
-    #[Rule('required|min:3|max:50')]
+    #[Validate('required', message: 'Product name is required!')]
+    #[Validate('min:3', message: 'Product name must be minimum 3 characters long!')]
+    #[Validate('max:150', message: 'Product name must not be more than 150 characters long!')]
     public $name;
 
-    #[Rule('required|min:5|max:255')]
+    #[Validate('required', message: 'Product description is required!')]
+    #[Validate('min:10', message: 'Product description must be minimum 10 characters long!')]
     public $description;
-
-    #[Rule('required')]
+    public $category;
     public $price;
 
-    #[Rule('required')]
-    #[Rule(['images.*' => 'image|max:2048'])]
-    public $images;
+    // Dynamic validation
 
-    public function createProduct()
-    {
+    #[Validate('required', message: 'Product image is required!')]
+    #[Validate('image', message: 'Product image must be a valid image!')]
+    #[Validate('mimes:jpg,jpeg,png,svg,webp', message: 'Product image accepts only jpg, jpeg, png, svg, and webp!')]
+    #[Validate('max:2048', message: 'Product image must not be larger than 2MB!')]
+
+    public $image;
+
+    public function saveProduct(){
+        // Trigger validation rule during form submit
         $this->validate();
-        if (is_array($this->images)) {
-            foreach ($this->images as $image) {
-                $image->store('uploads', 'public');
-            }
-        }
-        session()->flash('success', 'A new product has been added successfully!');
-        $this->reset();
     }
-
     public function render()
     {
         return view('livewire.product-form');

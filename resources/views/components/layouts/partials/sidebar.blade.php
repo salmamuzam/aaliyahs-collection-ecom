@@ -32,7 +32,7 @@
             </a>
         </li>
         <li>
-            <a href=""
+            <a wire:navigate href="{{ route('categories') }}"
                 class="text-gray-300 hover:text-white text-[15px] font-normal flex items-center hover:bg-[#822659] rounded px-4 py-2 transition-all">
 
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-[18px] h-[18px] mr-3"
@@ -47,7 +47,7 @@
             </a>
         </li>
         <li>
-            <a href=""
+            <a wire:navigate href="{{ route('products') }}"
                 class="text-gray-300 hover:text-white text-[15px] font-normal flex items-center hover:bg-[#822659] rounded px-4 py-2 transition-all">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-[18px] h-[18px] mr-3"
                     viewBox="0 0 511.414 511.414">

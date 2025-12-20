@@ -5,12 +5,12 @@
             <div class="flex items-center justify-between space-x-4">
                 <h2 class="text-xl font-semibold text-slate-900">
                     product</h2>
-                <a wire:navigate href="{{ route('categories') }}" type='button'
+                <a wire:navigate href="{{ route('products') }}" type='button'
                     class="text-white font-medium w-max bg-[#004D61] hover:bg-[#3E5641] rounded-lg text-[15px] px-4 py-2.5 !mt-4 tracking-wide cursor-pointer">
                     Back
                 </a>
             </div>
-            <form wire:submit="saveCategory" class="grid gap-5 mt-8">
+            <form wire:submit="saveProduct" class="grid gap-5 mt-8">
                 <div>
                     <label class='block mb-2 text-sm font-medium text-[#1A1A1A]'>Name</label>
                     <input  wire:model="name" type='text' placeholder='
@@ -23,7 +23,7 @@ Rose glow Abaya'
                 </div>
                 <div class="col-span-full">
                     <label class="block mb-2 text-sm font-medium text-slate-800">Description</label>
-                    <textarea placeholder='Softly radiant and feminine — Rosé Glow features delicate hand-beaded detailing on the sleeves on overcoat with matching inner and shawl, crafted on a fluid peach-toned fabric that catches light effortlessly. A timeless choice for refined occasions.' rows="6"
+                    <textarea wire:model="description" placeholder='Softly radiant and feminine — Rosé Glow features delicate hand-beaded detailing on the sleeves on overcoat with matching inner and shawl, crafted on a fluid peach-toned fabric that catches light effortlessly. A timeless choice for refined occasions.' rows="6"
                         class="w-full rounded-lg py-2.5 px-4 border border-slate-300 focus:border-[#822659] text-sm outline-none"></textarea>
                 </div>
                 <div class="relative w-full">
@@ -41,7 +41,7 @@ Rose glow Abaya'
 
                     <ul id="dropdownMenu"
                         class='absolute hidden rounded-lg [box-shadow:0_8px_19px_-7px_rgba(215,215,215,1)] bg-white py-2 z-[1000] min-w-full w-max divide-y divide-gray-200 max-h-96 overflow-auto'>
-                       
+
                         <li
                             class='dropdown-item px-5 py-2.5 hover:bg-gray-50 text-slate-600 text-sm font-medium cursor-pointer'>
                             Abaya
@@ -62,10 +62,10 @@ Rose glow Abaya'
                 </div>
                 <div>
                     <label class='block mb-2 text-sm font-medium text-[#1A1A1A]'>Price</label>
-                    <input  wire:model="name" type='number' placeholder='Rs 26,500.00'
+                    <input  wire:model="price" type='number' placeholder='Rs 26,500.00'
                         class="w-full rounded-lg py-2.5 px-4 border border-slate-300 focus:border-[#822659] text-sm outline-none" />
                     {{-- Capture Error Messages --}}
-                    @error('name')
+                    @error('price')
                         {{-- <p class="mt-2 text-sm font-medium text-rose-600">{{ $message }}</p> --}}
                     @enderror
                 </div>
