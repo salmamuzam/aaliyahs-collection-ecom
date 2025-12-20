@@ -13,8 +13,8 @@
             <form wire:submit="saveProduct" class="grid gap-5 mt-8">
                 <div>
                     <label class='block mb-2 text-sm font-medium text-[#1A1A1A]'>Name</label>
-                    <input wire:model="name" type='text' placeholder='
-Rose glow Abaya' class="w-full rounded-lg py-2.5 px-4 border border-slate-300 focus:border-[#822659] text-sm outline-none" />
+                    <input wire:model="name" type='text' placeholder='Rose glow Abaya'
+                        class="w-full rounded-lg py-2.5 px-4 border border-slate-300 focus:border-[#822659] text-sm outline-none" />
                     {{-- Capture Error Messages --}}
                     @error('name')
                         <p class="mt-2 text-sm font-medium text-rose-600">{{ $message }}</p>

@@ -115,15 +115,15 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
-                {{-- @forelse($products as $product) --}}
+                 @forelse($products as $product) 
                 @include('livewire.includes.product-row')
-                {{-- @empty
-                @endforelse --}}
+                 @empty
+                @endforelse
             </tbody>
         </table>
     </div>
-    {{-- @forelse($products as $product) --}}
+     @forelse($products as $product)
     @include('livewire.includes.product-card')
-    {{-- @empty
-    @endforelse --}}
+     @empty
+    @endforelse
 </div>

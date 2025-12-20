@@ -1,18 +1,18 @@
 <tr class="bg-white">
     <td class="p-3 text-sm text-center text-gray-700 whitespace-nowrap">
-        {{-- <img class="h-auto rounded-lg w-100" src="{{ asset('storage/' . $product->image) }}"> --}}
+         <img class="h-auto rounded-lg w-100" src="{{ asset('storage/' . $product->image) }}">
     </td>
     <td class="p-3 text-sm text-center text-gray-700 whitespace-nowrap">
-        {{-- {{ $product->name }} --}}
+         {{ Str::limit($product->name, 30) }}
     </td>
     <td class="p-3 text-sm text-center text-gray-700 whitespace-nowrap">
-        {{-- {{ $product->description }} --}}
+        {{ Str::limit($product->description, 50) }}
     </td>
     <td class="p-3 text-sm text-center text-gray-700 whitespace-nowrap">
-        {{-- {{ $product->category_id }} --}}
+        {{ $product->category->name}}
     </td>
     <td class="p-3 text-sm text-center text-gray-700 whitespace-nowrap">
-        {{-- {{ $product->price}} --}}
+        {{ $product->price}}
     </td>
     <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
         <div class="flex items-center space-x-4">
