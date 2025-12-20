@@ -17,11 +17,14 @@ class ProductList extends Component
 
     #[Title('Admin Dashboard | Products')]
 
+    public $search = null;
+
     public function render()
     {
         // Fetch the products
         // Show the last created product first
-        $products = Product::orderBy('id', 'desc')->paginate(4);
+        $products = Product::where('name')->
+        orderBy('id', 'desc')->paginate(4);
         return view('livewire.product-list', compact('products'));
     }
 
