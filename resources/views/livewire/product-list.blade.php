@@ -118,7 +118,7 @@
                                     </svg>
                                     Edit
                                 </a>
-                                <a wire:navigate href="" type="button"
+                                <a wire:navigate href="{{ route('products.view', $product->id) }}" type="button"
                                     class="flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-amber-700 hover:bg-amber-800 focus:ring-4 focus:outline-none focus:ring-amber-300">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor"
                                         class="w-4 h-4 mr-2 -ml-0.5">
@@ -166,8 +166,8 @@
                                 class="text-pink-600 text-sm font-medium bg-pink-50 px-3 py-1.5 inline-block tracking-wide rounded-lg">
                                 {{ $product->category->name }}</h2>
                         </div>
-                        <h3 class="mt-4 font-semibold text-left  text-slate-900">{{ $product->name }}</h3>
-                        <ul class="space-y-2 text-sm font-medium  text-slate-500">
+                        <h3 class="mt-4 font-semibold text-left text-slate-900">{{ $product->name }}</h3>
+                        <ul class="space-y-2 text-sm font-medium text-slate-500">
                             <li class="pt-4 text-rose-600">Rs. {{ $product->price }}</li>
                             <li class="pt-2 text-justify">{{ $product->description }}</li>
                         </ul>
@@ -186,7 +186,7 @@
                                     </svg>
                                     Edit
                                 </a>
-                                <a wire:navigate href="" type="button"
+                                <a wire:navigate href="{{ route('products.view', $product->id) }}" type="button"
                                     class="flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-amber-700 hover:bg-amber-800 focus:ring-4 focus:outline-none focus:ring-amber-300">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor"
                                         class="w-4 h-4 mr-2 -ml-0.5">

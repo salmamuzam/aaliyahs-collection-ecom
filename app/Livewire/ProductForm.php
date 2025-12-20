@@ -12,6 +12,10 @@ class ProductForm extends Component
 {
     use WithFileUploads;
 
+    public $product = null;
+
+    public $isView = false;
+
     // Define properties based on input binding
 
     #[Validate('required', message: 'Product name is required!')]
@@ -43,9 +47,20 @@ class ProductForm extends Component
 
     public $image;
 
-    public function mount()
+
+    public function mount(Product $product)
     {
         $this->categories = Category::all();
+        // Check whether the route is products.view
+        $this->isView = request()->routeIs('products.view');
+        // Check whether we have the product data belonging to the id
+        if ($product->id) {
+            $this->product = $product;
+            $this->name = $product->name;
+            $this->description = $product->description;
+            $this->category_id = $product->category_id;
+            $this->price = $product->price;
+        }
     }
 
     public function saveProduct()
