@@ -74,7 +74,7 @@
         </div>
     </form>
 
-    <div class="hidden overflow-auto rounded-lg shadow md:block bg-white">
+    <div class="hidden overflow-auto rounded-lg shadow md:block ">
         <table class="w-full ">
             <thead class="border-b-2 text-white border-[#822659] bg-[#3E5641]">
                 <tr>
@@ -146,7 +146,7 @@
             </tbody>
 
         </table>
-        <div class="px-4 mt-2 mb-2">
+<div class="px-4 mt-2 mb-2">
             {{-- Pagination --}}
             {{ $products->links() }}
         </div>
