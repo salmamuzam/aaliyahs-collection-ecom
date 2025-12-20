@@ -1,9 +1,9 @@
 <tr class="bg-white">
     <td class="p-3 text-sm text-center text-gray-700 whitespace-nowrap">
-         <img class="h-auto rounded-lg w-100" src="{{ asset('storage/' . $product->image) }}">
+        <img class="h-auto rounded-lg w-100" src="{{ asset('storage/' . $product->image) }}">
     </td>
     <td class="p-3 text-sm text-center text-gray-700 whitespace-nowrap">
-         {{ Str::limit($product->name, 30) }}
+        {{ Str::limit($product->name, 30) }}
     </td>
     <td class="p-3 text-sm text-center text-gray-700 whitespace-nowrap">
         {{ Str::limit($product->description, 50) }}
