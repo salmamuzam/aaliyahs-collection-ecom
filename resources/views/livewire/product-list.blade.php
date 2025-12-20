@@ -128,7 +128,7 @@
                                     </svg>
                                     Preview
                                 </a>
-                                <button type="button"
+                                <button wire:confirm="Are you sure, you want to delete?" wire:click="deleteProduct({{ $product->id }})" type="button"
                                     class="flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-rose-700 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 -ml-0.5" viewbox="0 0 20 20"
                                         fill="currentColor" aria-hidden="true">
@@ -196,7 +196,7 @@
                                     </svg>
                                     Preview
                                 </a>
-                                <button type="button"
+                                <button wire:confirm="Are you sure, you want to delete?" wire:click="deleteProduct({{ $product->id }})" type="button"
                                     class="flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-rose-700 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 -ml-0.5" viewbox="0 0 20 20"
                                         fill="currentColor" aria-hidden="true">
