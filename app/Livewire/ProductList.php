@@ -14,7 +14,8 @@ class ProductList extends Component
     public function render()
     {
         // Fetch the products
-        $products = Product::paginate(4);
+        // Show the last created product first
+        $products = Product::orderBy('id', 'desc')->paginate(4);
         return view('livewire.product-list', compact('products'));
     }
 }

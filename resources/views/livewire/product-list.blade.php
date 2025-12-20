@@ -106,7 +106,7 @@
                         </td>
                         <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
                             <div class="flex items-center space-x-4">
-                                <a wire:navigate href="" type="button"
+                                <a wire:navigate href="{{ route('products.edit', $product->id) }}" type="button"
                                     class="flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-indigo-700 rounded-lg hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 -ml-0.5" viewbox="0 0 20 20"
                                         fill="currentColor" aria-hidden="true">
@@ -174,7 +174,7 @@
                         <hr class="my-6 border-gray-300" />
                         <div class="flex flex-wrap items-center justify-between gap-4">
                             <div class="flex justify-center w-full gap-4">
-                                <a wire:navigate href="" type="button"
+                                <a wire:navigate href="{{ route('products.edit', $product->id) }}" type="button"
                                     class="flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-indigo-700 rounded-lg hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 -ml-0.5" viewbox="0 0 20 20"
                                         fill="currentColor" aria-hidden="true">

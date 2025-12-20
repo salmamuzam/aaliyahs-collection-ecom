@@ -40,13 +40,7 @@ class ProductForm extends Component
 
     // Dynamic validation
 
-    #[Validate('required', message: 'Product image is required!')]
-    #[Validate('image', message: 'Product image must be a valid image!')]
-    #[Validate('mimes:jpg,jpeg,png,svg,webp', message: 'Product image accepts only jpg, jpeg, png, svg, and webp!')]
-    #[Validate('max:2048', message: 'Product image must not be larger than 2MB!')]
-
     public $image;
-
 
     public function mount(Product $product)
     {
@@ -66,7 +60,25 @@ class ProductForm extends Component
     public function saveProduct()
     {
         // Trigger validation rule during form submit
+        // Only for name, description, price, and category
         $this->validate();
+        // Define rules
+        $rules = [
+            'image' => $this->product && $this->product->image ? 'nullable|image|mimes:jpg,jpeg,png,svg,webp|max:2048' : 'required|image|mimes:jpg,jpeg,png,svg,webp|max:2048'
+        ];
+
+        // Custom error messages
+
+        $messages = [
+            'image.required' => 'Product image is required!',
+            'image.image' => 'Product image must be a valid image!',
+            'image.mimes' => 'Product image accepts only jpg, jpeg, png, svg, and webp!',
+            'image.max' => 'Product image must not be larger than 2MB!',
+        ];
+
+        // Trigger image validation rules
+        $this->validate($rules, $messages);
+
 
         $imagePath = null;
 
@@ -78,26 +90,55 @@ class ProductForm extends Component
             $imagePath = $this->image->storeAs('uploads', $imageName, 'public');
         }
 
-        // Insert the data into the table
+        // Update functionality
+        // If product is in edit mode, update the product
+        if ($this->product) {
+            // Assign columns from mount to db column name
+            $this->product->name = $this->name;
+            $this->product->description = $this->description;
+            $this->product->category_id = $this->category_id;
+            $this->product->price = $this->price;
 
-        $product = Product::create([
-            'name' => $this->name,
-            'description' => $this->description,
-            'category_id' => $this->category_id,
-            'price' => $this->price,
-            // Store the file path
-            'image' => $imagePath
-        ]);
+            // If we have the image path,
+            if ($imagePath) {
+                $this->product->image = $imagePath;
+            }
+            // Save column data in product table
 
-        // If product is created
-        if ($product) {
-            session()->flash('success', 'Product has been created successfully!');
+            $updateProduct = $this->product->save();
+
+            // If product is updated
+            if ($updateProduct) {
+                session()->flash('success', 'Product has been updated successfully!');
+            }
+            // However, if product is not updated
+            else {
+                session()->flash('error', 'Unable to update product, please try again!');
+            }
         }
-        // However, if product is not created
+
+        // Create functionality
         else {
-            session()->flash('error', 'Unable to create product, please try again!');
-        }
+            // Insert the data into the table
 
+            $product = Product::create([
+                'name' => $this->name,
+                'description' => $this->description,
+                'category_id' => $this->category_id,
+                'price' => $this->price,
+                // Store the file path
+                'image' => $imagePath
+            ]);
+
+            // If product is created
+            if ($product) {
+                session()->flash('success', 'Product has been created successfully!');
+            }
+            // However, if product is not created
+            else {
+                session()->flash('error', 'Unable to create product, please try again!');
+            }
+        }
         // after product is created, redirect to the product listing page
         // no page refresh
         return $this->redirect('/products', navigate: true);
