@@ -23,9 +23,20 @@ class ProductList extends Component
     {
         // Fetch the products
         // Show the last created product first
-        $products = Product::where('name')->
-        orderBy('id', 'desc')->paginate(4);
+        // If search matches, it will filter out
+        // Search by name
+        $products = Product::where('name', 'like', '%' . $this->search . '%')
+            // or description
+            ->orWhere('description', 'like', '%' . $this->search . '%')
+            // or category
+            ->orWhere('category_id', 'like', '%' . $this->search . '%')
+            // or price
+            ->orWhere('price', 'like', '%' . $this->search . '%')
+            ->orderBy('id', 'desc')
+            ->paginate(4);
+
         return view('livewire.product-list', compact('products'));
+
     }
 
     // Delete functionality
