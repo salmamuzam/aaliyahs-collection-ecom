@@ -37,22 +37,37 @@ class ProductList extends Component
         }
     }
 
-    public function fetchProducts()
-    {
-        // Fetch the products
-        // Show the last created product first
-        // If search matches, it will filter out
-        // Search by name
-        return Product::where('name', 'like', '%' . $this->search . '%')
-            // or description
-            ->orWhere('description', 'like', '%' . $this->search . '%')
-            // or category
-            ->orWhere('category_id', 'like', '%' . $this->search . '%')
-            // or price
-            ->orWhere('price', 'like', '%' . $this->search . '%')
-            ->orderBy($this->sortColumn, $this->sortOrder)
-            ->paginate(4);
+public function fetchProducts()
+{
+    // Check if we need to join for sorting
+    $needsJoin = $this->sortColumn === 'category.name';
+    
+    $query = Product::with('category');
+    
+    // Add join first if needed
+    if ($needsJoin) {
+        $query->join('categories', 'products.category_id', '=', 'categories.id')
+              ->select('products.*');
     }
+    
+    // Then add search conditions with appropriate prefixes
+    $query->where(function($q) use ($needsJoin) {
+        $prefix = $needsJoin ? 'products.' : '';
+        $q->where($prefix . 'name', 'like', '%' . $this->search . '%')
+          ->orWhere($prefix . 'description', 'like', '%' . $this->search . '%')
+          ->orWhere($prefix . 'category_id', 'like', '%' . $this->search . '%')
+          ->orWhere($prefix . 'price', 'like', '%' . $this->search . '%');
+    });
+    
+    // Handle sorting
+    if ($needsJoin) {
+        $query->orderBy('categories.name', $this->sortOrder);
+    } else {
+        $query->orderBy($this->sortColumn, $this->sortOrder);
+    }
+    
+    return $query->paginate(4);
+}
 
     public function render()
     {

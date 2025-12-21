@@ -79,10 +79,48 @@
             <thead class="border-b-2 text-white border-[#822659] bg-[#3E5641]">
                 <tr>
                     <th class="w-20 p-3 text-sm font-semibold tracking-wide text-center">Image</th>
-                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Name <span class="cursor-pointer" wire:click="sortBy('name')"><i class="fa-solid fa-sort"></i></span></th>
-                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Description <span class="cursor-pointer" wire:click="sortBy('description')"><i class="fa-solid fa-sort"></i></span></th>
-                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Category <span class="cursor-pointer" wire:click="sortBy('category_id')"><i class="fa-solid fa-sort"></i></span></th>
-                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Price <span class="cursor-pointer" wire:click="sortBy('price')"><i class="fa-solid fa-sort"></i></span></th>
+                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Name <span class="cursor-pointer" wire:click="sortBy('name')">
+                        @if($sortColumn === 'name')
+                        @if($sortOrder === 'asc')
+                        <i class="fa-solid fa-sort-up"></i>
+                        @else
+                        <i class="fa-solid fa-sort-down"></i>
+                        @endif
+                        @else
+                        <i class="fa-solid fa-sort"></i>
+                    @endif
+                    </span></th>
+                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Description <span class="cursor-pointer" wire:click="sortBy('description')">
+
+                             @if($sortColumn === 'description')
+                        @if($sortOrder === 'asc')
+                        <i class="fa-solid fa-sort-up"></i>
+                        @else
+                        <i class="fa-solid fa-sort-down"></i>
+                        @endif
+                        @else
+                        <i class="fa-solid fa-sort"></i>
+                    @endif</span></th>
+                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Category <span class="cursor-pointer" wire:click="sortBy('category.name')">
+                              @if($sortColumn === 'category.name')
+                        @if($sortOrder === 'asc')
+                        <i class="fa-solid fa-sort-up"></i>
+                        @else
+                        <i class="fa-solid fa-sort-down"></i>
+                        @endif
+                        @else
+                        <i class="fa-solid fa-sort"></i>
+                    @endif</span></th>
+                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Price <span class="cursor-pointer" wire:click="sortBy('price')">
+                              @if($sortColumn === 'price')
+                        @if($sortOrder === 'asc')
+                        <i class="fa-solid fa-sort-up"></i>
+                        @else
+                        <i class="fa-solid fa-sort-down"></i>
+                        @endif
+                        @else
+                        <i class="fa-solid fa-sort"></i>
+                    @endif</span></th>
                     <th class="w-24 p-3 text-sm font-semibold tracking-wide text-center">Actions</th>
                 </tr>
             </thead>
