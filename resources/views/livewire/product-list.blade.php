@@ -79,10 +79,10 @@
             <thead class="border-b-2 text-white border-[#822659] bg-[#3E5641]">
                 <tr>
                     <th class="w-20 p-3 text-sm font-semibold tracking-wide text-center">Image</th>
-                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Name</th>
-                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Description</th>
-                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Category</th>
-                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Price</th>
+                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Name <span class="cursor-pointer" wire:click="sortBy('name')"><i class="fa-solid fa-sort"></i></span></th>
+                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Description <span class="cursor-pointer" wire:click="sortBy('description')"><i class="fa-solid fa-sort"></i></span></th>
+                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Category <span class="cursor-pointer" wire:click="sortBy('category_id')"><i class="fa-solid fa-sort"></i></span></th>
+                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Price <span class="cursor-pointer" wire:click="sortBy('price')"><i class="fa-solid fa-sort"></i></span></th>
                     <th class="w-24 p-3 text-sm font-semibold tracking-wide text-center">Actions</th>
                 </tr>
             </thead>

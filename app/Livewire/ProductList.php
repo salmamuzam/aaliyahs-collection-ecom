@@ -20,6 +20,23 @@ class ProductList extends Component
     public $search = null;
     public $activePageNumber = 1;
 
+    // by default sort by id
+    public $sortColumn = 'id';
+
+    public $sortOrder = 'asc';
+
+    public function sortBy($columnName)
+    {
+        if ($this->sortColumn === $columnName) {
+            // Assign sort order
+            // check current sort order
+            $this->sortOrder = $this->sortOrder === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortColumn = $columnName;
+            $this->sortOrder = 'asc';
+        }
+    }
+
     public function fetchProducts()
     {
         // Fetch the products
@@ -33,7 +50,7 @@ class ProductList extends Component
             ->orWhere('category_id', 'like', '%' . $this->search . '%')
             // or price
             ->orWhere('price', 'like', '%' . $this->search . '%')
-            ->orderBy('id', 'desc')
+            ->orderBy($this->sortColumn, $this->sortOrder)
             ->paginate(4);
     }
 
