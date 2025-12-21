@@ -79,48 +79,52 @@
             <thead class="border-b-2 text-white border-[#822659] bg-[#3E5641]">
                 <tr>
                     <th class="w-20 p-3 text-sm font-semibold tracking-wide text-center">Image</th>
-                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Name <span class="cursor-pointer" wire:click="sortBy('name')">
-                        @if($sortColumn === 'name')
-                        @if($sortOrder === 'asc')
-                        <i class="fa-solid fa-sort-up"></i>
-                        @else
-                        <i class="fa-solid fa-sort-down"></i>
-                        @endif
-                        @else
-                        <i class="fa-solid fa-sort"></i>
-                    @endif
-                    </span></th>
-                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Description <span class="cursor-pointer" wire:click="sortBy('description')">
+                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Name <span class="cursor-pointer"
+                            wire:click="sortBy('name')">
+                            @if($sortColumn === 'name')
+                                @if($sortOrder === 'asc')
+                                    <i class="fa-solid fa-sort-up"></i>
+                                @else
+                                    <i class="fa-solid fa-sort-down"></i>
+                                @endif
+                            @else
+                                <i class="fa-solid fa-sort"></i>
+                            @endif
+                        </span></th>
+                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Description <span
+                            class="cursor-pointer" wire:click="sortBy('description')">
 
-                             @if($sortColumn === 'description')
-                        @if($sortOrder === 'asc')
-                        <i class="fa-solid fa-sort-up"></i>
-                        @else
-                        <i class="fa-solid fa-sort-down"></i>
-                        @endif
-                        @else
-                        <i class="fa-solid fa-sort"></i>
-                    @endif</span></th>
-                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Category <span class="cursor-pointer" wire:click="sortBy('category.name')">
-                              @if($sortColumn === 'category.name')
-                        @if($sortOrder === 'asc')
-                        <i class="fa-solid fa-sort-up"></i>
-                        @else
-                        <i class="fa-solid fa-sort-down"></i>
-                        @endif
-                        @else
-                        <i class="fa-solid fa-sort"></i>
-                    @endif</span></th>
-                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Price <span class="cursor-pointer" wire:click="sortBy('price')">
-                              @if($sortColumn === 'price')
-                        @if($sortOrder === 'asc')
-                        <i class="fa-solid fa-sort-up"></i>
-                        @else
-                        <i class="fa-solid fa-sort-down"></i>
-                        @endif
-                        @else
-                        <i class="fa-solid fa-sort"></i>
-                    @endif</span></th>
+                            @if($sortColumn === 'description')
+                                @if($sortOrder === 'asc')
+                                    <i class="fa-solid fa-sort-up"></i>
+                                @else
+                                    <i class="fa-solid fa-sort-down"></i>
+                                @endif
+                            @else
+                                <i class="fa-solid fa-sort"></i>
+                            @endif</span></th>
+                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Category <span
+                            class="cursor-pointer" wire:click="sortBy('category.name')">
+                            @if($sortColumn === 'category.name')
+                                @if($sortOrder === 'asc')
+                                    <i class="fa-solid fa-sort-up"></i>
+                                @else
+                                    <i class="fa-solid fa-sort-down"></i>
+                                @endif
+                            @else
+                                <i class="fa-solid fa-sort"></i>
+                            @endif</span></th>
+                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Price <span class="cursor-pointer"
+                            wire:click="sortBy('price')">
+                            @if($sortColumn === 'price')
+                                @if($sortOrder === 'asc')
+                                    <i class="fa-solid fa-sort-up"></i>
+                                @else
+                                    <i class="fa-solid fa-sort-down"></i>
+                                @endif
+                            @else
+                                <i class="fa-solid fa-sort"></i>
+                            @endif</span></th>
                     <th class="w-24 p-3 text-sm font-semibold tracking-wide text-center">Actions</th>
                 </tr>
             </thead>
@@ -166,7 +170,8 @@
                                     </svg>
                                     Preview
                                 </a>
-                                <button wire:confirm="Are you sure, you want to delete?" wire:click="deleteProduct({{ $product->id }})" type="button"
+                                <button wire:confirm="Are you sure, you want to delete?"
+                                    wire:click="deleteProduct({{ $product->id }})" type="button"
                                     class="flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-rose-700 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 -ml-0.5" viewbox="0 0 20 20"
                                         fill="currentColor" aria-hidden="true">
@@ -184,7 +189,7 @@
             </tbody>
 
         </table>
-<div class="px-4 mt-2 mb-2">
+        <div class="px-4 mt-2 mb-2">
             {{-- Pagination --}}
             {{ $products->links() }}
         </div>
@@ -202,7 +207,8 @@
                         <div class="text-center">
                             <h2
                                 class="text-pink-600 text-sm font-medium bg-pink-50 px-3 py-1.5 inline-block tracking-wide rounded-lg">
-                                {{ $product->category->name }}</h2>
+                                {{ $product->category->name }}
+                            </h2>
                         </div>
                         <h3 class="mt-4 font-semibold text-left text-slate-900">{{ $product->name }}</h3>
                         <ul class="space-y-2 text-sm font-medium text-slate-500">
@@ -234,7 +240,8 @@
                                     </svg>
                                     Preview
                                 </a>
-                                <button wire:confirm="Are you sure, you want to delete?" wire:click="deleteProduct({{ $product->id }})" type="button"
+                                <button wire:confirm="Are you sure, you want to delete?"
+                                    wire:click="deleteProduct({{ $product->id }})" type="button"
                                     class="flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-rose-700 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 -ml-0.5" viewbox="0 0 20 20"
                                         fill="currentColor" aria-hidden="true">
