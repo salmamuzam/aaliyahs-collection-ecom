@@ -76,6 +76,7 @@
 
     @include('components.layouts.partials.footer')
     @livewireScripts
+
 </body>
 
 </html>
