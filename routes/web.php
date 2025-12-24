@@ -1,16 +1,34 @@
 <?php
 
 use App\Livewire\CategoryForm;
+use App\Livewire\MyOrdersPage;
+use App\Livewire\ShopPage;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GoogleController;
+use App\Livewire\CancelPage;
+use App\Livewire\CartPage;
 use App\Livewire\CategoryList;
+use App\Livewire\CheckoutPage;
+use App\Livewire\HomePage;
+use App\Livewire\ProductDetailPage;
 use App\Livewire\ProductForm;
 use App\Livewire\ProductList;
+use App\Livewire\SuccessPage;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', HomePage::class);
+Route::get('/shop', ShopPage::class);
+Route::get('/cart', CartPage::class);
+Route::get('/products/{product}', ProductDetailPage::class);
+Route::get('/checkout', CheckoutPage::class);
+Route::get('/my-orders', MyOrdersPage::class);
+
+Route::get('/success', SuccessPage::class);
+Route::get('/cancel', CancelPage::class);
+
+
+
+
 
 Route::middleware([
     'auth:sanctum',

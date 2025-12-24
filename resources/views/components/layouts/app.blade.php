@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
@@ -23,7 +23,7 @@
 <body class="font-sans antialiased  bg-[#F3EDE8]">
     <x-banner />
     {{-- Include the navbar --}}
-    @include('components.layouts.partials.sidebar')
+    {{-- @include('components.layouts.partials.sidebar')
     <!-- Hamburger Menu Button -->
 <button id="hamburger" class="fixed top-4 left-4 z-50 p-2 text-white bg-[#004D61] rounded-lg lg:hidden hover:bg-[#822659] transition-colors">
     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -36,6 +36,45 @@
         {{ $slot }}
     </main>
 
+    @livewireScripts
+</body>
+
+{{-- </html> --}}
+
+
+
+ <!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+     <title>{{ $title ??'Aaliyah Collection' }}</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/navbar.js', 'resources/js/dropdown.js'])
+
+
+    <!-- Styles -->
+    @livewireStyles
+</head>
+
+<body class="font-sans antialiased  bg-[#F3EDE8]">
+    <x-banner />
+    {{-- Include the navbar --}}
+    @include('components.layouts.partials.navbar')
+
+    <main class="bg-[#F3EDE8]">
+        {{ $slot }}
+    </main>
+
+    @include('components.layouts.partials.footer')
     @livewireScripts
 </body>
 

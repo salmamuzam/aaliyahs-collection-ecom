@@ -19,15 +19,15 @@
     @livewireStyles
 </head>
 
-<body class="font-sans antialiased">
+<body class="bg-[#F3EDE8]">
     <x-banner />
     {{-- Include the navbar --}}
-    @include('layouts.partials.navbar')
+    @livewire('layouts.partials.navbar')
     <main class="container flex flex-grow px-5 mx-auto">
         {{ $slot }}
     </main>
     {{-- Include the footer --}}
-    @include('layouts.partials.footer')
+    @livewire('layouts.partials.footer')
     @stack('modals')
 
     @livewireScripts
