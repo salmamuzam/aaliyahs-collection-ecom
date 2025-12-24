@@ -50,7 +50,7 @@
 
  @foreach($products as $product)
                     <div  wire:key="{{ $product->id }}" class="p-3 bg-white border border-gray-200 rounded-lg shadow-sm">
-                        <a href="/shop/{{ $product->slug }}" class="block">
+                        <a href="/shop/{{ $product->id }}" class="block">
 
                             <img src="{{ url('storage', $product->image) }}" alt="{{ $product->name }}"
                                 class="object-contain rounded-lg w-full h-full" />

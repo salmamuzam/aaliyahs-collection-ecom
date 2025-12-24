@@ -19,7 +19,7 @@ use App\Livewire\SuccessPage;
 Route::get('/', HomePage::class);
 Route::get('/shop', ShopPage::class);
 Route::get('/cart', CartPage::class);
-Route::get('/products/{product}', ProductDetailPage::class);
+Route::get('/shop/{product}', ProductDetailPage::class);
 Route::get('/checkout', CheckoutPage::class);
 Route::get('/my-orders', MyOrdersPage::class);
 
