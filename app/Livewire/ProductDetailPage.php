@@ -41,7 +41,7 @@ class ProductDetailPage extends Component
     public function addToCart($product_id)
     {
         // return total number of item count
-        $total_count = CartManagement::addItemToCart($product_id);
+        $total_count = CartManagement::addItemToCartWithQty($product_id, $this->quantity);
         // $this->dispatch('update-cart-count',  total_count: $total_count)->to(Navbar::class);
         LivewireAlert::title('Success!')
             ->text('Product added to the cart!')
