@@ -24,7 +24,7 @@
                                     <div class="flex flex-wrap items-center justify-between gap-4">
                                         <div class="flex items-center gap-4">
                                             <h4 class="text-sm font-semibold text-slate-900">Qty:</h4>
-                                            <button type="button"
+                                            <button wire:click="decreaseQty({{ $item['product_id'] }})" type="button"
                                                 class="flex items-center justify-center w-[18px] h-[18px] bg-blue-600 outline-none rounded-sm cursor-pointer">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-2 fill-white"
                                                     viewBox="0 0 124 124">
@@ -35,7 +35,7 @@
                                             </button>
                                             <span
                                                 class="font-semibold text-base leading-[16px]">{{ $item['quantity'] }}</span>
-                                            <button type="button"
+                                            <button wire:click="increaseQty({{ $item['product_id'] }})"type="button"
                                                 class="flex items-center justify-center w-[18px] h-[18px] bg-blue-600 outline-none rounded-sm cursor-pointer">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-2 fill-white"
                                                     viewBox="0 0 42 42">
@@ -49,7 +49,7 @@
                                             <h4 class="text-base font-semibold text-slate-900"> LKR
                                                 {{ $item['unit_amount'] }}</h4>
                                                 <button wire:click="removeItem({{ $item['product_id'] }})">
-                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                            <svg wire:Loading.remove wire:target="removeItem({{ $item['product_id'] }})" xmlns="http://www.w3.org/2000/svg"
                                                 class="w-3 cursor-pointer shrink-0 fill-gray-400 hover:fill-red-500 absolute top-3.5 right-3.5"
                                                 viewBox="0 0 320.591 320.591">
                                                 <path
@@ -59,6 +59,7 @@
                                                     d="M287.9 318.583a30.37 30.37 0 0 1-21.257-8.806L8.83 51.963C-2.078 39.225-.595 20.055 12.143 9.146c11.369-9.736 28.136-9.736 39.504 0l259.331 257.813c12.243 11.462 12.876 30.679 1.414 42.922-.456.487-.927.958-1.414 1.414a30.368 30.368 0 0 1-23.078 7.288z"
                                                     data-original="#000000"></path>
                                             </svg>
+                                            <span wire:loading wire:target="removeItem({{ $item['product_id'] }})" class="text-red-500 top-3.5 absolute  right-3.5">Removing...</span>
                                             </button>
                                         </div>
 

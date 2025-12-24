@@ -28,6 +28,14 @@ class CartPage extends Component
         $this->grand_total = CartManagement::calculateGrandTotal($this->cart_items);
     }
 
+    public function increaseQty($product_id){
+        $this->cart_items = CartManagement::incrementQuantityToCartItem($product_id);
+        $this->grand_total = CartManagement::calculateGrandTotal($this->cart_items);
+    }
+ public function decreaseQty($product_id){
+        $this->cart_items = CartManagement::decrementQuantityToCartItem($product_id);
+        $this->grand_total = CartManagement::calculateGrandTotal($this->cart_items);
+    }
     public function render()
     {
         return view('livewire.cart-page');
