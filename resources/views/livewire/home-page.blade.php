@@ -27,7 +27,7 @@
                 @foreach($categories as $category)
                 <!-- Category 1 -->
                 <div wire:key="{{ $category->id }}" class="shadow-sm bg-white p-1.5 overflow-hidden cursor-pointer relative hover:shadow-md">
-                    <a href="javascript:void(0);" class="block">
+                    <a href="/shop?selected_categories[0]={{ $category->id }}" class="block">
                         <div class="bg-gray-200 aspect-square">
                             <img src='{{ url('storage', $category->image) }}'
                               alt="{{ $category->name }}"  class="object-cover object-top w-full h-full" />
