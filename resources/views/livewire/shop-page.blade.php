@@ -1,17 +1,17 @@
 <div>
     <div class="w-full max-w-[85rem] py-5 px-4 sm:px-6 lg:px-8 mx-auto">
-  <section class="py-2  font-poppins dark:bg-gray-800 rounded-lg">
+  <section class="py-2 rounded-lg font-poppins dark:bg-gray-800">
     <div class="px-4 py-4 mx-auto max-w-7xl lg:py-6 md:px-6">
       <div class="flex flex-wrap mb-5 -mx-3">
         <div class="w-full pr-2 lg:w-1/4 lg:block">
-          <div class="p-4 mb-5 bg-white rounded-lg border border-gray-200 dark:border-gray-900 dark:bg-gray-900">
+          <div class="p-4 mb-5 bg-white border border-gray-200 rounded-lg dark:border-gray-900 dark:bg-gray-900">
             <h2 class="text-2xl font-bold dark:text-gray-400"> Categories</h2>
             <div class="w-16 pb-2 mb-6 border-b border-rose-600 dark:border-gray-400"></div>
             <ul>
                 @foreach($categories as $category)
               <li class="mb-4" wire:key="{{ $category->id }}">
                 <label for="{{ $category->slug }}" class="flex items-center dark:text-gray-400 ">
-                  <input type="checkbox" id="{{ $category->slug }}" value="{{ $category->id }}" class="w-4 h-4 mr-2">
+                  <input type="checkbox" id="{{ $category->slug }}"  wire:model.live="selected_categories" value="{{ $category->id }}" class="w-4 h-4 mr-2">
                   <span class="text-lg">{{ $category->name }}</span>
                 </label>
               </li>
@@ -23,23 +23,24 @@
 
 
 
-          <div class="p-4 mb-5 bg-white border rounded-lg border-gray-200 dark:bg-gray-900 dark:border-gray-900">
+          <div class="p-4 mb-5 bg-white border border-gray-200 rounded-lg dark:bg-gray-900 dark:border-gray-900">
             <h2 class="text-2xl font-bold dark:text-gray-400">Price</h2>
             <div class="w-16 pb-2 mb-6 border-b border-rose-600 dark:border-gray-400"></div>
             <div>
-              <input type="range" class="w-full h-1 mb-4 bg-blue-100 rounded appearance-none cursor-pointer" max="500000" value="100000" step="100000">
+                <div class="font-semibold">LKR {{ $price_range}}</div>
+              <input wire:model.live="price_range" type="range" class="w-full h-1 mb-4 bg-blue-100 rounded appearance-none cursor-pointer" max="50000" value="30000" step="1000">
               <div class="flex justify-between ">
-                <span class="inline-block text-lg font-bold text-blue-400 ">&#8377; 1000</span>
-                <span class="inline-block text-lg font-bold text-blue-400 ">&#8377; 500000</span>
+                <span class="inline-block text-lg font-bold text-blue-400 ">LKR 1,000</span>
+                <span class="inline-block text-lg font-bold text-blue-400 ">LKR 50,000</span>
               </div>
             </div>
           </div>
         </div>
         <div class="w-full px-3 lg:w-3/4">
           <div class="mb-4">
-            <div class="items-center justify-between hidden px-3 py-2 rounded-lg bg-gray-100 md:flex dark:bg-gray-900 ">
+            <div class="items-center justify-between hidden px-3 py-2 bg-gray-100 rounded-lg md:flex dark:bg-gray-900 ">
               <div class="flex items-center justify-between">
-                <select name="" id="" class="block w-40 text-base rounded-lg bg-gray-100 cursor-pointer dark:text-gray-400 dark:bg-gray-900">
+                <select name="" id="" class="block w-40 text-base bg-gray-100 rounded-lg cursor-pointer dark:text-gray-400 dark:bg-gray-900">
                   <option value="">Sort by Latest</option>
                   <option value="">Sort by Price</option>
                 </select>
@@ -53,7 +54,7 @@
                         <a href="/shop/{{ $product->id }}" class="block">
 
                             <img src="{{ url('storage', $product->image) }}" alt="{{ $product->name }}"
-                                class="object-contain rounded-lg w-full h-full" />
+                                class="object-contain w-full h-full rounded-lg" />
 
 
 
@@ -81,7 +82,7 @@
           </div>
           <!-- pagination start -->
 
-             <div class="flex mt-6 justify-end">
+             <div class="flex justify-end mt-6">
 {{ $products->links() }}
          </div>
 
