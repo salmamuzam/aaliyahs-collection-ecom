@@ -19,7 +19,7 @@
 
     {{-- Categories Section --}}
 
-    <div class="bg-[#F2F3F6] rounded-[20px] sm:p-8 p-6">
+    <div class="bg-[#FFF0F5] rounded-[20px] sm:p-8 p-6">
         <div class="max-w-screen-xl mx-auto">
             <h2 class="mb-6 text-2xl font-bold text-[#004D61]">OUR COLLECTIONS</h2>
 
