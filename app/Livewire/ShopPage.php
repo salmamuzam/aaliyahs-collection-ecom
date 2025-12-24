@@ -21,6 +21,8 @@ class ShopPage extends Component
     #[Url]
     public $price_range = 50000;
 
+    #[Url]
+    public $sort = 'latest';
 
     #[Title('Products | Aaliyah Collection')]
     public function render()
@@ -35,6 +37,16 @@ class ShopPage extends Component
         // when value of price range changes
         if ($this->price_range) {
             $productQuery->whereBetween('price', [0, $this->price_range]);
+        }
+
+        if($this->sort == 'latest'){
+            $productQuery->latest();
+        }
+
+        // sorts the price in ascending order
+
+        if($this->sort == 'price'){
+            $productQuery->orderBy('price');
         }
 
         return view('livewire.shop-page', [
