@@ -20,6 +20,7 @@ class CheckoutPage extends Component
 
     public function placeOrder(){
         $this->validate([
+            // Validated input fields
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required|email',

@@ -103,14 +103,7 @@
                                             class="w-20" alt="cod" />
                                     </label>
                                 </div>
-                                <div class="flex items-center">
-                                    <input wire:model="payment_method" value="stripe" type="radio"
-                                        class="w-5 h-5 cursor-pointer" id="stripe" />
-                                    <label for="stripe" class="flex gap-2 ml-4 cursor-pointer">
-                                        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968382.png"
-                                            class="w-20" alt="stripe" />
-                                    </label>
-                                </div>
+                   
 
                             </div>
                             @error('payment_method')
@@ -118,29 +111,7 @@
                                     {{ $message }}
                                 </div>
                             @enderror
-                            <div class="grid lg:grid-cols-2 gap-y-6 gap-x-4">
-                                <div>
-                                    <label class="block mb-2 text-sm font-medium text-slate-900">Cardholder's
-                                        Name</label>
-                                    <input type="text" placeholder="Enter Cardholder's Name"
-                                        class="px-4 py-2.5 bg-white border border-gray-400 text-slate-900 w-full text-sm rounded-md focus:outline-blue-600" />
-                                </div>
-                                <div>
-                                    <label class="block mb-2 text-sm font-medium text-slate-900">Card Number</label>
-                                    <input type="text" placeholder="Enter Card Number"
-                                        class="px-4 py-2.5 bg-white border border-gray-400 text-slate-900 w-full text-sm rounded-md focus:outline-blue-600" />
-                                </div>
-                                <div>
-                                    <label class="block mb-2 text-sm font-medium text-slate-900">Expiry</label>
-                                    <input type="text" placeholder="Enter EXP."
-                                        class="px-4 py-2.5 bg-white border border-gray-400 text-slate-900 w-full text-sm rounded-md focus:outline-blue-600" />
-                                </div>
-                                <div>
-                                    <label class="block mb-2 text-sm font-medium text-slate-900">CVV</label>
-                                    <input type="text" placeholder="Enter CVV"
-                                        class="px-4 py-2.5 bg-white border border-gray-400 text-slate-900 w-full text-sm rounded-md focus:outline-blue-600" />
-                                </div>
-                            </div>
+
                             <div class="flex gap-4 mt-8 max-lg:flex-col">
                                 <button type="button"
                                     class="rounded-md px-4 py-2.5 w-full text-sm font-medium tracking-wide bg-gray-200 hover:bg-gray-300 border border-gray-300 text-slate-900 max-lg:order-1 cursor-pointer">Continue
