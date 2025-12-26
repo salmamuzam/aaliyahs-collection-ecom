@@ -26,7 +26,7 @@
     </section>
 
     <div class="flex flex-wrap items-center justify-between py-3 px-4 sm:px-10 bg-[#004D61] lg:gap-y-4 gap-y-6 gap-x-4">
-        <a href="javascript:void(0)"><img src="{{ asset('images/icons/white_logo.png')}}"
+        <a href="/" wire:navigate><img src="{{ asset('images/icons/white_logo.png')}}"
                 alt="Aaliyah's Collection Logo" class="h-10">
         </a>
 

@@ -1,75 +1,56 @@
 <div>
-    <section class="py-8 antialiased bg-white md:py-16 dark:bg-gray-900">
-        <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0">
-            <div class="lg:flex lg:gap-8 xl:gap-16">
+    <div class="tracking-wide max-w-7xl mx-auto py-6 md:py-12 px-4">
+      <div class="flex flex-col md:flex-row gap-8 items-stretch">
 
-                <!-- Image Section -->
-                <div class="flex-1 max-w-md mx-auto shrink-0 lg:max-w-full lg:relative">
-                    <img class="object-contain w-full h-full lg:absolute lg:inset-0 dark:hidden"
-                        src="{{ url('storage', $product->image) }}" alt="{{ $product->name }}" />
-                    <img class="hidden object-contain w-full h-full lg:absolute lg:inset-0 dark:block"
-                        src="{{ url('storage', $product->image) }}" alt="{{ $product->name }}" />
-                </div>
-
-                <!-- Content Section -->
-                <div class="flex-1 mt-6 sm:mt-8 lg:mt-0">
-                    <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
-                        {{ $product->name }}
-                    </h1>
-
-                    <p class="mt-4 text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white">
-                        LKR {{ $product->price }}
-                    </p>
-
-                    <div class="mt-4 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-                        <div class="w-32 mb-8 ">
-
-                            <div class="relative flex flex-row w-full h-10 mt-6 bg-transparent rounded-lg">
-                                <button wire:click="decreaseQty"
-                                    class="w-20 h-full text-gray-600 bg-gray-300 rounded-l outline-none cursor-pointer dark:hover:bg-gray-700 dark:text-gray-400 hover:text-gray-700 dark:bg-gray-900 hover:bg-gray-400">
-                                    <span class="m-auto text-2xl font-thin">-</span>
-                                </button>
-                                <input wire:model="quantity" type="number" readonly
-                                    class="flex items-center w-full font-semibold text-center text-gray-700 placeholder-gray-700 bg-gray-300 outline-none dark:text-gray-400 dark:placeholder-gray-400 dark:bg-gray-900 focus:outline-none text-md hover:text-black"
-                                    placeholder="1">
-                                <button wire:click="increaseQty"
-                                    class="w-20 h-full text-gray-600 bg-gray-300 rounded-r outline-none cursor-pointer dark:hover:bg-gray-700 dark:text-gray-400 dark:bg-gray-900 hover:text-gray-700 hover:bg-gray-400">
-                                    <span class="m-auto text-2xl font-thin">+</span>
-                                </button>
-                            </div>
-                        </div>
-                        <a href="#"
-                            class="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                            role="button">
-                            <svg class="w-5 h-5 -ms-2 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z" />
-                            </svg>
-                            Add to favorites
-                        </a>
-
-                        <button wire:click="addToCart({{ $product->id}})" href="#"
-                            class="text-white mt-4 sm:mt-0 bg-pink-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 flex items-center justify-center"
-                            role="button">
-                            <svg class="w-5 h-5 -ms-2 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
-                            </svg>
-                            <span wire:loading.remove wire:target="addToCart({{ $product->id}})"> Add to cart</span><span wire:loading wire:target="addToCart({{ $product->id}})">Adding...</span>
-                        </button>
-                    </div>
-
-                    <hr class="my-6 border-gray-200 md:my-8 dark:border-gray-800" />
-
-                    <p class="mb-6 text-justify text-gray-500 dark:text-gray-400">
-                        {{ $product->description }}
-                    </p>
-                </div>
-            </div>
+        <div class="w-full md:w-1/2 relative">
+            <img src="{{ url('storage', $product->image) }}" alt="{{ $product->name }}" class="w-full rounded-md border border-gray-300 md:absolute md:inset-0 md:h-full object-cover h-[450px] object-top block" />
         </div>
-    </section>
+
+        <div class="w-full md:w-1/2 bg-white py-4 px-8 rounded-md shadow-sm border border-gray-300">
+          <div>
+            <h2 class="text-2xl font-bold text-[#1A1A1A]">{{ $product->name }}</h2>
+            <div class="flex justify-between items-center mt-4">
+                <div>
+                   <span class="text-white text-sm font-medium bg-[#004D61] px-3 py-1.5 tracking-wide rounded-md">{{ $product->category->name ?? 'Category' }}</span>
+                </div>
+                <h3 class="text-[#822659] text-[#1A1A1A] font-bold">LKR {{ number_format($product->price, 2) }}</h3>
+            </div>
+
+          <div>
+             <div class="mt-2 border-b-2 border-gray-300 w-full py-2">
+                <span class="text-[#004D61] text-sm font-bold uppercase">Description</span>
+             </div>
+            <p class="text-[#1A1A1A] mt-3 text-sm text-justify">{{ $product->description }}</p>
+          </div>
+
+          <div class="mt-4">
+            <h3 class="text-sm font-bold uppercase text-[#004D61]">Quantity</h3>
+
+            <div class="flex mt-4 rounded-md overflow-hidden bg-[#3E5641] py-2.5 px-4 w-32">
+              <button wire:click="decreaseQty" type="button" class="bg-transparent w-full text-white font-semibold flex items-center justify-center cursor-pointer outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 fill-current inline" viewBox="0 0 124 124">
+                  <path d="M112 50H12C5.4 50 0 55.4 0 62s5.4 12 12 12h100c6.6 0 12-5.4 12-12s-5.4-12-12-12z" data-original="#000000"></path>
+                </svg>
+              </button>
+              <span class="bg-transparent w-full px-4 font-semibold flex items-center justify-center text-white text-sm">
+                {{ $quantity }}
+              </span>
+              <button wire:click="increaseQty" type="button" class="bg-transparent w-full text-white font-semibold flex items-center justify-center cursor-pointer outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 fill-current inline" viewBox="0 0 42 42">
+                  <path d="M37.059 16H26V4.941C26 2.224 23.718 0 21 0s-5 2.224-5 4.941V16H4.941C2.224 16 0 18.282 0 21s2.224 5 4.941 5H16v11.059C16 39.776 18.282 42 21 42s5-2.224 5-4.941V26h11.059C39.776 26 42 23.718 42 21s-2.224-5-4.941-5z" data-original="#000000"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex gap-4 mt-4">
+            <button type="button" class="w-full max-w-[200px] px-4 py-2.5 bg-[#822659] hover:bg-[#6b1f49] text-white text-sm rounded-md cursor-pointer">Add to favorites</button>
+            <button wire:click.prevent="addToCart({{ $product->id }})" type="button" class="w-full max-w-[200px] px-4 py-2.5 bg-[#3E5641] hover:bg-[#324534] text-white text-sm rounded-md cursor-pointer transition-colors">
+                <span wire:loading.remove wire:target="addToCart({{ $product->id }})">Add to cart</span>
+                <span wire:loading wire:target="addToCart({{ $product->id }})">Adding...</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 </div>

@@ -6,12 +6,12 @@
                 <p class="text-4xl font-bold text-[#822659] md:text-7xl font-playfair">25% OFF</p>
                 <p class="text-4xl text-[#1A1A1A] font-bold md:text-7xl font-playfair">RAMADAN SALE</p>
                 <p class="mt-2 text-[#1A1A1A] text-sm md:text-lg">For limited time only!</p>
-                <button
-                    class="px-5 py-2 mt-10 rounded-lg text-lg text-[#F0F0F0] bg-[#3E5641] md:text-2xl hover:bg-[#004D61]">Shop
-                    Now</button>
+                <a href="/shop" wire:navigate
+                    class="px-5 py-2 mt-10 rounded-md text-lg text-[#F0F0F0] bg-[#3E5641] md:text-2xl hover:bg-[#004D61]">Shop
+                    Now</a>
             </div>
             <div class="order-1 lg:order-2">
-                <img class="h-80 w-80 object-cover  hover:shadow-md aspect-square lg:w-[500px] lg:h-[500px]"
+                <img class="h-80 w-80 object-cover rounded-md border border-gray-300 hover:shadow-md aspect-square lg:w-[500px] lg:h-[500px]"
                     src="{{ asset('images/hero/hero_image.jpg') }}" alt="Hero Image">
             </div>
         </div>
@@ -41,9 +41,9 @@
                 @foreach ($categories as $category)
                     <!-- Category 1 -->
                     <div wire:key="{{ $category->id }}"
-                        class="shadow-sm bg-white p-1.5 overflow-hidden cursor-pointer relative hover:shadow-md">
-                        <a href="/shop?selected_categories[0]={{ $category->id }}" class="block">
-                            <div class="bg-gray-200 aspect-square">
+                        class="shadow-sm bg-white p-1.5 overflow-hidden cursor-pointer relative hover:shadow-md rounded-md border border-gray-300">
+                        <a href="/shop?selected_categories[0]={{ $category->id }}" class="block" wire:navigate>
+                            <div class="bg-gray-200 aspect-square rounded-md overflow-hidden">
                                 <img src='{{ url('storage', $category->image) }}' alt="{{ $category->name }}"
                                     class="object-cover object-top w-full h-full" />
                             </div>

@@ -58,9 +58,9 @@ class CartManagement
     }
 
 
-       // add item to the cart with quantity
+    // add item to the cart with quantity
 
-    static public function addItemToCartWithQty($product_id, $qty=1)
+    static public function addItemToCartWithQty($product_id, $qty = 1)
     {
         // fetch all cart items from cookie
         $cart_items = self::getCartItemsFromCookie();
@@ -181,7 +181,7 @@ class CartManagement
                 if ($cart_items[$key]['quantity'] > 1) {
                     // decrease the quantity
                     $cart_items[$key]['quantity']--;
-                    $cart_items[$key]['total_amount'] == $cart_items[$key]['quantity'] * $cart_items[$key]['unit_amount'];
+                    $cart_items[$key]['total_amount'] = $cart_items[$key]['quantity'] * $cart_items[$key]['unit_amount'];
                 }
 
 
