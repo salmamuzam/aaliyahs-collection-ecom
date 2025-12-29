@@ -115,7 +115,7 @@
                 
                 <div class="flex gap-4 max-lg:flex-col mt-8">
                   <a wire:navigate href="/shop" class="rounded-md px-4 py-2.5 w-full text-base font-medium tracking-wide bg-[#e6d3dd] hover:bg-[#d9c0d1] text-[#822659] max-lg:order-1 cursor-pointer text-center">Continue Shopping</a>
-                  <button type="submit" class="rounded-md px-4 py-2.5 w-full text-base font-medium tracking-wide bg-[#3E5641] hover:bg-[#324534] text-white cursor-pointer">Place Order</button>
+                  <button type="submit" class="rounded-md px-4 py-2.5 w-full text-base font-medium tracking-wide bg-[#3E5641] hover:bg-[#324534] text-white cursor-pointer"><span wire:loading.remove>Place Order</span><span wire:loading>Processing...</span></button>
                 </div>
               </div>
             </form>

@@ -2,7 +2,7 @@
           <div class="max-w-6xl mx-auto max-lg:max-w-2xl">
               <div>
                   <h1 class="text-2xl font-semibold text-slate-900">Order Summary</h1>
-                  <p class="mt-3 text-sm text-slate-500">Your purchase was successful. Here’s a summary of your order details.</p>
+                  <p class="mt-3 text-sm text-slate-500">Your order has been received. Here’s a summary of your order details.</p>
               </div>
 
               <div class="grid mt-12 lg:grid-cols-3 gap-y-16">
@@ -16,7 +16,7 @@
                               </div>
                               <div>
                                   <p class="text-sm font-medium text-slate-500">Shipping Method</p>
-                                  <p class="mt-2 text-sm font-medium text-slate-900">Express Delivery</p>
+                                  <p class="mt-2 text-sm font-medium text-slate-900">Cash on Delivery</p>
                               </div>
                               <div>
                                   <p class="text-sm font-medium text-slate-500">Address</p>
@@ -34,15 +34,14 @@
 
                           <ul class="mt-6 space-y-4 font-medium">
                               <li class="flex flex-wrap gap-4 text-sm text-slate-500">Subtotal <span class="ml-auto font-semibold text-slate-900">$120.00</span></li>
-                              <li class="flex flex-wrap gap-4 text-sm text-slate-500">Shipping <span class="ml-auto font-semibold text-slate-900">$4.00</span></li>
-                              <li class="flex flex-wrap gap-4 text-sm text-slate-500">Tax <span class="ml-auto font-semibold text-slate-900">$6.00</span></li>
+
                               <hr class="border-gray-300" />
                               <li class="flex flex-wrap gap-4 text-[15px]">Total <span class="ml-auto font-semibold text-slate-900">$130.00</span></li>
                           </ul>
 
                           <div class="mt-8 space-y-3">
-                              <button type="button" class="text-sm px-4 py-2.5 w-full font-medium tracking-wide bg-purple-600 hover:bg-purple-700 text-white rounded-md cursor-pointer">Track Order</button>
-                              <button type="button" class="text-sm px-4 py-2.5 w-full font-medium tracking-wide bg-transparent text-slate-900 border border-gray-300 rounded-md cursor-pointer">Continue Shopping  </button>
+                              <button type="button" class="text-sm px-4 py-2.5 w-full font-medium tracking-wide bg-purple-600 hover:bg-purple-700 text-white rounded-md cursor-pointer">View My Order</button>
+                              <button type="button" class="text-sm px-4 py-2.5 w-full font-medium tracking-wide bg-transparent text-slate-900 border border-gray-300 rounded-md cursor-pointer">Go Back Shopping  </button>
                           </div>
                       </div>
                   </div>
@@ -57,7 +56,7 @@
                                   <div>
                                       <h3 class="text-sm font-semibold sm:text-base text-slate-900">Velvet Sneaker</h3>
                                       <div class="mt-2">
-                                          <p class="text-xs font-medium text-slate-500">Size: MD</p>
+                                          <p class="text-xs font-medium text-slate-500">Category: Abaya</p>
                                           <p class="mt-1 text-xs font-medium text-slate-500">Qty: 1</p>
                                       </div>
                                   </div>
@@ -77,7 +76,7 @@
                                   <div>
                                       <h3 class="text-sm font-semibold sm:text-base text-slate-900">Smart Watch Timex</h3>
                                       <div class="mt-2">
-                                          <p class="text-xs font-medium text-slate-500">Size: SM</p>
+                                          <p class="text-xs font-medium text-slate-500">Category: Hijab</p>
                                           <p class="mt-1 text-xs font-medium text-slate-500">Qty: 1</p>
                                       </div>
                                   </div>
@@ -97,7 +96,7 @@
                                   <div>
                                       <h3 class="text-sm font-semibold sm:text-base text-slate-900">French Connection</h3>
                                       <div class="mt-2">
-                                          <p class="text-xs font-medium text-slate-500">Size: LG</p>
+                                          <p class="text-xs font-medium text-slate-500">Category: Dress</p>
                                           <p class="mt-1 text-xs font-medium text-slate-500">Qty: 1</p>
                                       </div>
                                   </div>
