@@ -71,9 +71,9 @@
                   </div>
                   <div>
                     <label class="text-base text-[#1A1A1A] font-medium block mb-2">Address Line</label>
-                    <input wire:model="address" type="text" placeholder="Enter Address Line"
-                      class="px-4 py-2.5 bg-white border border-gray-400 text-[#1A1A1A] w-full text-base rounded-md focus:outline-none focus:border-[#822659] focus:ring-1 focus:ring-[#822659] @error('address') !border-[#822659] @enderror" />
-                    @error('address') <span class="text-[#822659] text-base">{{ $message }}</span> @enderror
+                    <input wire:model="street_address" type="text" placeholder="Enter Address Line"
+                      class="px-4 py-2.5 bg-white border border-gray-400 text-[#1A1A1A] w-full text-base rounded-md focus:outline-none focus:border-[#822659] focus:ring-1 focus:ring-[#822659] @error('street_address') !border-[#822659] @enderror" />
+                    @error('street_address') <span class="text-[#822659] text-base">{{ $message }}</span> @enderror
                   </div>
                   <div>
                     <label class="text-base text-[#1A1A1A] font-medium block mb-2">City</label>
@@ -83,15 +83,15 @@
                   </div>
                   <div>
                     <label class="text-base text-[#1A1A1A] font-medium block mb-2">Province</label>
-                    <input wire:model="state" type="text" placeholder="Enter Province"
-                      class="px-4 py-2.5 bg-white border border-gray-400 text-[#1A1A1A] w-full text-base rounded-md focus:outline-none focus:border-[#822659] focus:ring-1 focus:ring-[#822659] @error('state') !border-[#822659] @enderror" />
-                    @error('state') <span class="text-[#822659] text-base">{{ $message }}</span> @enderror
+                    <input wire:model="province" type="text" placeholder="Enter Province"
+                      class="px-4 py-2.5 bg-white border border-gray-400 text-[#1A1A1A] w-full text-base rounded-md focus:outline-none focus:border-[#822659] focus:ring-1 focus:ring-[#822659] @error('province') !border-[#822659] @enderror" />
+                    @error('province') <span class="text-[#822659] text-base">{{ $message }}</span> @enderror
                   </div>
                   <div>
                     <label class="text-base text-[#1A1A1A] font-medium block mb-2">Postal Code</label>
-                    <input wire:model="zip" type="text" placeholder="Enter Postal Code"
-                      class="px-4 py-2.5 bg-white border border-gray-400 text-[#1A1A1A] w-full text-base rounded-md focus:outline-none focus:border-[#822659] focus:ring-1 focus:ring-[#822659] @error('zip') !border-[#822659] @enderror" />
-                    @error('zip') <span class="text-[#822659] text-base">{{ $message }}</span> @enderror
+                    <input wire:model="postal_code" type="text" placeholder="Enter Postal Code"
+                      class="px-4 py-2.5 bg-white border border-gray-400 text-[#1A1A1A] w-full text-base rounded-md focus:outline-none focus:border-[#822659] focus:ring-1 focus:ring-[#822659] @error('postal_code') !border-[#822659] @enderror" />
+                    @error('postal_code') <span class="text-[#822659] text-base">{{ $message }}</span> @enderror
                   </div>
                    <div>
                     <label class="text-base text-[#1A1A1A] font-medium block mb-2">Country</label>

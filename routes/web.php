@@ -21,10 +21,10 @@ Route::get('/shop', ShopPage::class);
 Route::get('/cart', CartPage::class);
 Route::get('/shop/{product}', ProductDetailPage::class);
 Route::get('/checkout', CheckoutPage::class);
-Route::get('/my-orders', MyOrdersPage::class);
+Route::get('/my-orders', MyOrdersPage::class)->name('my-orders.show');
 
-Route::get('/success', SuccessPage::class);
-Route::get('/cancel', CancelPage::class);
+Route::get('/success', SuccessPage::class)->name('success');
+Route::get('/cancel', CancelPage::class)->name('cancel');
 
 
 

@@ -3,6 +3,9 @@
 namespace App\Livewire;
 
 use App\Helpers\CartManagement;
+use App\Models\Address;
+use App\Models\Order;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 #[Title('Checkout | Aaliyah Collection')]
@@ -12,26 +15,20 @@ class CheckoutPage extends Component
     public $last_name;
     public $email;
     public $phone;
-    public $address;
+    public $street_address;
     public $city;
-    public $state;
-    public $zip;
+    public $province;
+    public $postal_code;
     public $payment_method = 'cod';
 
     public function mount()
     {
-        $user = auth()->user();
-        if ($user) {
-            $this->first_name = $user->name; // Assuming name is full name, might need splitting or just put in first_name
-            // If the user model has separate first/last names, use them. Standard Laravel User has 'name'. 
-            // I'll try to split logic or just assign to first_name for now if simple. 
-            // Let's check if User has first_name. Usually it's just 'name'.
-            // I will split by space.
-            $parts = explode(' ', $user->name);
-            $this->first_name = $parts[0] ?? '';
-            $this->last_name = $parts[1] ?? '';
-
-            $this->email = $user->email;
+        // If there are no items in the cart, redirect to shop page
+       // grab the cart items from the cookie
+        $cart_items = CartManagement::getCartItemsFromCookie();
+       // count cart items
+        if (count($cart_items) == 0) {
+            return redirect('/shop');
         }
     }
 
@@ -43,12 +40,62 @@ class CheckoutPage extends Component
             'last_name' => 'required',
             'email' => 'required|email',
             'phone' => 'required',
-            'address' => 'required',
+            'street_address' => 'required',
             'city' => 'required',
-            'state' => 'required',
-            'zip' => 'required',
+            'province' => 'required',
+            'postal_code' => 'required',
             'payment_method' => 'required'
         ]);
+
+        // get the cart items from the cookie
+        $cart_items = CartManagement::getCartItemsFromCookie();
+
+        $order = new Order();
+        // assign to current logged in user
+        $order->user_id = auth()->user()->id;
+        // calculate grand total from items which are available in cookie
+        $order->grand_total = CartManagement::calculateGrandTotal($cart_items);
+        $order->payment_method = $this->payment_method;
+        $order->payment_status = 'pending';
+        $order->status = 'new';
+        $order->currency = 'lkr';
+        $order->shipping_amount = 0;
+        $order->shipping_method = 'none';
+        //access logged in first name and last name
+        $order->notes = 'Order placed by' . auth()->user()->first_name . ' ' . auth()->user()->last_name;
+        $address = new Address();
+        $address->first_name = $this->first_name;
+        $address->last_name = $this->last_name;
+        $address->email = $this->email;
+        $address->phone = $this->phone;
+        $address->street_address = $this->street_address;
+        $address->city = $this->city;
+        $address->province = $this->province;
+        $address->postal_code = $this->postal_code;
+        $address->country = 'Sri Lanka';
+
+        $order->save();
+
+        // Create and save address
+        $address->order_id = $order->id;
+        $address->user_id = auth()->user()->id;
+        $address->save();
+
+        // Create order items for each product in cart
+        foreach ($cart_items as $item) {
+            $order->items()->create([
+                'product_id' => $item['product_id'],
+                'quantity' => $item['quantity'],
+                'unit_amount' => $item['unit_amount'],
+                'total_amount' => $item['total_amount']
+            ]);
+        }
+
+        // Clear cart items
+        CartManagement::clearCartItems();
+
+        // Redirect without page refresh
+        return $this->redirect(route('success'), navigate: true);
     }
 
     public function render()
