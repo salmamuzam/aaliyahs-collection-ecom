@@ -8,7 +8,7 @@
     </x-slot>
 
     <x-slot name="content">
-        <div class="max-w-xl text-sm text-[#1A1A1A]">
+        <div class="max-w-xl text-base text-[#1A1A1A]">
             {{ __('If necessary, you may log out of all of your other browser sessions across all of your devices. Some of your recent sessions are listed below; however, this list may not be exhaustive. If you feel your account has been compromised, you should also update your password.') }}
         </div>
 
@@ -30,7 +30,7 @@
                         </div>
 
                         <div class="ms-3">
-                            <div class="text-sm text-[#1A1A1A]">
+                            <div class="text-base text-[#1A1A1A]">
                                 {{ $session->agent->platform() ? $session->agent->platform() : __('Unknown') }} - {{ $session->agent->browser() ? $session->agent->browser() : __('Unknown') }}
                             </div>
 
@@ -96,3 +96,5 @@
         </x-dialog-modal>
     </x-slot>
 </x-action-section>
+
+

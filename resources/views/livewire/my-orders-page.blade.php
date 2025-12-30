@@ -3,10 +3,11 @@
         <div class="p-6 mx-auto max-w-7xl max-lg:max-w-4xl">
             <h1 class="text-2xl mb-6 font-bold font-playfair text-[#004D61]">YOUR ORDERS</h1>
 
+        @if(count($orders) > 0)
         <!-- Desktop Table View -->
-        <div class="overflow-auto bg-white border border-gray-300 rounded-md shadow-sm hidden md:block">
+        <div class="hidden overflow-auto bg-white border border-gray-300 rounded-md shadow-sm md:block">
             <table class="w-full">
-                <thead class="bg-gray-50 border-b-2 border-gray-200">
+                <thead class="border-b-2 border-gray-200 bg-gray-50">
                     <tr>
                         <th class="w-24 p-3 text-base font-semibold font-sans tracking-wide text-center text-[#1A1A1A] whitespace-nowrap">Order ID</th>
                         <th class="w-32 p-3 text-base font-semibold font-sans tracking-wide text-center text-[#1A1A1A]">Date</th>
@@ -40,6 +41,17 @@
                             if ($order->status == 'new') {
                                 $statusBadge = '<span class="p-1.5 text-xs font-medium uppercase tracking-wider text-purple-800 bg-purple-200 rounded-lg bg-opacity-50">New</span>';
                             }
+
+                            if($order->payment_status == 'pending'){
+                                $paymentBadge = '<span class="p-1.5 text-xs font-medium tracking-wider text-purple-800 uppercase bg-purple-200 bg-opacity-50 rounded-lg">Pending</span>';
+                            }
+
+                             if($order->payment_status == 'paid'){
+                                $paymentBadge = '<span class="p-1.5 text-xs font-medium tracking-wider text-cyan-800 uppercase bg-cyan-200 bg-opacity-50 rounded-lg">Paid</span>';
+                            }
+                             if($order->payment_status == 'failed'){
+                                $paymentBadge = '<span class="p-1.5 text-xs font-medium tracking-wider text-blue-800 uppercase bg-blue-200 bg-opacity-50 rounded-lg">Failed</span>';
+                            }
                         @endphp
                         <tr class="{{ $loop->even ? 'bg-gray-50' : 'bg-white' }}">
                             <td class="p-3 text-base font-sans text-[#1A1A1A] whitespace-nowrap text-center">
@@ -55,7 +67,7 @@
                             </td>
                             <td class="p-3 text-base font-sans text-[#1A1A1A] whitespace-nowrap">
                                 <div class="flex justify-center">
-                                    <span class="p-1.5 text-xs font-medium uppercase tracking-wider text-gray-800 bg-gray-200 rounded-lg bg-opacity-50">{{ $order->payment_status }}</span>
+                                    {!! $paymentBadge !!}
                                 </div>
                             </td>
                             <td class="p-3 text-base font-sans text-[#1A1A1A] whitespace-nowrap font-medium text-center">
@@ -77,10 +89,11 @@
         </div>
 
         <!-- Mobile Card View -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden">
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:hidden">
             @foreach($orders as $order)
                 @php
                     $statusBadge = '';
+                    $paymentBadge = '';
                     // Cancelled - Red badge
                     if ($order->status == 'cancelled') {
                         $statusBadge = '<span class="p-1.5 text-xs font-medium uppercase tracking-wider text-red-800 bg-red-200 rounded-lg bg-opacity-50">Cancelled</span>';
@@ -101,8 +114,19 @@
                     if ($order->status == 'new') {
                         $statusBadge = '<span class="p-1.5 text-xs font-medium uppercase tracking-wider text-purple-800 bg-purple-200 rounded-lg bg-opacity-50">New</span>';
                     }
+
+                    // Payment status badges
+                    if($order->payment_status == 'pending'){
+                        $paymentBadge = '<span class="p-1.5 text-xs font-medium tracking-wider text-purple-800 uppercase bg-purple-200 bg-opacity-50 rounded-lg">Pending</span>';
+                    }
+                    if($order->payment_status == 'paid'){
+                        $paymentBadge = '<span class="p-1.5 text-xs font-medium tracking-wider text-cyan-800 uppercase bg-cyan-200 bg-opacity-50 rounded-lg">Paid</span>';
+                    }
+                    if($order->payment_status == 'failed'){
+                        $paymentBadge = '<span class="p-1.5 text-xs font-medium tracking-wider text-blue-800 uppercase bg-blue-200 bg-opacity-50 rounded-lg">Failed</span>';
+                    }
                 @endphp
-                <div class="bg-white border border-gray-300 space-y-3 p-4 rounded-md shadow-sm">
+                <div class="p-4 space-y-3 bg-white border border-gray-300 rounded-md shadow-sm">
                     <div class="flex items-center space-x-2 text-base">
                         <div>
                             <a href="/my-orders/{{ $order->id }}" class="text-[#004D61] font-bold hover:underline">#{{ $order->id }}</a>
@@ -113,8 +137,8 @@
                         </div>
                     </div>
                     <div class="text-base font-sans text-[#1A1A1A]">
-                        <span class="font-bold">Payment:</span> 
-                        <span class="p-1 text-xs font-medium uppercase tracking-wider text-gray-800 bg-gray-200 rounded bg-opacity-50">{{ $order->payment_status }}</span>
+                        <span class="font-bold">Payment:</span>
+                        {!! $paymentBadge !!}
                     </div>
                     <div class="text-base font-medium font-sans text-[#1A1A1A]">
                         LKR {{ number_format($order->grand_total, 2) }}
@@ -130,6 +154,16 @@
         <div class="mt-6">
             {{ $orders->links() }}
         </div>
+        @else
+            <div class="col-span-full relative w-full p-6 mx-auto bg-white border border-gray-300 rounded-md shadow-sm">
+                <div class="flex flex-col items-center justify-center py-12">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 mb-6 text-[#3E5641]">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    <p class="text-xl text-center font-playfair text-[#1A1A1A]">No orders found!</p>
+                </div>
+            </div>
+        @endif
         </div>
     </div>
 </div>

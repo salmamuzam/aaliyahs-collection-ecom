@@ -8,7 +8,7 @@
     </x-slot>
 
     <x-slot name="content">
-        <div class="max-w-xl text-sm text-[#1A1A1A]">
+        <div class="max-w-xl text-base text-[#1A1A1A]">
             {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.') }}
         </div>
 
@@ -51,3 +51,5 @@
         </x-dialog-modal>
     </x-slot>
 </x-action-section>
+
+

@@ -14,10 +14,10 @@ class GoogleController extends Controller
     public function googlepage()
     {
         return Socialite::driver('google')
-        // Profile: Gets first name, last name, and the profile picture
-        // Email: Gets the email of the user
-        ->scopes(['profile', 'email'])
-        ->redirect();
+            // Profile: Gets first name, last name, and the profile picture
+            // Email: Gets the email of the user
+            ->scopes(['profile', 'email'])
+            ->redirect();
     }
 
     public function googlecallback()
@@ -33,7 +33,7 @@ class GoogleController extends Controller
 
                 Auth::login($finduser);
                 // Then, send the user to the dashboard
-                return redirect()->intended('dashboard');
+                return redirect()->intended('/');
 
             }
             // However, if it is a first timer user, it will not find the user in the user table
@@ -49,7 +49,7 @@ class GoogleController extends Controller
                 $lastName = $googleUser['family_name'] ?? null;
                 // If google does not provide separate first name and last name
                 // Split the full name
-                if(!$firstName){
+                if (!$firstName) {
                     // Split the name into two parts
                     $nameParts = explode(' ', $user->name, 2);
                     $firstName = $nameParts[0] ?? 'User';
@@ -65,8 +65,8 @@ class GoogleController extends Controller
                 $counter = 1;
 
                 //Increment the counter until a unique username is found
-                while(User::where('username', $username)->exists()){
-                   // Append the counter to the base username
+                while (User::where('username', $username)->exists()) {
+                    // Append the counter to the base username
                     $username = $baseUsername . $counter;
                     // Increment the counter for the next iteration
                     $counter++;
@@ -85,7 +85,7 @@ class GoogleController extends Controller
                     // Google's profile picture url
                     'profile_photo_path' => $profilePhotoUrl,
                     // Extracted from the email
-                    'username'=> $username,
+                    'username' => $username,
                     // Google's email address
                     'email' => $user->email,
                     // Unique user ID from Google
@@ -94,8 +94,8 @@ class GoogleController extends Controller
                 ]);
 
                 Auth::login($newUser);
-            // Then, it will direct the user to the dashboard
-                return redirect()->intended('dashboard');
+                // Then, it will direct the user to the dashboard
+                return redirect()->intended('/');
             }
 
         }

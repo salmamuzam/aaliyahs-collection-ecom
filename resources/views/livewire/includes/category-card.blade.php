@@ -1,52 +1,38 @@
-<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 md:hidden">
-    <div
-        class="relative overflow-hidden rounded-lg before:absolute before:inset-0 before:w-full before:h-full before:bg-black/20 before:z-10">
-        <div class="relative">
-            <img src="{{ asset('storage/' . $category->image) }}"
-                class="object-cover object-top w-full aspect-square" />
+<div class="relative p-3 mb-2 bg-white border border-gray-300 rounded-md shadow-sm">
+    <div class="flex items-center gap-4 max-sm:flex-col max-sm:gap-0">
+        <div class="overflow-hidden rounded-lg w-40 h-32 shrink-0 mx-auto sm:h-auto sm:aspect-[3/4]">
+            <img src="{{ asset('storage/' . $category->image) }}" class="object-cover w-full h-full object-top border border-gray-200" />
         </div>
-        <div class="absolute bottom-0 z-20 w-full px-4 py-2 space-y-4 rounded-lg bg-white/50">
-            <div>
-                <h3 class="text-xl font-semibold text-center">{{ $category->name }}</h3>
+        <div class="w-full rounded-lg sm:border-l sm:pl-4 sm:border-gray-300">
+            <div class="mt-2 mb-1">
+                <h3 class="text-base font-semibold text-center text-[#1A1A1A]">{{ $category->name }}</h3>
             </div>
-            <div class="flex items-center justify-center space-x-4">
-                <a wire:navigate href="{{ route('categories.edit', $category->id) }}" type="button"
-                    data-drawer-target="drawer-update-product" data-drawer-show="drawer-update-product"
-                    aria-controls="drawer-update-product"
-                    class="flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-indigo-700 rounded-lg hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 -ml-0.5" viewbox="0 0 20 20"
-                        fill="currentColor" aria-hidden="true">
-                        <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                        <path fill-rule="evenodd"
-                            d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                            clip-rule="evenodd" />
-                    </svg>
-                    Edit
-                </a>
-                <a wire:navigate href="{{ route('categories.view', $category->id) }}" type="button"
-                    data-drawer-target="drawer-read-product-advanced" data-drawer-show="drawer-read-product-advanced"
-                    aria-controls="drawer-read-product-advanced"
-                    class="flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-amber-700 hover:bg-amber-800 focus:ring-4 focus:outline-none focus:ring-amber-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor"
-                        class="w-4 h-4 mr-2 -ml-0.5">
-                        <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z" />
-                    </svg>
-                    Preview
-                </a>
-                <button wire:click="deleteCategory({{ $category->id }})"
-                    wire:confirm="Are you sure, you want to delete?" type="button" data-modal-target="delete-modal"
-                    data-modal-toggle="delete-modal"
-                    class="flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-rose-700 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 -ml-0.5" viewbox="0 0 20 20"
-                        fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd"
-                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                            clip-rule="evenodd" />
-                    </svg>
-                    Delete
-                </button>
+            
+            <hr class="my-2 border-gray-200" />
+            
+            <div class="flex flex-wrap items-center justify-between gap-4">
+                <div class="flex justify-center w-full space-x-3">
+                    <a wire:navigate href="{{ route('categories.edit', $category->id) }}" title="Edit"
+                        class="p-2 text-indigo-600 hover:bg-indigo-50 rounded-md transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                    </a>
+                    <a wire:navigate href="{{ route('categories.view', $category->id) }}" title="Preview"
+                        class="p-2 text-amber-600 hover:bg-amber-50 rounded-md transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                    </a>
+                    <button wire:click="deleteCategory({{ $category->id }})" wire:confirm="Are you sure?" title="Delete"
+                        class="p-2 text-rose-600 hover:bg-rose-50 rounded-md transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
+</div>

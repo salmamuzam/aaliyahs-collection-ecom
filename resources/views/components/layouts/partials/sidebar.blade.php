@@ -9,7 +9,7 @@
             <p class="text-[15px] text-white font-medium">
                 {{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}
             </p>
-            <p class="text-xs text-gray-300 mt-0.5"> {{ Auth::user()->email}}</p>
+            <p class="text-[15px] text-gray-300 mt-0.5"> {{ Auth::user()->email}}</p>
         </div>
     </div>
 
@@ -80,7 +80,7 @@
 
     <ul class="space-y-3">
         <li>
-            <a href="{{ route('profile.show') }}"
+            <a href="{{ route('profile.show', ['view' => 'admin']) }}"
                 class="text-gray-300 hover:text-white text-[15px] font-normal flex items-center hover:bg-[#822659]  rounded px-4 py-2 transition-all">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-[18px] h-[18px] mr-3"
                     viewBox="0 0 512 512">

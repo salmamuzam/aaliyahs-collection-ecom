@@ -7,10 +7,10 @@
             </div>
 
             <ul class="flex flex-wrap items-center justify-center space-x-6 gap-y-2 md:justify-end">
-                <li><a href="" class="text-base text-white hover:underline">Home</a></li>
-                <li><a href="" class="text-base text-white hover:underline">Shop</a></li>
-                <li><a href="" class="text-base text-white hover:underline">Wishlist</a></li>
-                <li><a href="" class="text-base text-white hover:underline">Cart</a></li>
+                <li><a href="/" class="text-base text-white hover:underline" wire:navigate>Home</a></li>
+                <li><a href="/shop" class="text-base text-white hover:underline" wire:navigate>Shop</a></li>
+                <li><a href="#" class="text-base text-white hover:underline">Wishlist</a></li>
+                <li><a href="/cart" class="text-base text-white hover:underline" wire:navigate>Cart</a></li>
             </ul>
         </div>
 

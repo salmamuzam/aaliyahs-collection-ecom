@@ -1,9 +1,9 @@
-<div class="p-5 pt-0 lg:p-5 lg:pt-5">
+<div class="px-6 lg:px-12 pt-6 lg:pt-10 pb-4 lg:pb-8">
     <div class="flex items-center justify-between pt-16 mb-4 space-x-4 lg:pt-0">
-        <h1 class="text-xl">All products</h1>
-        <a wire:navigate href="{{ route('products.create') }}" type="button"
-            class="flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300">
-            <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+        <h1 class="text-2xl font-bold font-playfair uppercase text-[#004D61]">All products</h1>
+        <a wire:navigate href="{{ route('products.create') }}"
+            class="flex items-center px-5 py-2.5 text-base font-semibold text-center text-white rounded-lg bg-[#3E5641] hover:bg-[#2F4232] transition-colors shadow-sm shadow-green-100">
+            <svg class="h-4 w-4 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
                 aria-hidden="true">
                 <path clip-rule="evenodd" fill-rule="evenodd"
                     d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
@@ -57,199 +57,187 @@
         </div>
     @endif
 
-    <form class="flex items-center mb-4">
-        <label for="simple-search" class="sr-only">Search</label>
-        <div class="relative w-full">
-            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <svg aria-hidden="true" class="w-5 h-5 text-black" fill="currentColor" viewbox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                        clip-rule="evenodd" />
-                </svg>
-            </div>
-            <input wire:model.live.debounce.300ms="search" type="text" id="simple-search"
-                class="block w-full p-2 pl-10 text-sm text-[#1A1A1A] border border-gray-300 rounded-lg bg-white focus:ring-[#822659]-500 focus:border-[#822659]"
-                placeholder="Search ..." required="">
-        </div>
-    </form>
+    @include('livewire.includes.search-box')
 
-    <div class="hidden overflow-auto rounded-lg shadow md:block ">
-        <table class="w-full ">
-            <thead class="border-b-2 text-white border-[#822659] bg-[#3E5641]">
-                <tr>
-                    <th class="w-20 p-3 text-sm font-semibold tracking-wide text-center">Image</th>
-                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Name <span class="cursor-pointer"
-                            wire:click="sortBy('name')">
-                            @if($sortColumn === 'name')
-                                @if($sortOrder === 'asc')
-                                    <i class="fa-solid fa-sort-up"></i>
-                                @else
-                                    <i class="fa-solid fa-sort-down"></i>
-                                @endif
-                            @else
-                                <i class="fa-solid fa-sort"></i>
-                            @endif
-                        </span></th>
-                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Description <span
-                            class="cursor-pointer" wire:click="sortBy('description')">
 
-                            @if($sortColumn === 'description')
-                                @if($sortOrder === 'asc')
-                                    <i class="fa-solid fa-sort-up"></i>
+
+    <div class="hidden md:block overflow-hidden border border-gray-300 rounded-md shadow-sm">
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white table-fixed">
+                <thead class="bg-[#004D61] whitespace-nowrap">
+                    <tr>
+                        <th class="p-4 text-center text-base font-semibold text-white w-1/5">
+                            Image
+                        </th>
+                        <th class="p-4 text-center text-base font-semibold text-white w-1/5">
+                            Name
+                            <span class="ml-1 cursor-pointer" wire:click="sortBy('name')">
+                                @if($sortColumn === 'name')
+                                    @if($sortOrder === 'asc')
+                                        <i class="fa-solid fa-sort-up"></i>
+                                    @else
+                                        <i class="fa-solid fa-sort-down"></i>
+                                    @endif
                                 @else
-                                    <i class="fa-solid fa-sort-down"></i>
+                                    <i class="fa-solid fa-sort opacity-50"></i>
                                 @endif
-                            @else
-                                <i class="fa-solid fa-sort"></i>
-                            @endif</span></th>
-                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Category <span
-                            class="cursor-pointer" wire:click="sortBy('category.name')">
-                            @if($sortColumn === 'category.name')
-                                @if($sortOrder === 'asc')
-                                    <i class="fa-solid fa-sort-up"></i>
+                            </span>
+                        </th>
+                        <th class="p-4 text-center text-base font-semibold text-white w-1/5">
+                            Category
+                            <span class="ml-1 cursor-pointer" wire:click="sortBy('category.name')">
+                                @if($sortColumn === 'category.name')
+                                    @if($sortOrder === 'asc')
+                                        <i class="fa-solid fa-sort-up"></i>
+                                    @else
+                                        <i class="fa-solid fa-sort-down"></i>
+                                    @endif
                                 @else
-                                    <i class="fa-solid fa-sort-down"></i>
+                                    <i class="fa-solid fa-sort opacity-50"></i>
                                 @endif
-                            @else
-                                <i class="fa-solid fa-sort"></i>
-                            @endif</span></th>
-                    <th class="p-3 text-sm font-semibold tracking-wide text-center">Price <span class="cursor-pointer"
-                            wire:click="sortBy('price')">
-                            @if($sortColumn === 'price')
-                                @if($sortOrder === 'asc')
-                                    <i class="fa-solid fa-sort-up"></i>
+                            </span>
+                        </th>
+                        <th class="p-4 text-center text-base font-semibold text-white w-1/5">
+                            Price
+                            <span class="ml-1 cursor-pointer" wire:click="sortBy('price')">
+                                @if($sortColumn === 'price')
+                                    @if($sortOrder === 'asc')
+                                        <i class="fa-solid fa-sort-up"></i>
+                                    @else
+                                        <i class="fa-solid fa-sort-down"></i>
+                                    @endif
                                 @else
-                                    <i class="fa-solid fa-sort-down"></i>
+                                    <i class="fa-solid fa-sort opacity-50"></i>
                                 @endif
-                            @else
-                                <i class="fa-solid fa-sort"></i>
-                            @endif</span></th>
-                    <th class="w-24 p-3 text-sm font-semibold tracking-wide text-center">Actions</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-black-100">
-                @forelse($products as $product)
-                    <tr class="bg-white">
-                        <td class="p-3 text-sm text-center text-gray-700 whitespace-nowrap">
-                            <img class="h-auto rounded-lg w-100" src="{{ asset('storage/' . $product->image) }}">
-                        </td>
-                        <td class="p-3 text-sm text-center text-gray-700 whitespace-nowrap">
-                            {{ Str::limit($product->name, 30) }}
-                        </td>
-                        <td class="p-3 text-sm text-center text-gray-700 whitespace-nowrap">
-                            {{ Str::limit($product->description, 50) }}
-                        </td>
-                        <td class="p-3 text-sm text-center text-gray-700 whitespace-nowrap">
-                            {{ $product->category->name}}
-                        </td>
-                        <td class="p-3 text-sm text-center text-gray-700 whitespace-nowrap">
-                            {{ $product->price}}
-                        </td>
-                        <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">
-                            <div class="flex items-center space-x-4">
-                                <a wire:navigate href="{{ route('products.edit', $product->id) }}" type="button"
-                                    class="flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-indigo-700 rounded-lg hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 -ml-0.5" viewbox="0 0 20 20"
-                                        fill="currentColor" aria-hidden="true">
-                                        <path
-                                            d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                                        <path fill-rule="evenodd"
-                                            d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                    Edit
-                                </a>
-                                <a wire:navigate href="{{ route('products.view', $product->id) }}" type="button"
-                                    class="flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-amber-700 hover:bg-amber-800 focus:ring-4 focus:outline-none focus:ring-amber-300">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor"
-                                        class="w-4 h-4 mr-2 -ml-0.5">
-                                        <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
-                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                            d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z" />
-                                    </svg>
-                                    Preview
-                                </a>
-                                <button wire:confirm="Are you sure, you want to delete?"
-                                    wire:click="deleteProduct({{ $product->id }})" type="button"
-                                    class="flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-rose-700 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 -ml-0.5" viewbox="0 0 20 20"
-                                        fill="currentColor" aria-hidden="true">
-                                        <path fill-rule="evenodd"
-                                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                    Delete
-                                </button>
-                            </div>
-                        </td>
+                            </span>
+                        </th>
+                        <th class="p-4 text-center text-base font-semibold text-white w-1/5">
+                            Actions
+                        </th>
                     </tr>
-                @empty
-                @endforelse
-            </tbody>
-
-        </table>
-        <div class="px-4 mt-2 mb-2">
-            {{-- Pagination --}}
-            {{ $products->links() }}
+                </thead>
+                <tbody class="divide-y divide-gray-200 whitespace-nowrap">
+                    @forelse($products as $product)
+                        <tr class="hover:bg-gray-100 transition-colors">
+                            <td class="p-4 text-center">
+                                <div class="flex justify-center">
+                                    <img class="w-12 h-auto aspect-[3/4] rounded-md object-cover object-top border border-gray-200" src="{{ asset('storage/' . $product->image) }}">
+                                </div>
+                            </td>
+                            <td class="p-4 text-base text-[#1A1A1A] font-medium text-center whitespace-normal">
+                                {{ $product->name }}
+                            </td>
+                            <td class="p-4 text-center">
+                                @php
+                                    $categoryColors = [
+                                        'bg-purple-50 text-purple-700 border-purple-100',
+                                        'bg-blue-50 text-blue-700 border-blue-100',
+                                        'bg-cyan-50 text-cyan-700 border-cyan-100',
+                                        'bg-emerald-50 text-emerald-700 border-emerald-100',
+                                        'bg-amber-50 text-amber-700 border-amber-100',
+                                        'bg-indigo-50 text-indigo-700 border-indigo-100',
+                                    ];
+                                    $badgeColor = $categoryColors[$product->category->id % count($categoryColors)];
+                                @endphp
+                                <span class="px-2 py-1 text-xs font-bold uppercase tracking-wider rounded-md border {{ $badgeColor }}">
+                                    {{ $product->category->name }}
+                                </span>
+                            </td>
+                            <td class="p-4 text-base text-[#1A1A1A] font-medium text-center">
+                                LKR {{ number_format($product->price, 2) }}
+                            </td>
+                            <td class="p-4">
+                                <div class="flex items-center justify-center space-x-3">
+                                    <a wire:navigate href="{{ route('products.edit', $product->id) }}" title="Edit"
+                                        class="p-2 text-indigo-600 hover:bg-indigo-50 rounded-md transition-colors">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                        </svg>
+                                    </a>
+                                    <a wire:navigate href="{{ route('products.view', $product->id) }}" title="Preview"
+                                        class="p-2 text-amber-600 hover:bg-amber-50 rounded-md transition-colors">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                        </svg>
+                                    </a>
+                                    <button wire:click="deleteProduct({{ $product->id }})" wire:confirm="Are you sure?" title="Delete"
+                                        class="p-2 text-rose-600 hover:bg-rose-50 rounded-md transition-colors">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="p-8 text-center text-gray-500 font-sans">
+                                No products found.
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
+        @if($products->hasPages())
+            <div class="p-4 border-t border-gray-200 uppercase bg-gray-50 text-sm">
+                {{ $products->links() }}
+            </div>
+        @endif
     </div>
 
 
     <div class="md:hidden">
         @forelse($products as $product)
             <div class="relative p-6 mb-2 bg-white border border-gray-300 rounded-md shadow-sm md:hidden">
-                <div class="flex items-center gap-4 max-sm:flex-col max-sm:gap-6">
-                    <div class="overflow-hidden rounded-lg w-52 h-52 shrink-0">
-                        <img src='{{ asset('storage/' . $product->image) }}' class="object-cover w-full h-auto" />
+                <div class="flex items-center gap-4 max-sm:flex-col max-sm:gap-1">
+                    <div class="overflow-hidden rounded-lg w-40 h-auto aspect-[3/4] shrink-0">
+                        <img src='{{ asset('storage/' . $product->image) }}' class="object-cover w-full h-auto object-top border border-gray-200" />
                     </div>
                     <div class="w-full rounded-lg sm:border-l sm:pl-4 sm:border-gray-300">
-                        <div class="text-center">
-                            <h2
-                                class="text-pink-600 text-sm font-medium bg-pink-50 px-3 py-1.5 inline-block tracking-wide rounded-lg">
+                        @php
+                            $categoryColors = [
+                                'bg-purple-50 text-purple-700 border-purple-100',
+                                'bg-blue-50 text-blue-700 border-blue-100',
+                                'bg-cyan-50 text-cyan-700 border-cyan-100',
+                                'bg-emerald-50 text-emerald-700 border-emerald-100',
+                                'bg-amber-50 text-amber-700 border-amber-100',
+                                'bg-indigo-50 text-indigo-700 border-indigo-100',
+                            ];
+                            $badgeColor = $categoryColors[$product->category->id % count($categoryColors)];
+                        @endphp
+                        <div class="mb-2 text-center">
+                            <span class="px-2 py-1 text-xs font-bold uppercase tracking-wider rounded-md border {{ $badgeColor }}">
                                 {{ $product->category->name }}
-                            </h2>
+                            </span>
                         </div>
-                        <h3 class="mt-4 font-semibold text-left text-slate-900">{{ $product->name }}</h3>
-                        <ul class="space-y-2 text-sm font-medium text-slate-500">
-                            <li class="pt-4 text-rose-600">Rs. {{ $product->price }}</li>
-                            <li class="pt-2 text-justify">{{ $product->description }}</li>
+                        <h3 class="text-base font-semibold text-center text-[#1A1A1A]">{{ $product->name }}</h3>
+                        <ul class="mt-1 space-y-1 text-base font-medium text-center text-[#1A1A1A]">
+                            <li>LKR {{ number_format($product->price, 2) }}</li>
+                            <li class="text-base text-gray-500 font-normal line-clamp-none text-justify">{{ $product->description }}</li>
                         </ul>
-                        <hr class="my-6 border-gray-300" />
+                        <hr class="my-4 border-gray-200" />
                         <div class="flex flex-wrap items-center justify-between gap-4">
-                            <div class="flex justify-center w-full gap-4">
-                                <a wire:navigate href="{{ route('products.edit', $product->id) }}" type="button"
-                                    class="flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-indigo-700 rounded-lg hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 -ml-0.5" viewbox="0 0 20 20"
-                                        fill="currentColor" aria-hidden="true">
-                                        <path
-                                            d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                                        <path fill-rule="evenodd"
-                                            d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                                            clip-rule="evenodd" />
+                            <div class="flex justify-center w-full space-x-3">
+                                <a wire:navigate href="{{ route('products.edit', $product->id) }}" title="Edit"
+                                    class="p-2 text-indigo-600 hover:bg-indigo-50 rounded-md transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                     </svg>
-                                    Edit
                                 </a>
-                                <a wire:navigate href="{{ route('products.view', $product->id) }}" type="button"
-                                    class="flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-amber-700 hover:bg-amber-800 focus:ring-4 focus:outline-none focus:ring-amber-300">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor"
-                                        class="w-4 h-4 mr-2 -ml-0.5">
-                                        <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
-                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                            d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z" />
+                                <a wire:navigate href="{{ route('products.view', $product->id) }}" title="Preview"
+                                    class="p-2 text-amber-600 hover:bg-amber-50 rounded-md transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                     </svg>
-                                    Preview
                                 </a>
-                                <button wire:confirm="Are you sure, you want to delete?"
-                                    wire:click="deleteProduct({{ $product->id }})" type="button"
-                                    class="flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-rose-700 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 -ml-0.5" viewbox="0 0 20 20"
-                                        fill="currentColor" aria-hidden="true">
-                                        <path fill-rule="evenodd"
-                                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                            clip-rule="evenodd" />
+                                <button wire:click="deleteProduct({{ $product->id }})" wire:confirm="Are you sure?" title="Delete"
+                                    class="p-2 text-rose-600 hover:bg-rose-50 rounded-md transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
-                                    Delete
                                 </button>
                             </div>
                         </div>
@@ -260,7 +248,9 @@
         @endforelse
 
         {{-- Pagination --}}
-        {{ $products->links() }}
+        <div class="mt-4">
+            {{ $products->links() }}
+        </div>
 
     </div>
 </div>

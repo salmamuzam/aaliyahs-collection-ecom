@@ -53,19 +53,19 @@
                 </li>
                 <li
                     class="max-lg:border-b max-lg:border-gray-100 max-lg:py-3 relative lg:after:absolute lg:after:bg-white lg:after:w-full lg:after:h-[2px] lg:after:block lg:after:-bottom-4 lg:after:transition-all lg:after:duration-300">
-                    <a href='' class="text-white block text-[15px] font-normal">Home</a>
+                    <a href='/' class="text-white block text-[15px] font-normal" wire:navigate>Home</a>
                 </li>
                 <li
                     class="max-lg:border-b max-lg:border-gray-100 max-lg:py-3 relative lg:hover:after:absolute lg:after:bg-white lg:after:w-0 lg:hover:after:w-full lg:hover:after:h-[2px] lg:after:block lg:after:-bottom-4 lg:after:transition-all lg:after:duration-300">
-                    <a href='' class="text-white block text-[15px] font-normal">Shop</a>
+                    <a href='/shop' class="text-white block text-[15px] font-normal" wire:navigate>Shop</a>
                 </li>
                 <li
                     class="max-lg:border-b max-lg:border-gray-100 max-lg:py-3 relative lg:hover:after:absolute lg:after:bg-white lg:after:w-0 lg:hover:after:w-full lg:hover:after:h-[2px] lg:after:block lg:after:-bottom-4 lg:after:transition-all lg:after:duration-300">
-                    <a href='' class="text-white block text-[15px] font-normal">Wishlist</a>
+                    <a href='#' class="text-white block text-[15px] font-normal">Wishlist</a>
                 </li>
                 <li
                     class="max-lg:border-b max-lg:border-gray-100 max-lg:py-3 relative lg:hover:after:absolute lg:after:bg-white lg:after:w-0 lg:hover:after:w-full lg:hover:after:h-[2px] lg:after:block lg:after:-bottom-4 lg:after:transition-all lg:after:duration-300">
-                    <a href='' class="text-white block text-[15px] font-normal">Cart</a>
+                    <a href='/cart' class="text-white block text-[15px] font-normal" wire:navigate>Cart</a>
                 </li>
             </ul>
         </div>

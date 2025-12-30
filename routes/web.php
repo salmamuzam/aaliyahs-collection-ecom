@@ -11,6 +11,7 @@ use App\Livewire\CartPage;
 use App\Livewire\CategoryList;
 use App\Livewire\CheckoutPage;
 use App\Livewire\HomePage;
+use App\Livewire\MyOrderDetailPage;
 use App\Livewire\ProductDetailPage;
 use App\Livewire\ProductForm;
 use App\Livewire\ProductList;
@@ -21,8 +22,8 @@ Route::get('/shop', ShopPage::class);
 Route::get('/cart', CartPage::class);
 Route::get('/shop/{product}', ProductDetailPage::class);
 Route::get('/checkout', CheckoutPage::class);
-Route::get('/my-orders', MyOrdersPage::class)->name('my-orders.show');
-
+Route::get('/my-orders', MyOrdersPage::class);
+Route::get('/my-orders/{order_id}', MyOrderDetailPage::class)->name('my-orders.show');
 Route::get('/success', SuccessPage::class)->name('success');
 Route::get('/cancel', CancelPage::class)->name('cancel');
 

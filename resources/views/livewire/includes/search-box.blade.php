@@ -1,18 +1,13 @@
-<form class="flex items-center mb-4">
-    {{-- Search category --}}
-    <label for="simple-search" class="sr-only">Search</label>
-    <div class="relative w-full">
-        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <svg aria-hidden="true" class="w-5 h-5 text-black" fill="currentColor" viewbox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd"
-                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                    clip-rule="evenodd" />
+<div class="w-full mb-6">
+    <label for="search" class="sr-only">Search</label>
+    <div class="relative">
+        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+            <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
             </svg>
         </div>
-        {{-- Live search --}}
-        <input wire:model.live.debounce.300ms="search" type="text" id="simple-search"
-            class="block w-full p-2 pl-10 text-sm text-[#1A1A1A] border border-gray-300 rounded-lg bg-white focus:ring-[#822659]-500 focus:border-[#822659]"
-            placeholder="Search ..." required="">
+        <input wire:model.live.debounce.300ms="search" type="search" id="search"
+            class="block w-full p-3 ps-10 bg-white border border-gray-300 text-[#1A1A1A] text-sm rounded-lg focus:ring-[#3E5641] focus:border-[#3E5641] shadow-sm placeholder-gray-400 outline-none transition-all"
+            placeholder="Search..." />
     </div>
-</form>
+</div>
