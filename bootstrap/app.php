@@ -12,13 +12,14 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->web(append: [
+            \App\Http\Middleware\EnsureTwoFactorCodeIsPresent::class,
+        ]);
+
         // Register Admin.php (Middleware)
         $middleware->alias([
             'admin' => \App\Http\Middleware\Admin::class,
             'customer' => \App\Http\Middleware\Customer::class,
-            // alias for custom EnsurePasswordIsConfirmed middleware
-            // this is used to confirm the password of the user
-            'password.confirm' => \App\Http\Middleware\EnsurePasswordIsConfirmed::class,
         ]);
     })
 

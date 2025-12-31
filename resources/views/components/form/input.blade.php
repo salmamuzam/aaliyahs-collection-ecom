@@ -4,10 +4,30 @@
     // Simple, reliable error detection
     $fieldHasError = $hasError ?? ($errors->has($name) || ($name === 'login' && ($errors->has('email') || $errors->has('username'))));
     $displayError = $errorMessage ?? ($errors->first($name) ?: ($name === 'login' ? ($errors->first('email') ?: $errors->first('username')) : null));
-    
-    // Clean up technical technical messages if any remain
-    if ($displayError && str_contains(strtolower($displayError), 'login field')) {
-        $displayError = 'The email or username field is required.';
+
+    // Clean up technical messages
+    if ($displayError) {
+        $lowered = strtolower($displayError);
+        
+        // 1. All Required fields (Check for the word "required" in the message)
+        if (str_contains($lowered, 'required')) {
+            $displayError = 'This field is required!';
+        }
+        
+        // 2. Login field incorrect (not required)
+        elseif ($name === 'login' && (str_contains($lowered, 'incorrect') || str_contains($lowered, 'check') || str_contains($lowered, 'match'))) {
+            $displayError = 'The username or email is incorrect!';
+        }
+        
+        // 3. 2FA Code incorrect
+        elseif ($name === 'code' && (str_contains($lowered, 'invalid') || str_contains($lowered, 'wrong') || str_contains($lowered, 'incorrect'))) {
+            $displayError = 'The code is incorrect!';
+        }
+        
+        // 4. Recovery Code incorrect
+        elseif ($name === 'recovery_code' && (str_contains($lowered, 'invalid') || str_contains($lowered, 'wrong') || str_contains($lowered, 'incorrect'))) {
+            $displayError = 'The recovery code is incorrect!';
+        }
     }
 
     // Base classes
@@ -28,6 +48,6 @@
         @endif
     </div>
     @if($displayError)
-        <span class="text-brand-burgundy text-sm mt-1 block">{{ $displayError }}</span>
+        <span class="text-brand-burgundy text-base mt-1 block">{{ $displayError }}</span>
     @endif
 </div>

@@ -1,20 +1,25 @@
 <x-layouts.guest>
     <div class="brand-auth-wrapper">
         
-        {{-- Hero Header --}}
-        @include('auth.includes.header', [
-            'title' => 'Create Account',
-            'subtitle' => "Already have an account?",
-            'link' => ['url' => route('login'), 'text' => 'Login here']
-        ])
+        {{-- Logo Section --}}
+        @include('auth.includes.header')
 
         {{-- Card Section --}}
-        <div class="max-w-4xl w-full p-6 sm:p-10 brand-card z-10" x-data="{ loading: false }">
+        <div class="max-w-4xl w-full p-6 sm:p-10 brand-card z-10">
+            
+            {{-- Header Text --}}
+            <div class="w-full mb-8 text-center">
+                <h1 class="text-brand-green text-2xl md:text-3xl brand-heading-playfair mb-3 uppercase">Create Account</h1>
+                <p class="text-brand-black text-base font-sans">
+                    Already have an account?
+                    <a href="{{ route('login') }}" wire:navigate class="brand-link ml-1">Login here</a>
+                </p>
+            </div>
             
             @include('auth.includes.alerts')
 
             {{-- Standard POST ensures validation "Required" errors are 100% reliable --}}
-            <form method="POST" action="{{ route('register') }}" novalidate @submit="loading = true" class="space-y-6">
+            <form method="POST" action="{{ route('register') }}" novalidate class="space-y-6">
                 @csrf
 
                 {{-- First Name & Last Name --}}
@@ -53,6 +58,7 @@
                     <x-form.password-input label="Confirm Password" name="password_confirmation" required autocomplete="new-password" placeholder="Confirm password" />
                 </div>
 
+                {{-- 
                 @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                     <div class="mt-4">
                             <div class="flex items-center">
@@ -65,12 +71,12 @@
                                 </div>
                             </div>
                     </div>
-                @endif
+                @endif 
+                --}}
 
                 <div class="!mt-8">
-                    <x-button.primary x-bind:disabled="loading" class="w-full">
-                        <span x-show="!loading">Create Account</span>
-                        <span x-show="loading" style="display: none;">Registering account...</span>
+                    <x-button.primary class="w-full">
+                        Create Account
                     </x-button.primary>
                 </div>
 

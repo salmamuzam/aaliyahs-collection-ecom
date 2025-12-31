@@ -37,6 +37,10 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
         Fortify::redirectUserForTwoFactorAuthenticationUsing(RedirectIfTwoFactorAuthenticatable::class);
+        Fortify::registerView(function () {
+            return view('auth.register');
+        });
+
         Fortify::authenticateUsing(function (Request $request) {
             // Get the user from login
             $user = User::where("email", $request->login)
@@ -46,7 +50,7 @@ class FortifyServiceProvider extends ServiceProvider
             // 1. If user doesn't exist:
             if (!$user) {
                 throw \Illuminate\Validation\ValidationException::withMessages([
-                    'login' => ['Please check your email or username and try again.'],
+                    'login' => ['The username or email is incorrect!'],
                 ]);
             }
 
@@ -57,7 +61,7 @@ class FortifyServiceProvider extends ServiceProvider
 
             // 3. User exists but password is wrong:
             throw \Illuminate\Validation\ValidationException::withMessages([
-                'password' => ['The password you entered is incorrect. Please try again.'],
+                'password' => ['The password is incorrect!'],
             ]);
         });
 

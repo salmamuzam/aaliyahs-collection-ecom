@@ -1,6 +1,6 @@
 <div class="flex items-center gap-4 my-8">
     <div class="h-px w-full bg-gray-200"></div>
-    <span class="text-sm text-gray-400 font-medium whitespace-nowrap">OR CONTINUE WITH</span>
+    <span class="text-sm text-brand-black font-medium whitespace-nowrap">OR CONTINUE WITH</span>
     <div class="h-px w-full bg-gray-200"></div>
 </div>
 

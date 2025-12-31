@@ -2,20 +2,18 @@
     <div class="brand-auth-wrapper">
         {{-- Logo Section --}}
         <div class="max-w-[480px] w-full mb-4 text-center">
-            <a href="/" wire:navigate>
-                <div class="flex justify-center transition-all duration-300 hover:scale-105 active:scale-95">
-                    <x-authentication-card-logo />
-                </div>
-            </a>
+            <div class="flex justify-center transition-all duration-300 hover:scale-105 active:scale-95">
+                <x-authentication-card-logo />
+            </div>
         </div>
 
         {{-- Card Section --}}
-        <div class="max-w-[480px] w-full p-6 sm:p-10 brand-card z-10" x-data="{ loading: false }">
+        <div class="max-w-[480px] w-full p-6 sm:p-10 brand-card z-10">
             <h1 class="text-brand-green text-center text-2xl font-bold font-playfair mb-6 uppercase">RESET PASSWORD</h1>
 
             @include('auth.includes.alerts')
 
-            <form method="POST" action="{{ route('password.update') }}" novalidate @submit="loading = true" class="space-y-6">
+            <form method="POST" action="{{ route('password.update') }}" novalidate class="space-y-6">
                 @csrf
                 <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
@@ -39,9 +37,8 @@
                 />
 
                 <div class="!mt-8">
-                    <x-button.primary x-bind:disabled="loading" class="w-full">
-                        <span x-show="!loading">Reset Password</span>
-                        <span x-show="loading" style="display: none;">Resetting...</span>
+                    <x-button.primary class="w-full">
+                        Reset Password
                     </x-button.primary>
                 </div>
             </form>

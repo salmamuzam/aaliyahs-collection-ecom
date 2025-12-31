@@ -2,15 +2,13 @@
     <div class="brand-auth-wrapper">
         {{-- Logo Section --}}
         <div class="max-w-[480px] w-full mb-4 text-center">
-            <a href="/" wire:navigate>
-                <div class="flex justify-center transition-all duration-300 hover:scale-105 active:scale-95">
-                    <x-authentication-card-logo />
-                </div>
-            </a>
+            <div class="flex justify-center transition-all duration-300 hover:scale-105 active:scale-95">
+                <x-authentication-card-logo />
+            </div>
         </div>
 
         {{-- Card Section --}}
-        <div x-data="{ recovery: false, loading: false }" class="max-w-[480px] w-full p-6 sm:p-10 brand-card z-10">
+        <div x-data="{ recovery: false }" class="max-w-[480px] w-full p-6 sm:p-10 brand-card z-10">
             <h1 class="text-brand-green text-center text-2xl font-bold font-playfair mb-2 uppercase">TWO FACTOR CONFIRMATION</h1>
 
             <div class="mb-4 text-base text-brand-black font-sans text-center mt-2" x-show="! recovery">
@@ -23,17 +21,17 @@
 
             @include('auth.includes.alerts')
 
-            <form method="POST" action="{{ route('two-factor.login') }}" novalidate @submit="loading = true" class="space-y-6">
+            <form method="POST" action="{{ route('two-factor.login') }}" novalidate class="space-y-6">
                 @csrf
 
                 {{-- Code --}}
                 <div x-show="! recovery">
-                    <x-form.input label="Code" name="code" type="text" inputmode="numeric" autofocus x-ref="code" autocomplete="one-time-code" placeholder="Enter code" />
+                    <x-form.input label="Code" name="code" type="text" inputmode="numeric" autofocus x-ref="code" autocomplete="one-time-code" placeholder="Enter code" required />
                 </div>
 
                 {{-- Recovery Code --}}
                 <div x-show="recovery" style="display: none;">
-                    <x-form.input label="Recovery Code" name="recovery_code" type="text" x-ref="recovery_code" autocomplete="one-time-code" placeholder="Enter recovery code" />
+                    <x-form.input label="Recovery Code" name="recovery_code" type="text" x-ref="recovery_code" autocomplete="one-time-code" placeholder="Enter recovery code" required />
                 </div>
 
                 <div class="flex items-center justify-end mt-4">
@@ -58,9 +56,8 @@
                 </div>
 
                 <div class="!mt-8">
-                    <x-button.primary x-bind:disabled="loading">
-                        <span x-show="!loading">Log in</span>
-                        <span x-show="loading" style="display: none;">Logging in...</span>
+                    <x-button.primary>
+                        Log in
                     </x-button.primary>
                 </div>
             </form>

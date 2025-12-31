@@ -1,20 +1,25 @@
 <x-layouts.guest>
     <div class="brand-auth-wrapper">
         
-        {{-- Hero Header --}}
-        @include('auth.includes.header', [
-            'title' => 'Sign In',
-            'subtitle' => "Don't have an account?",
-            'link' => ['url' => route('register'), 'text' => 'Register here']
-        ])
+        {{-- Logo Section --}}
+        @include('auth.includes.header')
 
         {{-- Main Card --}}
-        <div class="max-w-[480px] w-full p-6 sm:p-10 brand-card z-10" x-data="{ loading: false }">
+        <div class="max-w-[480px] w-full p-6 sm:p-10 brand-card z-10">
+            
+            {{-- Header Text --}}
+            <div class="w-full mb-8 text-center">
+                <h1 class="text-brand-green text-2xl md:text-3xl brand-heading-playfair mb-3 uppercase">Sign In</h1>
+                <p class="text-brand-black text-base font-sans">
+                    Don't have an account?
+                    <a href="{{ route('register') }}" wire:navigate class="brand-link ml-1">Register here</a>
+                </p>
+            </div>
             
             @include('auth.includes.alerts')
 
             {{-- Standard POST ensures validation errors are 100% reliable and visible --}}
-            <form method="POST" action="{{ route('login') }}" novalidate @submit="loading = true" class="space-y-6">
+            <form method="POST" action="{{ route('login') }}" novalidate class="space-y-6">
                 @csrf
 
                 {{-- Email or Username --}}
@@ -49,7 +54,7 @@
                         </label>
                     </div>
                     @if (Route::has('password.request'))
-                        <div class="text-sm">
+                        <div class="text-base">
                             <a href="{{ route('password.request') }}" wire:navigate class="brand-link">
                                 Forgot your password?
                             </a>
@@ -58,9 +63,8 @@
                 </div>
 
                 <div class="!mt-8">
-                    <x-button.primary x-bind:disabled="loading" class="w-full">
-                        <span x-show="!loading">Sign in</span>
-                        <span x-show="loading" style="display: none;">Signing in...</span>
+                    <x-button.primary class="w-full">
+                        Sign in
                     </x-button.primary>
                 </div>
 

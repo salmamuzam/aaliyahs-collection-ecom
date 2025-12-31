@@ -29,6 +29,13 @@ Route::get('auth/google/callback', [GoogleController::class, 'googlecallback']);
 // ============================================
 require __DIR__ . '/auth.php';
 
+// Custom Registration Route (Overrides Fortify)
+Route::post('/register', [\App\Http\Controllers\RegisteredUserController::class, 'store'])
+    ->middleware(['guest:' . config('fortify.guard')])
+    ->name('register');
+
+
+
 // ============================================
 // Include Admin Routes
 // ============================================

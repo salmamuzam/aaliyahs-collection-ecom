@@ -4,6 +4,26 @@
     // Simple, reliable error detection
     $fieldHasError = $hasError ?? $errors->has($name);
     $displayError = $errorMessage ?? $errors->first($name);
+
+    // Clean up technical messages
+    if ($displayError) {
+        $lowered = strtolower($displayError);
+        
+        // 1. Required field
+        if (str_contains($lowered, 'required')) {
+            $displayError = 'This field is required!';
+        }
+        
+        // 2. Incorrect password (match our records, incorrect, invalid)
+        elseif (str_contains($lowered, 'incorrect') || str_contains($lowered, 'invalid') || str_contains($lowered, 'match') || str_contains($lowered, 'does not match')) {
+            // Distinguish between login mismatch and confirmation mismatch
+            if (str_contains($lowered, 'confirmation') || str_contains($lowered, 'match')) {
+                 $displayError = 'The password does not match!';
+            } else {
+                 $displayError = 'The password is incorrect!';
+            }
+        }
+    }
 @endphp
 
 <div>
@@ -25,6 +45,7 @@
         </div>
     </div>
     @if($displayError)
-        <span class="text-brand-burgundy text-sm mt-1 block">{{ $displayError }}</span>
+        <span class="text-brand-burgundy text-base mt-1 block">{{ $displayError }}</span>
     @endif
 </div>
+

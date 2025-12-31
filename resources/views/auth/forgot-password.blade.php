@@ -1,18 +1,23 @@
 <x-layouts.guest>
     <div class="brand-auth-wrapper">
         
-        {{-- Hero Header --}}
-        @include('auth.includes.header', [
-            'title' => 'Forgot Password',
-            'subtitle' => "No problem. Just let us know your email address and we will email you a password reset link.",
-        ])
+        {{-- Logo Section --}}
+        @include('auth.includes.header')
 
         {{-- Card Section --}}
-        <div class="max-w-[480px] w-full p-6 sm:p-10 brand-card z-10" x-data="{ loading: false }">
+        <div class="max-w-[480px] w-full p-6 sm:p-10 brand-card z-10">
+            
+            {{-- Header Text --}}
+            <div class="w-full mb-8 text-center">
+                <h1 class="text-brand-green text-2xl md:text-3xl brand-heading-playfair mb-3 uppercase">Forgot Password</h1>
+                <p class="text-brand-black text-base font-sans">
+                    No problem. Just let us know your email address and we will email you a password reset link.
+                </p>
+            </div>
             
             @include('auth.includes.alerts')
 
-            <form method="POST" action="{{ route('password.email') }}" novalidate @submit="loading = true" class="space-y-6">
+            <form method="POST" action="{{ route('password.email') }}" novalidate class="space-y-6">
                 @csrf
 
                 {{-- Email --}}
@@ -23,9 +28,8 @@
                 </x-form.input>
 
                 <div class="!mt-8">
-                    <x-button.primary x-bind:disabled="loading" class="w-full">
-                        <span x-show="!loading">Email Password Reset Link</span>
-                        <span x-show="loading" style="display: none;">Sending link...</span>
+                    <x-button.primary class="w-full">
+                        Email Password Reset Link
                     </x-button.primary>
                 </div>
 
