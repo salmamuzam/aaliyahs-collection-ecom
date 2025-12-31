@@ -38,13 +38,13 @@ class CartManagement
         // if product is not available in cookie
         // we need to add the product to the cookie
         else {
-            $product = Product::where('id', $product_id)->first(['id', 'name', 'price', 'image']);
+            $product = Product::where('id', $product_id)->first(['id', 'name', 'price', 'images']);
             // if product found, add item in cart items
             if ($product) {
                 $cart_items[] = [
                     'product_id' => $product_id,
                     'name' => $product->name,
-                    'image' => $product->image,
+                    'image' => $product->images[0] ?? 'uploads/placeholder.png',
                     'quantity' => 1,
                     'unit_amount' => $product->price,
                     'total_amount' => $product->price
@@ -87,13 +87,13 @@ class CartManagement
         // if product is not available in cookie
         // we need to add the product to the cookie
         else {
-            $product = Product::where('id', $product_id)->first(['id', 'name', 'price', 'image']);
+            $product = Product::where('id', $product_id)->first(['id', 'name', 'price', 'images']);
             // if product found, add item in cart items
             if ($product) {
                 $cart_items[] = [
                     'product_id' => $product_id,
                     'name' => $product->name,
-                    'image' => $product->image,
+                    'image' => $product->images[0] ?? 'uploads/placeholder.png',
                     'quantity' => $qty,
                     'unit_amount' => $product->price,
                     'total_amount' => $product->price

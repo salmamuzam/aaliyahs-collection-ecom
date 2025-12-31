@@ -1,148 +1,72 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+<x-layouts.guest>
+    <div class="brand-auth-wrapper">
+        
+        {{-- Hero Header --}}
+        @include('auth.includes.header', [
+            'title' => 'Sign In',
+            'subtitle' => "Don't have an account?",
+            'link' => ['url' => route('register'), 'text' => 'Register here']
+        ])
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/navbar.js'])
-
-    <!-- Styles -->
-    @livewireStyles
-</head>
-<body class="font-sans antialiased bg-[#F3EDE8] flex flex-col min-h-screen">
-    <x-banner />
-    
-    {{-- Include the navbar --}}
-    @include('layouts.partials.navbar')
-
-    <main class="w-full flex-grow">
-        <div class="w-full flex flex-col items-center justify-center py-8 px-4 sm:px-6 lg:px-8">
+        {{-- Main Card --}}
+        <div class="max-w-[480px] w-full p-6 sm:p-10 brand-card z-10" x-data="{ loading: false }">
             
-            {{-- Logo Section --}}
-            <div class="max-w-[480px] w-full mb-4 text-center">
-                <a href="/">
-                    <div class="flex justify-center">
-                        <x-authentication-card-logo />
+            @include('auth.includes.alerts')
+
+            {{-- Standard POST ensures validation errors are 100% reliable and visible --}}
+            <form method="POST" action="{{ route('login') }}" novalidate @submit="loading = true" class="space-y-6">
+                @csrf
+
+                {{-- Email or Username --}}
+                <x-form.input 
+                    label="Email or Username" 
+                    name="login" 
+                    required 
+                    :value="old('login')" 
+                    autofocus 
+                    autocomplete="username" 
+                    placeholder="Enter email or username"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    </svg>
+                </x-form.input>
+
+                {{-- Password --}}
+                <x-form.password-input 
+                    label="Password" 
+                    name="password" 
+                    required 
+                    autocomplete="current-password" 
+                    placeholder="Enter password" 
+                />
+
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                    <div class="flex items-center">
+                        <input id="remember-me" name="remember" type="checkbox" class="h-4 w-4 shrink-0 text-brand-green focus:ring-brand-green border-slate-300 rounded" />
+                        <label for="remember-me" class="ml-3 block text-base font-sans text-brand-black">
+                            Remember me
+                        </label>
                     </div>
-                </a>
-            </div>
-
-            {{-- Card Section --}}
-            <div class="max-w-[480px] w-full p-6 sm:p-8 rounded-md bg-white border border-gray-300 shadow-sm z-10">
-                <h1 class="text-[#3E5641] text-center text-2xl font-bold font-playfair mb-2 uppercase">SIGN IN</h1>
-                
-                {{-- Register Link (Moved) --}}
-                <p class="text-[#1A1A1A] text-center text-base font-sans mb-6">
-                    Don't have an account? 
-                    <a href="{{ route('register') }}" class="text-[#3E5641] hover:underline ml-1 font-semibold font-sans">Register here</a>
-                </p>
-
-                <x-validation-errors class="mb-4" />
-
-                @session('status')
-                    <div class="mb-4 text-sm font-medium text-green-600">
-                        {{ $value }}
-                    </div>
-                @endsession
-
-                <form method="POST" action="{{ route('login') }}" class="space-y-6">
-                    @csrf
-
-                    {{-- Email or Username --}}
-                    <div>
-                        <label class="text-[#1A1A1A] text-base font-bold font-sans mb-2 block">Email or Username</label>
-                        <div class="relative flex items-center">
-                            <input name="login" type="text" required value="{{ old('login') }}" autofocus autocomplete="username"
-                                class="w-full text-[#1A1A1A] text-base font-sans border border-slate-300 px-4 py-3 pr-12 rounded-md focus:ring-[#3E5641] focus:border-[#3E5641] outline-none transition-all placeholder-gray-400"
-                                placeholder="Enter email or username" />
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 absolute right-4 text-[#bbb]">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                            </svg>
+                    @if (Route::has('password.request'))
+                        <div class="text-sm">
+                            <a href="{{ route('password.request') }}" wire:navigate class="brand-link">
+                                Forgot your password?
+                            </a>
                         </div>
-                    </div>
+                    @endif
+                </div>
 
-                    {{-- Password --}}
-                    <div>
-                        <label class="text-[#1A1A1A] text-base font-bold font-sans mb-2 block">Password</label>
-                        <div class="relative flex items-center" x-data="{ show: false }">
-                            <input name="password" :type="show ? 'text' : 'password'" type="password" required autocomplete="current-password"
-                                class="w-full text-[#1A1A1A] text-base font-sans border border-slate-300 px-4 py-3 pr-12 rounded-md focus:ring-[#3E5641] focus:border-[#3E5641] outline-none transition-all placeholder-gray-400"
-                                placeholder="Enter password" />
-                            
-                            {{-- Toggle Icons --}}
-                            <div @click="show = !show" class="absolute right-4 cursor-pointer text-[#bbb] hover:text-[#3E5641] transition-colors">
-                                {{-- Closed Eye (Hide) - Initially Visible --}}
-                                <svg x-show="!show" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
-                                </svg>
-                                
-                                {{-- Open Eye (Show) - When Clicked --}}
-                                <svg x-show="show" style="display: none;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
+                <div class="!mt-8">
+                    <x-button.primary x-bind:disabled="loading" class="w-full">
+                        <span x-show="!loading">Sign in</span>
+                        <span x-show="loading" style="display: none;">Signing in...</span>
+                    </x-button.primary>
+                </div>
 
-                    <div class="flex flex-wrap items-center justify-between gap-4">
-                        <div class="flex items-center">
-                            <input id="remember-me" name="remember" type="checkbox" class="h-4 w-4 shrink-0 text-[#3E5641] focus:ring-[#3E5641] border-slate-300 rounded" />
-                            <label for="remember-me" class="ml-3 block text-base font-sans text-[#1A1A1A]">
-                                Remember me
-                            </label>
-                        </div>
-                        @if (Route::has('password.request'))
-                            <div class="text-sm">
-                                <a href="{{ route('password.request') }}" class="text-[#3E5641] hover:underline font-semibold font-sans">
-                                    Forgot your password?
-                                </a>
-                            </div>
-                        @endif
-                    </div>
+                @include('auth.includes.social-login')
 
-                    <div class="!mt-8">
-                        <button type="submit" class="w-full py-2.5 px-4 text-[15px] font-medium tracking-wide rounded-md text-white bg-[#3E5641] hover:bg-[#2c3e2f] focus:outline-none transition-colors cursor-pointer shadow-md">
-                            Sign in
-                        </button>
-                    </div>
-
-                    {{-- OR Divider --}}
-                    <div class="flex items-center gap-4 my-4">
-                        <hr class="w-full border-gray-300" />
-                        <p class="text-sm text-center text-gray-500 font-medium">OR</p>
-                        <hr class="w-full border-gray-300" />
-                    </div>
-
-                    {{-- Google Button --}}
-                    <div>
-                        <a href="{{ url('auth/google') }}" class="block w-full">
-                            <button type="button" class="w-full flex items-center justify-center gap-3 py-2.5 px-4 border border-gray-300 rounded-md bg-white hover:bg-gray-50 transition-colors shadow-sm">
-                                <img src="{{ asset('images/icons/google.png') }}" alt="google" class="w-5 h-5" onerror="this.src='/images/icons/google.png';"> 
-                                <span class="text-slate-700 font-medium">Log in with Google</span>
-                            </button>
-                        </a>
-                    </div>
-
-                </form>
-            </div>
+            </form>
         </div>
-    </main>
-
-    {{-- Include the footer --}}
-    @include('layouts.partials.footer')
-    
-    @stack('modals')
-    @livewireScripts
-</body>
-</html>
-
-
+    </div>
+</x-layouts.guest>

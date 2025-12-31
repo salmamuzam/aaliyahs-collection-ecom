@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('livewire:navigated', () => {
         let dropdownToggle = document.getElementById('dropdownToggle');
         let dropdownMenu = document.getElementById('dropdownMenu');
 

@@ -30,7 +30,7 @@ $width = match ($width) {
             class="absolute z-50 mt-2 {{ $width }} rounded-md shadow-lg {{ $alignmentClasses }} {{ $dropdownClasses }}"
             style="display: none;"
             @click="open = false">
-        <div class="rounded-md ring-1 ring-[#1A1A1A] ring-opacity-5 {{ $contentClasses }}">
+        <div class="rounded-md ring-1 ring-brand-black ring-opacity-5 {{ $contentClasses }}">
             {{ $content }}
         </div>
     </div>

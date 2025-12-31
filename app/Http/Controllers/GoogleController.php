@@ -32,6 +32,9 @@ class GoogleController extends Controller
             if ($finduser) {
 
                 Auth::login($finduser);
+                if ($finduser->user_type === 'admin') {
+                    return redirect()->route('admin.overview');
+                }
                 // Then, send the user to the dashboard
                 return redirect()->intended('/');
 
@@ -94,6 +97,9 @@ class GoogleController extends Controller
                 ]);
 
                 Auth::login($newUser);
+                if ($newUser->user_type === 'admin') {
+                    return redirect()->route('admin.overview');
+                }
                 // Then, it will direct the user to the dashboard
                 return redirect()->intended('/');
             }

@@ -1,4 +1,4 @@
-<footer class="px-10 py-10 tracking-wide bg-[#822659]">
+<footer class="px-10 py-10 tracking-wide bg-brand-burgundy">
     <div class="max-w-screen-xl mx-auto">
         <div class="flex flex-wrap items-center gap-6 md:justify-between max-md:flex-col">
             <div>

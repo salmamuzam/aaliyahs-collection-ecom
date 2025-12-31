@@ -20,12 +20,7 @@ class HomeController extends Controller
         if (Auth::user()->user_type == 'customer') {
             return redirect('/');
         } else {
-            return view('admin.home');
+            return redirect()->route('admin.overview');
         }
-    }
-
-    public function page()
-    {
-        return view('adminpage');
     }
 }

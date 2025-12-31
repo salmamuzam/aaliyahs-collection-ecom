@@ -1,0 +1,79 @@
+<div class="brand-container pb-8 pt-24 lg:pt-8">
+    <div class="brand-card p-6 sm:p-10">
+        <div class="mb-8 flex items-center justify-between">
+            <h2 class="text-2xl text-brand-teal brand-heading-playfair">
+                {{ $isView ? 'View' : ($category ? 'Edit' : 'Create') }} Category
+            </h2>
+            <a wire:navigate href="{{ route('categories') }}" class="px-5 py-2.5 text-base font-semibold text-white bg-brand-green rounded-lg hover:bg-opacity-90 transition-colors shadow-sm">
+                Back
+            </a>
+        </div>
+
+        <form wire:submit="saveCategory" class="grid sm:grid-cols-2 gap-4 text-brand-black">
+            {{-- Name Input --}}
+            <div class="col-span-full">
+                <label class="text-brand-black text-base font-medium mb-2 block">Name</label>
+                <input {{ $isView ? 'disabled' : '' }} wire:model="name" type="text"
+                    class="brand-form-input"
+                    placeholder="Enter category name" />
+                @include('livewire.includes.form-error', ['field' => 'name'])
+            </div>
+
+            {{-- Existing Image --}}
+            @if($category && $category->image)
+                <div class="col-span-full">
+                    <label class="text-brand-black text-base font-medium mb-2 block">Current Image</label>
+                    <img class="h-40 object-cover rounded-md shadow-sm border border-gray-200" src="{{ Storage::url($category->image) }}" alt="Category Image">
+                </div>
+            @endif
+
+            {{-- Upload Image --}}
+            @if(!$isView)
+                <div class="col-span-full">
+                    <label class="text-brand-black text-base font-medium mb-2 block">Upload Image</label>
+                    <input wire:model="image" type="file"
+                        class="brand-form-input file:mr-4 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-brand-green file:text-white hover:file:bg-opacity-90" />
+                    <p class="mt-2 text-xs text-gray-500">JPG, JPEG, PNG, SVG, and WEBP supported.</p>
+                    
+                    @if($image)
+                        @php
+                            $allowedExtensions = ['jpg', 'jpeg', 'png', 'svg', 'webp'];
+                            $extension = strtolower($image->getClientOriginalExtension());
+                        @endphp
+                        
+                        @if(in_array($extension, $allowedExtensions))
+                            <div class="mt-4">
+                                <p class="text-base font-medium text-brand-black mb-2">Image Preview</p>
+                                <img src="{{ $image->temporaryUrl() }}" class="h-40 object-cover rounded-md shadow-sm">
+                            </div>
+                        @else
+                            <div class="mt-4">
+                                <p class="text-base font-medium text-brand-burgundy">Invalid file type. Please upload JPG, JPEG, PNG, SVG, or WEBP images only.</p>
+                            </div>
+                        @endif
+                    @endif
+
+                    @include('livewire.includes.form-error', ['field' => 'image'])
+                </div>
+            @endif
+
+            @if(!$isView)
+                <div class="col-span-full mt-4">
+                        <button type="submit"
+                        class="text-white bg-brand-green hover:bg-opacity-90 text-base rounded-md font-medium px-4 py-2.5 cursor-pointer w-full shadow-md hover:shadow-lg transition-all flex items-center justify-center">
+                        @if($category)
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mr-2 w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                            </svg>
+                        @else
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mr-2 w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                            </svg>
+                        @endif
+                        {{ $category ? 'Update Category' : 'Create Category' }}
+                    </button>
+                </div>
+            @endif
+        </form>
+    </div>
+</div>

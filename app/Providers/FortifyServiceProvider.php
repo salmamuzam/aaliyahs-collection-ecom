@@ -37,20 +37,32 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
         Fortify::redirectUserForTwoFactorAuthenticationUsing(RedirectIfTwoFactorAuthenticatable::class);
-        Fortify::authenticateUsing(function(Request $request){
+        Fortify::authenticateUsing(function (Request $request) {
             // Get the user from login
-            // If there is a match with the email or username:
             $user = User::where("email", $request->login)
-                        ->orWhere("username", $request->login)
-                        ->first();
-            // If password is correct:
-            if($user && Hash::check($request->password, $user->password)) {
+                ->orWhere("username", $request->login)
+                ->first();
+
+            // 1. If user doesn't exist:
+            if (!$user) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'login' => ['Please check your email or username and try again.'],
+                ]);
+            }
+
+            // 2. If password matches:
+            if (Hash::check($request->password, $user->password)) {
                 return $user;
             }
+
+            // 3. User exists but password is wrong:
+            throw \Illuminate\Validation\ValidationException::withMessages([
+                'password' => ['The password you entered is incorrect. Please try again.'],
+            ]);
         });
 
         RateLimiter::for('login', function (Request $request) {
-            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
+            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())) . '|' . $request->ip());
 
             return Limit::perMinute(5)->by($throttleKey);
         });
@@ -69,6 +81,6 @@ class FortifyServiceProvider extends ServiceProvider
             // If it matches, it returns true
             // If not, it returns false
             return Hash::check($password, $user->password);
-});
+        });
     }
 }

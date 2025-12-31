@@ -1,5 +1,5 @@
-<header class="min-h-[60px] tracking-wide relative z-50">
-    <section class="bg-[#822659] min-h-[40px] px-4 py-2 sm:px-10 flex items-center max-sm:flex-col">
+<header class="min-h-[60px] tracking-wide relative z-50" x-data="{ open: false }">
+    <section class="bg-brand-burgundy min-h-[40px] px-4 py-2 sm:px-10 flex items-center max-sm:flex-col">
         <button type="button" class="text-sm text-white">
             <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" fill="#fff" class="inline-block mr-3"
                 viewBox="0 0 482.6 482.6">
@@ -21,18 +21,19 @@
         </button>
         {{-- Only visible in guest view --}}
         @guest
-        @include('layouts.partials.navbar-right-guest')
+        @include('components.layouts.partials.navbar-right-guest')
         @endguest
     </section>
 
-    <div class="flex flex-wrap items-center justify-between py-3 px-4 sm:px-10 bg-[#004D61] lg:gap-y-4 gap-y-6 gap-x-4">
+    <div class="flex flex-wrap items-center justify-between py-3 px-4 sm:px-10 bg-brand-teal lg:gap-y-4 gap-y-6 gap-x-4">
         <a href="/" wire:navigate><img src="{{ asset('images/icons/white_logo.png')}}"
                 alt="Aaliyah's Collection Logo" class="h-10">
         </a>
 
         <div id="collapseMenu"
+            :class="{ 'max-lg:!block': open }"
             class="max-lg:hidden lg:!flex lg:items-center max-lg:before:fixed max-lg:before:bg-black max-lg:before:opacity-40 max-lg:before:inset-0 max-lg:before:z-50">
-            <button id="toggleClose"
+            <button id="toggleClose" @click="open = false"
                 class="lg:hidden fixed top-2 right-4 z-[100] rounded-full bg-white w-9 h-9 flex items-center justify-center border border-gray-100 cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 fill-black" viewBox="0 0 320.591 320.591">
                     <path
@@ -45,39 +46,31 @@
             </button>
 
             <ul
-                class="lg:!flex lg:gap-x-10 max-lg:space-y-3 max-lg:fixed max-lg:bg-[#004D61] max-lg:w-2/3 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:px-10 max-lg:py-4 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50">
+                class="lg:!flex lg:gap-x-10 max-lg:space-y-3 max-lg:fixed max-lg:bg-brand-teal max-lg:w-2/3 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:px-10 max-lg:py-4 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50">
                 <li class="hidden mb-6 max-lg:block">
-                    <a href="javascript:void(0)"><img src="{{ asset('images/icons/white_logo.png') }}"
+                    <a href="{{ url('/') }}" wire:navigate><img src="{{ asset('images/icons/white_logo.png') }}"
                             alt="Aaliyah's Collection Logo" class="w-20" />
                     </a>
                 </li>
 
                 {{-- Home --}}
-                <li class="max-lg:border-b max-lg:border-gray-100 max-lg:py-3 relative
-                           lg:after:absolute lg:after:bg-white lg:after:h-[2px] lg:after:block lg:after:-bottom-4 lg:after:transition-all lg:after:duration-300 lg:after:w-0 lg:hover:after:w-full
-                           {{ request()->is('/') ? 'lg:after:w-full' : '' }}">
-                    <a wire:navigate href="{{ url('/') }}" class="text-white block text-[15px] font-normal">Home</a>
+                <li class="max-lg:border-b max-lg:border-gray-100 max-lg:py-3">
+                    <a wire:navigate href="{{ url('/') }}" @class(['brand-nav-link', 'brand-nav-link-active' => request()->is('/')])>Home</a>
                 </li>
 
                 {{-- Shop --}}
-                <li class="max-lg:border-b max-lg:border-gray-100 max-lg:py-3 relative
-                           lg:after:absolute lg:after:bg-white lg:after:h-[2px] lg:after:block lg:after:-bottom-4 lg:after:transition-all lg:after:duration-300 lg:after:w-0 lg:hover:after:w-full
-                           {{ request()->is('shop') ? 'lg:after:w-full' : '' }}">
-                    <a wire:navigate  href="{{ url('/shop') }}" class="text-white block text-[15px] font-normal">Shop</a>
+                <li class="max-lg:border-b max-lg:border-gray-100 max-lg:py-3">
+                    <a wire:navigate  href="{{ url('/shop') }}" @class(['brand-nav-link', 'brand-nav-link-active' => request()->is('shop')])>Shop</a>
                 </li>
 
                 {{-- Wishlist --}}
-                <li class="max-lg:border-b max-lg:border-gray-100 max-lg:py-3 relative
-                           lg:after:absolute lg:after:bg-white lg:after:h-[2px] lg:after:block lg:after:-bottom-4 lg:after:transition-all lg:after:duration-300 lg:after:w-0 lg:hover:after:w-full
-                           {{ request()->is('wishlist') ? 'lg:after:w-full' : '' }}">
-                    <a wire:navigate href="{{ url('/wishlist') }}" class="text-white block text-[15px] font-normal">Wishlist</a>
+                <li class="max-lg:border-b max-lg:border-gray-100 max-lg:py-3">
+                    <a wire:navigate href="{{ url('/wishlist') }}" @class(['brand-nav-link', 'brand-nav-link-active' => request()->is('wishlist')])>Wishlist</a>
                 </li>
 
                 {{-- Cart --}}
-                <li class="max-lg:border-b max-lg:border-gray-100 max-lg:py-3 relative
-                           lg:after:absolute lg:after:bg-white lg:after:h-[2px] lg:after:block lg:after:-bottom-4 lg:after:transition-all lg:after:duration-300 lg:after:w-0 lg:hover:after:w-full
-                           {{ request()->is('cart') ? 'lg:after:w-full' : '' }}">
-                    <a wire:navigate href="{{ url('/cart') }}" class="text-white block text-[15px] font-normal">Cart</a>
+                <li class="max-lg:border-b max-lg:border-gray-100 max-lg:py-3">
+                    <a wire:navigate href="{{ url('/cart') }}" @class(['brand-nav-link', 'brand-nav-link-active' => request()->is('cart')])>Cart</a>
                 </li>
             </ul>
         </div>
@@ -86,23 +79,18 @@
             <ul class="flex space-x-4">
             {{-- Only visible when user is logged in --}}
               @auth()
-              @include('layouts.partials.navbar-right-auth')
+              @include('components.layouts.partials.navbar-right-auth')
               @endauth
                 <li
                     class="mt-1.5 relative px-1 lg:hover:after:absolute lg:after:bg-white lg:after:w-0 lg:hover:after:w-full lg:hover:after:h-[2px] lg:after:block lg:after:-bottom-4 lg:after:transition-all lg:after:duration-300">
-                    <span class="relative">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
-                            class="inline-block cursor-pointer fill-white" viewBox="0 0 512 512">
-                            <path
-                                d="M164.96 300.004h.024c.02 0 .04-.004.059-.004H437a15.003 15.003 0 0 0 14.422-10.879l60-210a15.003 15.003 0 0 0-2.445-13.152A15.006 15.006 0 0 0 497 60H130.367l-10.722-48.254A15.003 15.003 0 0 0 105 0H15C6.715 0 0 6.715 0 15s6.715 15 15 15h77.969c1.898 8.55 51.312 230.918 54.156 243.71C131.184 280.64 120 296.536 120 315c0 24.812 20.188 45 45 45h272c8.285 0 15-6.715 15-15s-6.715-15-15-15H165c-8.27 0-15-6.73-15-15 0-8.258 6.707-14.977 14.96-14.996zM477.114 90l-51.43 180H177.032l-40-180zM150 405c0 24.813 20.188 45 45 45s45-20.188 45-45-20.188-45-45-45-45 20.188-45 45zm45-15c8.27 0 15 6.73 15 15s-6.73 15-15 15-15-6.73-15-15 6.73-15 15-15zm167 15c0 24.813 20.188 45 45 45s45-20.188 45-45-20.188-45-45-45-45 20.188-45 45zm45-15c8.27 0 15 6.73 15 15s-6.73 15-15 15-15-6.73-15-15 6.73-15 15-15zm0 0"
-                                data-original="#000000"></path>
-                        </svg>
-                        <span
-                            class="absolute left-auto px-1 py-0 -ml-1 text-xs text-white rounded-full bg-rose-500 -top-1">0</span>
-                    </span>
+                    <livewire:guest.favorites-icon />
+                </li>
+                <li
+                    class="mt-1.5 relative px-1 lg:hover:after:absolute lg:after:bg-white lg:after:w-0 lg:hover:after:w-full lg:hover:after:h-[2px] lg:after:block lg:after:-bottom-4 lg:after:transition-all lg:after:duration-300">
+                    <livewire:guest.cart-icon />
                 </li>
             </ul>
-            <button id="toggleOpen" class="ml-6 cursor-pointer lg:hidden">
+            <button id="toggleOpen" @click="open = !open" class="ml-6 cursor-pointer lg:hidden">
                 <svg class="w-7 h-7" fill="#fff" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd"
                         d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"

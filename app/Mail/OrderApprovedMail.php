@@ -11,14 +11,14 @@ use Illuminate\Queue\SerializesModels;
 
 class OrderApprovedMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    public $order;
 
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($order)
     {
-        //
+        $this->order = $order;
     }
 
     /**
@@ -27,7 +27,7 @@ class OrderApprovedMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Order Approved Mail',
+            subject: 'Your Order Has Been Approved',
         );
     }
 
@@ -37,7 +37,7 @@ class OrderApprovedMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            markdown: 'emails.orders.approved',
         );
     }
 
