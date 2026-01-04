@@ -27,11 +27,14 @@ class CategoryResource extends JsonResource
                     return [
                         'id' => (string) $product->id,
                         'name' => $product->name,
+                        'description' => $product->description,
                         'price' => $product->price,
                         'images' => $product->images,
+                        'created_at' => $product->created_at,
+                        'updated_at' => $product->updated_at,
                     ];
                 }),
-            ],
+            ]
         ];
     }
 }
