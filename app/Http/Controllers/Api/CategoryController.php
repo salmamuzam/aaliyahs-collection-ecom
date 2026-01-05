@@ -16,11 +16,18 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            //Relationship with products
-            $categories = Category::with('products')->get();
+            $query = Category::with('products');
+            // search functionality
+            if ($request->has('search')) {
+                $search = $request->search;
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%");
+                });
+            }
+            $categories = $query->paginate(10);
             if ($categories) {
                 return ResponseHelper::success(message: 'Categories fetched successfully!', data: CategoryResource::collection($categories), statusCode: 200);
             }
@@ -30,10 +37,6 @@ class CategoryController extends Controller
             return ResponseHelper::error(message: 'Unable to fetch categories! Please try again!', statusCode: 500);
         }
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(CategoryRequest $request)
     {
         try {

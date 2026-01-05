@@ -16,10 +16,33 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $products = Product::with('category')->paginate(10);
+            $query = Product::with('category');
+            // search functionality
+            if ($request->has('search')) {
+                $search = $request->search;
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%")
+                        ->orWhere('description', 'like', "%{$search}%")
+                        ->orWhere('price', 'like', "%{$search}%")
+                        ->orWhereHas(
+                            'category',
+                            function ($categoryQuery) use ($search) {
+                                $categoryQuery->where('name', 'like', "%{$search}%");
+                            }
+                        );
+                });
+            }
+            // Filter by category name
+            if ($request->has('category_name')) {
+                $query->whereHas('category', function ($q) use ($request) {
+                    $q->where('name', $request->category_name);
+                });
+            }
+
+            $products = $query->paginate(10);
             if ($products) {
                 return ResponseHelper::success(message: 'Products fetched successfully!', data: ProductResource::collection($products), statusCode: 200);
             }
