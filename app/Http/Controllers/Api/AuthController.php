@@ -94,7 +94,7 @@ class AuthController extends Controller
                 $user->currentAccessToken()->delete();
                 return ResponseHelper::success(message: 'You have been logged out successfully!', statusCode: 200);
             }
-            return ResponseHelper::success(message: 'Unable to logout due to invalid token', statusCode: 200);
+            return ResponseHelper::error(message: 'Unable to logout due to invalid token', statusCode: 401);
         } catch (Exception $e) {
             Log::error('Unable to logout due to some exception: ' . $e->getMessage() . '-Line No: ' . $e->getLine());
             return ResponseHelper::error(message: 'Unable to logout! Please try again!', statusCode: 500);

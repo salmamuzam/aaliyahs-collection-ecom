@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Helpers\ResponseHelper;
+use App\Http\Requests\CategoryRequest;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use App\Http\Resources\CategoryResource;
 
 class CategoryController extends Controller
 {
@@ -19,7 +21,7 @@ class CategoryController extends Controller
         try {
             $categories = Category::all();
             if ($categories) {
-                return ResponseHelper::success(message: 'Categories fetched successfully!', data: $categories, statusCode: 201);
+                return ResponseHelper::success(message: 'Categories fetched successfully!', data: CategoryResource::collection($categories), statusCode: 200);
             }
             return ResponseHelper::error(message: 'Unable to fetch categories! Please try again!', statusCode: 500);
         } catch (Exception $e) {
@@ -31,9 +33,25 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        //
+        try {
+            $data = $request->validated();
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('uploads/categories'), $imageName);
+                $data['image'] = 'uploads/categories/' . $imageName;
+            }
+            $category = Category::create($data);
+            if ($category) {
+                return ResponseHelper::success(message: 'Category has been created successfully!', data: new CategoryResource($category), statusCode: 201);
+            }
+            return ResponseHelper::error(message: 'Unable to create category! Please try again!', statusCode: 500);
+        } catch (Exception $e) {
+            Log::error('Unable to create category: ' . $e->getMessage() . '-Line No: ' . $e->getLine());
+            return ResponseHelper::error(message: 'Unable to create category! Please try again!', statusCode: 500);
+        }
     }
 
     /**

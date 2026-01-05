@@ -15,26 +15,8 @@ class CategoryResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => (string) $this->id,
-            'attributes' => [
-                'name' => $this->name,
-                'image' => $this->image,
-                'created_at' => $this->created_at,
-                'updated_at' => $this->updated_at,
-            ],
-            'relationships' => [
-                'products' => $this->products->map(function ($product) {
-                    return [
-                        'id' => (string) $product->id,
-                        'name' => $product->name,
-                        'description' => $product->description,
-                        'price' => $product->price,
-                        'images' => $product->images,
-                        'created_at' => $product->created_at,
-                        'updated_at' => $product->updated_at,
-                    ];
-                }),
-            ]
+            'name' => strtoupper($this->name),
+            'image' => $this->image,
         ];
     }
 }
