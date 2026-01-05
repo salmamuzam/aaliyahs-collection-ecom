@@ -18,9 +18,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        try{
-        $products = Product::with('category')->paginate(5);
-          if ($products) {
+        try {
+            $products = Product::with('category')->paginate(5);
+            if ($products) {
                 return ResponseHelper::success(message: 'Products fetched successfully!', data: ProductResource::collection($products), statusCode: 200);
             }
             return ResponseHelper::error(message: 'Unable to fetch products! Please try again!', statusCode: 500);
@@ -36,9 +36,29 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        try{
-            $product = Product::create($request->validated());
+        try {
+            $data = $request->validated();
+
+            // Convert category_name to category_id
+            $category = \App\Models\Category::where('name', $data['category_name'])->first();
+            $data['category_id'] = $category->id;
+            unset($data['category_name']);
+
+            // Handle multiple image uploads
+            if ($request->hasFile('images')) {
+                $imagePaths = [];
+                foreach ($request->file('images') as $image) {
+                    $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                    $targetPath = public_path('storage/products');
+                    $image->move($targetPath, $imageName);
+                    $imagePaths[] = 'products/' . $imageName;
+                }
+                $data['images'] = $imagePaths;
+            }
+
+            $product = Product::create($data);
             $product->load('category');
+
             if ($product) {
                 return ResponseHelper::success(message: 'Product created successfully!', data: new ProductResource($product), statusCode: 201);
             }

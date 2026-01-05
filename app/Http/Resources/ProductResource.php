@@ -15,10 +15,12 @@ class ProductResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $images = $this->images ?? [];
+
         return [
             'name' => strtoupper($this->name),
             'price' => number_format($this->price, 2),
-            'images' => $this->images,
+            'images' => $images,
             'category' => new CategoryResource($this->whenLoaded('category')),
         ];
     }

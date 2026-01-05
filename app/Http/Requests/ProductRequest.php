@@ -23,6 +23,7 @@ class ProductRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3|max:50',
+            'category_name' => 'required|exists:categories,name',
             'description' => 'required|min:10',
             'price' => 'required|numeric|min:1000|max:100000',
             'images' => 'required|array|min:1',
@@ -36,6 +37,8 @@ class ProductRequest extends FormRequest
             'name.required' => 'Please enter a product name.',
             'name.min' => 'Product name must be at least 3 characters long!',
             'name.max' => 'Product name must not be more than 50 characters long!',
+            'category_name.required' => 'Please enter a category name!',
+            'category_name.exists' => 'Please enter a valid category name!',
             'description.required' => 'Please enter a product description!',
             'description.min' => 'Product description must be at least 10 characters long!',
             'price.required' => 'Please enter the product price!',
