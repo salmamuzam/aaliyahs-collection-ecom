@@ -24,9 +24,17 @@ return Application::configure(basePath: dirname(__DIR__))
     })
 
     ->withExceptions(function (Exceptions $exceptions): void {
+        // Handle model not found exceptions
         $exceptions->render(function (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $e, \Illuminate\Http\Request $request) {
             if ($request->is('api/*')) {
-                return \App\Helpers\ResponseHelper::error(message: 'Record not found!', statusCode: 404);
+                // Check if it's a model not found error
+                $previous = $e->getPrevious();
+                if ($previous instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
+                    $model = class_basename($previous->getModel());
+                    return \App\Helpers\ResponseHelper::error(message: $model . ' not found!', statusCode: 404);
+                }
+                // Generic 404 for other cases
+                return \App\Helpers\ResponseHelper::error(message: 'Resource not found!', statusCode: 404);
             }
         });
     })->create();

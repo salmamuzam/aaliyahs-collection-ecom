@@ -72,9 +72,15 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Product $product)
     {
-        //
+        try {
+            $product->load('category');
+            return ResponseHelper::success(message: 'Product fetched successfully!', data: new ProductResource($product), statusCode: 200);
+        } catch (Exception $e) {
+            Log::error('Unable to fetch product: ' . $e->getMessage() . '-Line No: ' . $e->getLine());
+            return ResponseHelper::error(message: 'Unable to fetch product! Please try again!', statusCode: 500);
+        }
     }
 
     /**

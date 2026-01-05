@@ -15,11 +15,16 @@ class ResponseHelper
     // Common function to display success response
     public static function success($status = 'success', $message = null, $data = [], $statusCode = 200)
     {
-        return response()->json([
+        $response = [
             'status' => $status,
             'message' => $message,
-            'data' => $data,
-        ], $statusCode);
+        ];
+
+        if (!empty($data)) {
+            $response['data'] = $data;
+        }
+
+        return response()->json($response, $statusCode);
     }
 
     // Common function to display error response
