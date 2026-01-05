@@ -21,13 +21,12 @@ class CategoryRequest extends FormRequest
      */
     public function rules(): array
     {
+        $isUpdate = $this->isMethod('patch') || $this->isMethod('put');
 
-            return [
-                'name' => 'required|min:3|max:150',
-                'image' => 'required|image|mimes:jpeg,png,jpg,svg,webp|max:2048',
-            ];
-        
-
+        return [
+            'name' => ($isUpdate ? 'sometimes|' : 'required|') . 'min:3|max:150',
+            'image' => ($isUpdate ? 'sometimes|' : 'required|') . 'image|mimes:jpeg,png,jpg,svg,webp|max:2048',
+        ];
     }
 
     // Custom error messages

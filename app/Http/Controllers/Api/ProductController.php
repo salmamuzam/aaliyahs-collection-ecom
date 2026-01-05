@@ -86,16 +86,57 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ProductRequest $request, Product $product)
     {
-        //
+        try {
+
+            $data = $request->validated();
+
+            // Convert category_name to category_id
+            if (isset($data['category_name'])) {
+                $category = \App\Models\Category::where('name', $data['category_name'])->first();
+                $data['category_id'] = $category->id;
+                unset($data['category_name']);
+            }
+
+            // Handle multiple image uploads - replace specific indices
+            if ($request->hasFile('images')) {
+                // Get existing images
+                $existingImages = $product->images ?? [];
+
+                foreach ($request->file('images') as $index => $image) {
+                    $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                    $targetPath = public_path('storage/products');
+                    $image->move($targetPath, $imageName);
+
+                    // Replace image at specific index
+                    $existingImages[$index] = 'products/' . $imageName;
+                }
+
+                $data['images'] = $existingImages;
+            }
+
+            $product->update($data);
+            $product->load('category');
+            return ResponseHelper::success(message: 'Product has been updated successfully!', data: new ProductResource($product), statusCode: 200);
+        } catch (Exception $e) {
+            Log::error('Unable to update product: ' . $e->getMessage() . '-Line No: ' . $e->getLine());
+            return ResponseHelper::error(message: 'Unable to update product! Please try again!', statusCode: 500);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
-        //
+        try {
+
+            $product->delete();
+            return ResponseHelper::success(message: 'Product has been deleted successfully!', statusCode: 200);
+        } catch (Exception $e) {
+            Log::error('Unable to delete product: ' . $e->getMessage() . '-Line No: ' . $e->getLine());
+            return ResponseHelper::error(message: 'Unable to delete product! Please try again!', statusCode: 500);
+        }
     }
 }

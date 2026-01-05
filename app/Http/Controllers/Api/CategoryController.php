@@ -65,10 +65,7 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         try {
-            if ($category) {
-                return ResponseHelper::success(message: 'Category fetched successfully!', data: new CategoryResource($category), statusCode: 200);
-            }
-            return ResponseHelper::error(message: 'Category not found!', statusCode: 404);
+            return ResponseHelper::success(message: 'Category fetched successfully!', data: new CategoryResource($category), statusCode: 200);
         } catch (Exception $e) {
             Log::error('Unable to fetch category: ' . $e->getMessage() . '-Line No: ' . $e->getLine());
             return ResponseHelper::error(message: 'Unable to fetch category! Please try again!', statusCode: 500);
@@ -94,10 +91,7 @@ class CategoryController extends Controller
                 $data['image'] = 'categories/' . $imageName;
             }
             $category->update($data);
-            if ($category) {
-                return ResponseHelper::success(message: 'Category has been updated successfully!', data: new CategoryResource($category), statusCode: 200);
-            }
-            return ResponseHelper::error(message: 'Unable to update category! Please try again!', statusCode: 500);
+            return ResponseHelper::success(message: 'Category has been updated successfully!', data: new CategoryResource($category), statusCode: 200);
         } catch (Exception $e) {
             Log::error('Unable to update category: ' . $e->getMessage() . '-Line No: ' . $e->getLine());
             return ResponseHelper::error(message: 'Unable to update category! Please try again!', statusCode: 500);

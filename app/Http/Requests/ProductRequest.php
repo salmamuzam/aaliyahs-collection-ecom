@@ -21,12 +21,14 @@ class ProductRequest extends FormRequest
      */
     public function rules(): array
     {
+        $isUpdate = $this->isMethod('patch') || $this->isMethod('put');
+
         return [
-            'name' => 'required|min:3|max:50',
-            'category_name' => 'required|exists:categories,name',
-            'description' => 'required|min:10',
-            'price' => 'required|numeric|min:1000|max:100000',
-            'images' => 'required|array|min:1',
+            'name' => ($isUpdate ? 'sometimes|' : 'required|') . 'min:3|max:50',
+            'category_name' => ($isUpdate ? 'sometimes|' : 'required|') . 'exists:categories,name',
+            'description' => ($isUpdate ? 'sometimes|' : 'required|') . 'min:10',
+            'price' => ($isUpdate ? 'sometimes|' : 'required|') . 'numeric|min:1000|max:100000',
+            'images' => ($isUpdate ? 'sometimes|' : 'required|') . 'array|min:1',
             'images.*' => 'image|mimes:jpeg,png,jpg,svg,webp|max:2048',
         ];
     }
