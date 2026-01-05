@@ -17,6 +17,8 @@ class CategoryResource extends JsonResource
         return [
             'name' => strtoupper($this->name),
             'image' => $this->image,
+            // Product count
+            'products' => $this->when($this->relationLoaded('products'), $this->products->count())
         ];
     }
 }

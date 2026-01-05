@@ -21,13 +21,16 @@ class CategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name'=> 'required|min:3|max:150',
-            'image' => 'required|image|mimes:jpeg,png,jpg,svg,webp|max:2048',
-        ];
+
+            return [
+                'name' => 'required|min:3|max:150',
+                'image' => 'required|image|mimes:jpeg,png,jpg,svg,webp|max:2048',
+            ];
+        
+
     }
 
-     // Custom error messages
+    // Custom error messages
     public function messages(): array
     {
         return [

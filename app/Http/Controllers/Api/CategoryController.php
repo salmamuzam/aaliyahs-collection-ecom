@@ -19,7 +19,8 @@ class CategoryController extends Controller
     public function index()
     {
         try {
-            $categories = Category::all();
+            //Relationship with products
+            $categories = Category::with('products')->get();
             if ($categories) {
                 return ResponseHelper::success(message: 'Categories fetched successfully!', data: CategoryResource::collection($categories), statusCode: 200);
             }
@@ -57,24 +58,56 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Category $category)
     {
-        //
+        try {
+            if ($category) {
+                return ResponseHelper::success(message: 'Category fetched successfully!', data: new CategoryResource($category), statusCode: 200);
+            }
+            return ResponseHelper::error(message: 'Category not found!', statusCode: 404);
+        } catch (Exception $e) {
+            Log::error('Unable to fetch category: ' . $e->getMessage() . '-Line No: ' . $e->getLine());
+            return ResponseHelper::error(message: 'Unable to fetch category! Please try again!', statusCode: 500);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CategoryRequest $request, Category $category)
     {
-        //
+        try {
+            $data = $request->validated();
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('uploads/categories'), $imageName);
+                $data['image'] = 'uploads/categories/' . $imageName;
+            }
+            $category->update($data);
+            if ($category) {
+                return ResponseHelper::success(message: 'Category has been updated successfully!', data: new CategoryResource($category), statusCode: 200);
+            }
+            return ResponseHelper::error(message: 'Unable to update category! Please try again!', statusCode: 500);
+        } catch (Exception $e) {
+            Log::error('Unable to update category: ' . $e->getMessage() . '-Line No: ' . $e->getLine());
+            return ResponseHelper::error(message: 'Unable to update category! Please try again!', statusCode: 500);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Category $category)
     {
-        //
+        try {
+            $category->delete();
+            return ResponseHelper::success(message: 'Category has been deleted successfully!', statusCode: 200);
+        } catch (Exception $e) {
+            Log::error('Unable to delete category: ' . $e->getMessage() . '-Line No: ' . $e->getLine());
+            return ResponseHelper::error(message: 'Unable to delete category! Please try again!', statusCode: 500);
+        }
     }
 }
+
+

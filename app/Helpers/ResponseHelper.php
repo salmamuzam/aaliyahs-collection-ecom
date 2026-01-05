@@ -13,7 +13,8 @@ class ResponseHelper
     }
 
     // Common function to display success response
-    public static function success($status = 'success', $message = null, $data = [], $statusCode = 200){
+    public static function success($status = 'success', $message = null, $data = [], $statusCode = 200)
+    {
         return response()->json([
             'status' => $status,
             'message' => $message,
@@ -22,7 +23,8 @@ class ResponseHelper
     }
 
     // Common function to display error response
-    public static function error($status = 'error', $message = null, $statusCode = 400){
+    public static function error($status = 'error', $message = null, $statusCode = 400)
+    {
         return response()->json([
             'status' => $status,
             'message' => $message,
