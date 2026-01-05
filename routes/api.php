@@ -2,13 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
-//use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\ProductsController;
-use App\Http\Controllers\OrdersController;
+use App\Http\Controllers\Api\CategoryController;
 
-
-// Public Routes
+// Auth Routes
 
 Route::controller(AuthController::class)->group(function (){
     Route::post('/register', 'register');
@@ -19,11 +15,10 @@ Route::controller(AuthController::class)->group(function (){
     Route::get('logout', 'logout')->middleware('auth:sanctum');
 });
 
-// Protected Routes
+// Admin CRUD Routes
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
-    Route::apiResource('/categories', CategoriesController::class);
-    Route::resource('/products', ProductsController::class);
-    Route::resource('/orders', OrdersController::class);
+    Route::apiResource('/categories', CategoryController::class);
 });
+
