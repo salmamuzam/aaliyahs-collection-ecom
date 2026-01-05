@@ -19,7 +19,7 @@ class ProductController extends Controller
     public function index()
     {
         try {
-            $products = Product::with('category')->paginate(5);
+            $products = Product::with('category')->paginate(10);
             if ($products) {
                 return ResponseHelper::success(message: 'Products fetched successfully!', data: ProductResource::collection($products), statusCode: 200);
             }
