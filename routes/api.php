@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\ProductController;
 
 // Auth Routes
 
@@ -20,5 +21,6 @@ Route::controller(AuthController::class)->group(function (){
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::apiResource('/categories', CategoryController::class);
+    Route::apiResource('/products', ProductController::class);
 });
 

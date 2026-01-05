@@ -41,8 +41,12 @@ class CategoryController extends Controller
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
                 $imageName = time() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('uploads/categories'), $imageName);
-                $data['image'] = 'uploads/categories/' . $imageName;
+
+                // Store in REAL public/storage/categories folder
+                $targetPath = public_path('storage/categories');
+                $image->move($targetPath, $imageName);
+
+                $data['image'] = 'categories/' . $imageName;
             }
             $category = Category::create($data);
             if ($category) {
@@ -81,8 +85,13 @@ class CategoryController extends Controller
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
                 $imageName = time() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('uploads/categories'), $imageName);
-                $data['image'] = 'uploads/categories/' . $imageName;
+
+                // Store in REAL public/storage/categories folder (No Symlinks)
+                $targetPath = public_path('storage/categories');
+                $image->move($targetPath, $imageName);
+
+                // Save path as 'categories/image.jpg'
+                $data['image'] = 'categories/' . $imageName;
             }
             $category->update($data);
             if ($category) {
