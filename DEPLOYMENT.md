@@ -38,7 +38,7 @@ This project is deployed using a robust, cloud-native architecture on **Railway.
 
 To verify the deployment status:
 
-1. **Live URL:** [https://zippy-exploration-production-1737.up.railway.app](https://zippy-exploration-production-1737.up.railway.app)
+1. **Live URL:** [https://web-production-2650.up.railway.app](https://web-production-2650.up.railway.app)
 2. **SSL Check:** Verify the padlock icon in the browser address bar (HTTPS enabled via Let's Encrypt).
 3. **Database Check:** Register a new user account (creates a record in the secure, managed MySQL DB).
 4. **CI/CD Check:** Verify that the latest commit signature in the footer/logs matches the GitHub repository.
