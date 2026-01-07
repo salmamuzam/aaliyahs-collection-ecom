@@ -42,3 +42,5 @@ To verify the deployment status:
 2. **SSL Check:** Verify the padlock icon in the browser address bar (HTTPS enabled via Let's Encrypt).
 3. **Database Check:** Register a new user account (creates a record in the secure, managed MySQL DB).
 4. **CI/CD Check:** Verify that the latest commit signature in the footer/logs matches the GitHub repository.
+
+(_Note: The URL above is the auto-generated secure domain provided by Railway. Custom subdomains were attempting but unavailable at the time of deployment._)
