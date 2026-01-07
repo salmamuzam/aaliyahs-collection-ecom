@@ -21,7 +21,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/reset-password', 'resetPassword');
 
     // Email Verification Route
-    Route::get('/email/verify/{id}/{hash}', 'verifyEmail')->name('verification.verify');
+    Route::get('/email/verify/{id}/{hash}', 'verifyEmail')->name('api.verification.verify');
 
     // Authenticated Routes
     Route::middleware('auth:sanctum')->group(function () {
