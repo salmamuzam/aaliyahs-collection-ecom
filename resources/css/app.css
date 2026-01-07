@@ -56,11 +56,32 @@
     }
 
     .brand-gradient-teal {
-        @apply bg-gradient-to-br from-brand-teal to-[#003844];
+        @apply bg-gradient-to-br from-brand-teal to-brand-teal;
     }
 
     .brand-nav-link {
-        @apply text-white block text-[15px] font-normal relative lg:after:absolute lg:after:bg-white lg:after:h-[2px] lg:after:block lg:after:-bottom-4 lg:after:transition-all lg:after:duration-300 lg:after:w-0 lg:hover:after:w-full;
+        @apply text-white block text-[15px] font-normal font-sans relative lg:after:absolute lg:after:bg-white lg:after:h-0.5 lg:after:block lg:after:-bottom-4 lg:after:transition-all lg:after:duration-300 lg:after:w-0 lg:hover:after:w-full;
+    }
+
+    /* Premium Components */
+    .brand-premium-card {
+        @apply bg-white border border-brand-beige-dark rounded-xl shadow-sm hover:shadow-md transition-all duration-500 overflow-hidden;
+    }
+
+    .brand-glass-badge {
+        @apply bg-white bg-opacity-70 backdrop-blur-md border border-white border-opacity-40 rounded-full px-3 py-1 text-xs font-bold tracking-widest uppercase;
+    }
+
+    .brand-accent-line {
+        @apply w-12 h-1 bg-brand-accent-gold rounded-full block my-4;
+    }
+
+    .brand-typography-premium {
+        @apply font-outfit uppercase tracking-[0.2em] text-xs font-bold text-gray-400;
+    }
+
+    .brand-btn-outline {
+        @apply border-2 border-brand-teal text-brand-teal hover:bg-brand-teal hover:text-white font-bold py-2 px-6 rounded-lg transition-all duration-300 transform active:scale-95;
     }
 
     .brand-nav-link-active {

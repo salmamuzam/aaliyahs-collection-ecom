@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -20,11 +21,6 @@ class User extends Authenticatable implements MustVerifyEmail
     use Notifiable;
     use TwoFactorAuthenticatable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'first_name',
         'last_name',
@@ -35,11 +31,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'profile_photo_path',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
@@ -47,14 +38,24 @@ class User extends Authenticatable implements MustVerifyEmail
         'two_factor_secret',
     ];
 
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array<int, string>
-     */
     protected $appends = [
         'profile_photo_url',
     ];
+
+    protected function email(): Attribute
+    {
+        return Attribute::make(set: fn($v) => strtolower($v));
+    }
+
+    protected function fullName(): Attribute
+    {
+        return Attribute::make(get: fn() => "{$this->first_name} {$this->last_name}");
+    }
+
+    protected function name(): Attribute
+    {
+        return Attribute::make(get: fn() => "{$this->first_name} {$this->last_name}");
+    }
 
     /**
      * Get the attributes that should be cast.

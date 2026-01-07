@@ -35,9 +35,9 @@
                                     <div class="text-brand-black">LKR {{ number_format($price_range, 2) }}</div>
                                     <input wire:model.live="price_range" type="range"
                                         class="w-full h-1 mb-4 bg-gray-200 rounded appearance-none cursor-pointer accent-brand-burgundy"
-                                        max="50000" value="30000" step="1000">
+                                        min="0" max="50000" step="1000">
                                     <div class="flex justify-between ">
-                                        <span class="inline-block text-lg text-brand-burgundy">LKR 1,000</span>
+                                        <span class="inline-block text-lg text-brand-burgundy">LKR 0</span>
                                         <span class="inline-block text-lg text-brand-burgundy">LKR 50,000</span>
                                     </div>
                                 </div>
@@ -78,7 +78,12 @@
                             @empty
                                 @include('livewire.includes.empty-state', [
                                     'title' => 'No products found!',
+                                    'description' => 'Try different filters!',
+                                    'buttonText' => 'Explore Full Collection',
+                                    'buttonLink' => '/shop',
+                                    'showButton' => true,
                                     'class' => 'col-span-full',
+                                    'viewBox' => '0 0 512 512',
                                     'icon' => '<path d="M497.695 108.838a16.002 16.002 0 0 0-9.92-14.8L261.787 1.2a16.003 16.003 0 0 0-12.16 0L23.639 94.038a16 16 0 0 0-9.92 14.8v293.738a16 16 0 0 0 9.92 14.8l225.988 92.838a15.947 15.947 0 0 0 12.14-.001c.193-.064-8.363 3.445 226.008-92.837a16 16 0 0 0 9.92-14.8zm-241.988 76.886-83.268-34.207L352.39 73.016l88.837 36.495zm-209.988-51.67 71.841 29.513v83.264c0 8.836 7.164 16 16 16s16-7.164 16-16v-70.118l90.147 37.033v257.797L45.719 391.851zM255.707 33.297l55.466 22.786-179.951 78.501-61.035-25.074zm16 180.449 193.988-79.692v257.797l-193.988 79.692z" />'
                                 ])
                             @endforelse

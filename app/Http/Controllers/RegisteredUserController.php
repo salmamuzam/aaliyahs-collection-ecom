@@ -38,42 +38,20 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
-        // Manual validation to ensure it's not failing silently
-        $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
+        $data = $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'confirmed'],
-            // 'terms' => \Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ]);
 
-        if ($validator->fails()) {
-            // dd($validator->errors());
-            return back()->withErrors($validator)->withInput();
-        }
+        $user = \App\Models\User::create(array_merge($data, [
+            'password' => \Illuminate\Support\Facades\Hash::make($data['password']),
+        ]));
 
-        if (config('fortify.lowercase_usernames')) {
-            $request->merge([
-                Fortify::username() => Str::lower($request->{Fortify::username()}),
-            ]);
-        }
+        event(new Registered($user));
 
-        // Create the user manually
-        event(new Registered($user = \App\Models\User::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => \Illuminate\Support\Facades\Hash::make($request->password),
-        ])));
-
-        // Do not auto-login
-        // $this->guard->login($user);
-
-        session()->flash('success', 'Your account has been created successfully! Please sign in.');
-
-        // Redirect to login page
-        return redirect()->route('login');
+        return redirect()->route('login')->with('success', 'Your account has been created successfully! Please sign in.');
     }
 }

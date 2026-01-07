@@ -1,3 +1,4 @@
+<x-layouts.app>
 <section class="py-4 md:py-6">
     <div class="p-6 mx-auto max-w-7xl max-lg:max-w-4xl">
         <x-section-header title="THANKS FOR YOUR ORDER!" size="text-xl" />
@@ -12,7 +13,9 @@
             </dl>
             <dl class="items-center justify-between gap-4 sm:flex">
                 <dt class="mb-1 text-base font-bold text-brand-black sm:mb-0">Payment Method</dt>
-                <dd class="text-base font-medium text-brand-black sm:text-end">Cash on Delivery</dd>
+                <dd class="text-base font-medium text-brand-black sm:text-end">
+                    {{ $order->payment_method == 'cod' ? 'Cash on Delivery' : 'Stripe' }}
+                </dd>
             </dl>
             <dl class="items-center justify-between gap-4 sm:flex">
                 <dt class="mb-1 text-base font-bold text-brand-black sm:mb-0">Name</dt>
@@ -46,3 +49,4 @@
         </div>
     </div>
 </section>
+</x-layouts.app>

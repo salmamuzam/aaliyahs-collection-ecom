@@ -12,7 +12,7 @@ class CartIcon extends Component
 
     public function mount()
     {
-        $this->total_count = count(CartManagement::getCartItemsFromCookie());
+        $this->total_count = CartManagement::calculateTotalCount(CartManagement::getCartItemsFromCookie());
     }
 
     #[On('update-cart-count')]

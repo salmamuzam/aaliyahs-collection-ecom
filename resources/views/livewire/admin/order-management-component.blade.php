@@ -38,30 +38,10 @@
                                 {{ $order->address->first_name }} {{ $order->address->last_name }}
                             </td>
                             <td class="p-4 text-center">
-                                @php
-                                    $variantMap = [
-                                        'new' => 'info',
-                                        'processing' => 'success',
-                                        'shipped' => 'warning',
-                                        'delivered' => 'teal',
-                                        'cancelled' => 'danger',
-                                    ];
-                                @endphp
-                                <x-admin.badge :variant="$variantMap[$order->status] ?? 'default'">
-                                    {{ $order->status }}
-                                </x-admin.badge>
+                                <x-admin.status-badge :status="$order->status" />
                             </td>
                             <td class="p-4 text-center">
-                                @php
-                                    $paymentVariantMap = [
-                                        'pending' => 'warning',
-                                        'paid' => 'success',
-                                        'failed' => 'danger',
-                                    ];
-                                @endphp
-                                <x-admin.badge :variant="$paymentVariantMap[$order->payment_status] ?? 'default'">
-                                    {{ $order->payment_status }}
-                                </x-admin.badge>
+                                <x-admin.payment-status-badge :status="$order->payment_status" />
                             </td>
                             <td class="p-4 text-center text-base text-brand-black">
                                 LKR {{ number_format($order->grand_total, 2) }}

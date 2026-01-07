@@ -19,46 +19,38 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         try {
-            $query = Category::with('products');
-            // search functionality
-            if ($request->has('search')) {
-                $search = $request->search;
-                $query->where(function ($q) use ($search) {
-                    $q->where('name', 'like', "%{$search}%");
-                });
-            }
-            $categories = $query->paginate(10);
-            if ($categories) {
-                return ResponseHelper::success(message: 'Categories fetched successfully!', data: CategoryResource::collection($categories), statusCode: 200);
-            }
-            return ResponseHelper::error(message: 'Unable to fetch categories! Please try again!', statusCode: 500);
+            $search = $request->search;
+            $page = $request->input('page', 1);
+            $cacheKey = 'categories_' . ($search ? 'search_' . md5($search) : 'all') . '_page_' . $page;
+
+            $categories = cache()->remember($cacheKey, 3600, function () use ($search) {
+                return Category::with('products')
+                    ->when($search, fn($q) => $q->where('name', 'like', "%{$search}%"))
+                    ->paginate(10);
+            });
+
+            return ResponseHelper::success(
+                message: 'Categories fetched successfully!',
+                data: CategoryResource::collection($categories)
+            );
         } catch (Exception $e) {
-            Log::error('Unable to fetch categories: ' . $e->getMessage() . '-Line No: ' . $e->getLine());
-            return ResponseHelper::error(message: 'Unable to fetch categories! Please try again!', statusCode: 500);
+            Log::error('Unable to fetch categories: ' . $e->getMessage());
+            return ResponseHelper::error(message: 'Unable to fetch categories!', statusCode: 500);
         }
     }
+
     public function store(CategoryRequest $request)
     {
         try {
             $data = $request->validated();
-            if ($request->hasFile('image')) {
-                $image = $request->file('image');
-                $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $data['image'] = $this->handleImageUpload($request);
 
-                // Store in REAL public/storage/categories folder
-                $targetPath = public_path('storage/categories');
-                $image->move($targetPath, $imageName);
-
-                $data['image'] = 'categories/' . $imageName;
-            }
             $category = Category::create($data);
-            if ($category) {
-                return ResponseHelper::success(message: 'Category has been created successfully!', data: new CategoryResource($category), statusCode: 201);
-            }
-            return ResponseHelper::error(message: 'Unable to create category! Please try again!', statusCode: 500);
+
+            return ResponseHelper::success(message: 'Category has been created successfully!', data: new CategoryResource($category), statusCode: 201);
         } catch (Exception $e) {
-            Log::error('Unable to create category: ' . $e->getMessage() . '-Line No: ' . $e->getLine());
-            return ResponseHelper::error(message: 'Unable to create category! Please try again!', statusCode: 500);
+            Log::error('Unable to create category: ' . $e->getMessage());
+            return ResponseHelper::error(message: 'Unable to create category!', statusCode: 500);
         }
     }
 
@@ -68,10 +60,10 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         try {
-            return ResponseHelper::success(message: 'Category fetched successfully!', data: new CategoryResource($category), statusCode: 200);
+            return ResponseHelper::success(message: 'Category fetched successfully!', data: new CategoryResource($category));
         } catch (Exception $e) {
-            Log::error('Unable to fetch category: ' . $e->getMessage() . '-Line No: ' . $e->getLine());
-            return ResponseHelper::error(message: 'Unable to fetch category! Please try again!', statusCode: 500);
+            Log::error('Unable to fetch category: ' . $e->getMessage());
+            return ResponseHelper::error(message: 'Unable to fetch category!', statusCode: 500);
         }
     }
 
@@ -82,22 +74,16 @@ class CategoryController extends Controller
     {
         try {
             $data = $request->validated();
-            if ($request->hasFile('image')) {
-                $image = $request->file('image');
-                $imageName = time() . '.' . $image->getClientOriginalExtension();
 
-                // Store in REAL public/storage/categories folder (No Symlinks)
-                $targetPath = public_path('storage/categories');
-                $image->move($targetPath, $imageName);
-
-                // Save path as 'categories/image.jpg'
-                $data['image'] = 'categories/' . $imageName;
+            if ($path = $this->handleImageUpload($request)) {
+                $data['image'] = $path;
             }
+
             $category->update($data);
-            return ResponseHelper::success(message: 'Category has been updated successfully!', data: new CategoryResource($category), statusCode: 200);
+            return ResponseHelper::success(message: 'Category has been updated successfully!', data: new CategoryResource($category));
         } catch (Exception $e) {
-            Log::error('Unable to update category: ' . $e->getMessage() . '-Line No: ' . $e->getLine());
-            return ResponseHelper::error(message: 'Unable to update category! Please try again!', statusCode: 500);
+            Log::error('Unable to update category: ' . $e->getMessage());
+            return ResponseHelper::error(message: 'Unable to update category!', statusCode: 500);
         }
     }
 
@@ -108,11 +94,23 @@ class CategoryController extends Controller
     {
         try {
             $category->delete();
-            return ResponseHelper::success(message: 'Category has been deleted successfully!', statusCode: 200);
+            return ResponseHelper::success(message: 'Category has been deleted successfully!');
         } catch (Exception $e) {
-            Log::error('Unable to delete category: ' . $e->getMessage() . '-Line No: ' . $e->getLine());
-            return ResponseHelper::error(message: 'Unable to delete category! Please try again!', statusCode: 500);
+            Log::error('Unable to delete category: ' . $e->getMessage());
+            return ResponseHelper::error(message: 'Unable to delete category!', statusCode: 500);
         }
+    }
+
+    // --- Helper Methods ---
+
+    private function handleImageUpload(Request $request): ?string
+    {
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            return $image->storeAs('uploads/categories', $imageName, 'public');
+        }
+        return null;
     }
 }
 

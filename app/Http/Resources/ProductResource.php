@@ -18,7 +18,9 @@ class ProductResource extends JsonResource
         $images = $this->images ?? [];
 
         return [
+            'id' => $this->id,
             'name' => strtoupper($this->name),
+            'description' => $this->description,
             'price' => number_format($this->price, 2),
             'images' => $images,
             'category' => new CategoryResource($this->whenLoaded('category')),

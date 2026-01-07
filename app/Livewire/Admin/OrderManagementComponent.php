@@ -4,9 +4,8 @@ namespace App\Livewire\Admin;
 
 use Livewire\Component;
 use App\Models\Order;
-use App\Mail\OrderApprovedMail;
-use App\Mail\OrderCancelledMail;
 use Illuminate\Support\Facades\Mail;
+use App\Events\OrderStatusUpdated;
 
 use Livewire\WithPagination;
 
@@ -33,57 +32,41 @@ class OrderManagementComponent extends Component
         }
     }
 
-    public function approveOrder($orderId)
+    public function approveOrder(Order $order)
     {
-        $order = Order::with(['user', 'items.product'])->find($orderId);
-        if ($order) {
-            $order->update(['status' => 'processing']);
-            // Send the email
-            Mail::to($order->user->email)->send(new OrderApprovedMail($order));
-            session()->flash('message', "Order #{$order->id} has been moved to processing, and the user has been notified.");
-        } else {
-            session()->flash('error', "Order #{$orderId} not found.");
-        }
+        $order->update(['status' => 'processing']);
+        OrderStatusUpdated::dispatch($order);
+        session()->flash('message', "Order #{$order->id} is processing.");
     }
 
-    public function cancelOrder($orderId)
+    public function cancelOrder(Order $order)
     {
-        $order = Order::with('user')->find($orderId);
-        if ($order) {
-            $order->update(['status' => 'cancelled']);
-            // Send the email
-            Mail::to($order->user->email)->send(new OrderCancelledMail($order));
-            session()->flash('message', 'Order #' . $order->id . ' cancelled successfully, and the user has been notified!');
-        }
+        $order->update(['status' => 'cancelled']);
+        OrderStatusUpdated::dispatch($order);
+        session()->flash('message', "Order #{$order->id} cancelled.");
     }
 
     public function render()
     {
-        $query = Order::with(['user', 'items.product', 'address']);
-
-        // Search functionality
-        if (!empty($this->search)) {
-            $query->where(function ($q) {
-                $q->where('id', 'like', '%' . $this->search . '%')
-                    ->orWhere('grand_total', 'like', '%' . $this->search . '%')
-                    ->orWhereHas('address', function ($q) {
-                        $q->where('first_name', 'like', '%' . $this->search . '%')
-                            ->orWhere('last_name', 'like', '%' . $this->search . '%');
-                    });
-            });
-        }
-
-        // Handle customer sorting
-        if ($this->sortColumn === 'customer') {
-            $query->join('addresses', 'orders.id', '=', 'addresses.order_id')
-                ->select('orders.*')
-                ->orderBy('addresses.first_name', $this->sortOrder);
-        } else {
-            $query->orderBy($this->sortColumn, $this->sortOrder);
-        }
+        $orders = Order::with(['user', 'items.product', 'address'])
+            ->when($this->search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('id', 'like', "%{$search}%")
+                        ->orWhere('grand_total', 'like', "%{$search}%")
+                        ->orWhereHas('address', fn($q) => $q->where('first_name', 'like', "%{$search}%")->orWhere('last_name', 'like', "%{$search}%"));
+                });
+            })
+            ->when($this->sortColumn === 'customer', function ($query) {
+                $query->join('addresses', 'orders.id', '=', 'addresses.order_id')
+                    ->select('orders.*')
+                    ->orderBy('addresses.first_name', $this->sortOrder);
+            }, function ($query) {
+                $query->orderBy($this->sortColumn, $this->sortOrder);
+            })
+            ->paginate(5);
 
         return view('livewire.admin.order-management-component', [
-            'orders' => $query->paginate(5)
+            'orders' => $orders
         ]);
     }
 }

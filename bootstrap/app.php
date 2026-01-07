@@ -12,8 +12,17 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Register Global Security Headers Middleware
+        $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
+
         $middleware->web(append: [
             \App\Http\Middleware\EnsureTwoFactorCodeIsPresent::class,
+        ]);
+
+        // Exclude PayHere webhook from CSRF protection
+        $middleware->validateCsrfTokens(except: [
+            'payment/notify',
+            'payment/return'
         ]);
 
         // Register Admin.php (Middleware)

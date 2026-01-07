@@ -27,7 +27,7 @@ class CartManagement
         }
 
         //  if current product is already in the cookie
-        if ($existing_item != null) {
+        if ($existing_item !== null) {
             // update the quantity
             // by 1
             $cart_items[$existing_item]['quantity']++;
@@ -54,7 +54,7 @@ class CartManagement
         }
         // add to cookie
         self::addCartItemsToCookie($cart_items);
-        return count($cart_items);
+        return self::calculateTotalCount($cart_items);
     }
 
 
@@ -76,10 +76,9 @@ class CartManagement
         }
 
         //  if current product is already in the cookie
-        if ($existing_item != null) {
+        if ($existing_item !== null) {
             // update the quantity
-            // by 1
-            $cart_items[$existing_item]['quantity'] = $qty;
+            $cart_items[$existing_item]['quantity'] += $qty;
             $cart_items[$existing_item]['total_amount'] = $cart_items[$existing_item]['quantity'] *
                 $cart_items[$existing_item]['unit_amount'];
         }
@@ -103,7 +102,7 @@ class CartManagement
         }
         // add to cookie
         self::addCartItemsToCookie($cart_items);
-        return count($cart_items);
+        return self::calculateTotalCount($cart_items);
     }
     // remove item from the cart
 
@@ -195,6 +194,12 @@ class CartManagement
     static public function calculateGrandTotal($items)
     {
         return array_sum(array_column($items, 'total_amount'));
+    }
+
+    // calculate total item count (sum of quantities)
+    static public function calculateTotalCount($items)
+    {
+        return array_sum(array_column($items, 'quantity'));
     }
 
 }

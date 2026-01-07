@@ -31,98 +31,43 @@ class CategoryForm extends Component
     // Fetch the categories of the given id based on the model
     public function mount(Category $category)
     {
-        // check whether the route is view
-        // When the preview button is clicked, admin will be redirected to the category view page
-        // this has been captured here, and set to true
         $this->isView = request()->routeIs('categories.view');
-        // Check whether the category data exists
-        if ($category->id) {
+
+        if ($category->exists) {
             $this->category = $category;
-            // Assign the name to the public properties
-            $this->name = $category->name;
+            $this->fill($category->only('name'));
         }
     }
 
-    // Form submission
     public function saveCategory()
     {
-
-        // Execute validation rules for name
         $this->validate();
 
-        // Dynamic validation based on create and update functionality
-        // Define rules
-        $rules = [
-            // Check whether we have category and image, if there is an image in edit mode it will be optional. However, if category does not have image, it will check the required validation
-            'image' => $this->category && $this->category->image ? 'nullable|image|mimes:jpg,jpeg,png,svg,webp|max:2048' : 'required|image|mimes:jpg,jpeg,png,svg,webp|max:2048'
-        ];
-
-        // Customized error messages
-
-        $messages = [
+        $this->validate([
+            'image' => ($this->category?->image ? 'nullable' : 'required') . '|image|mimes:jpg,jpeg,png,svg,webp|max:2048'
+        ], [
             'image.required' => 'Category image is required!',
-            'image.image' => 'Category image must be a valid image!',
-            'image.mimes' => 'Category image accepts only jpg, jpeg, png, svg, and webp!',
-            'image.max' => 'Category image must not be larger than 2MB!',
-        ];
-        // Trigger validation rules for image only
-        $this->validate($rules, $messages);
+            'image.image' => 'Must be a valid image!',
+            'image.mimes' => 'Accepted: jpg, jpeg, png, svg, webp!',
+            'image.max' => 'Limit: 2MB!',
+        ]);
 
-        $imagePath = null;
-        // If image is selected, capture the extension
+        $imagePath = $this->image
+            ? $this->image->storeAs('uploads/categories', time() . '.' . $this->image->extension(), 'public')
+            : $this->category?->image;
 
-        if ($this->image) {
-            // Time stamp
-            $imageName = time() . '.' . $this->image->extension();
-            // Store the image with the timestamp name in categories folder
-            $imagePath = $this->image->storeAs('uploads/categories', $imageName, 'public');
-        }
+        $data = ['name' => $this->name, 'image' => $imagePath];
 
-        // Update functionality
-        // If category is in edit mode, update the category
-        // Saves column data into the category table
         if ($this->category) {
-            // Assign form inputs
-            $this->category->name = $this->name;
-
-            if ($imagePath) {
-                $this->category->image = $imagePath;
-            }
-
-            $updateCategory = $this->category->save();
-
-            // If category is created, display success message
-            if ($updateCategory) {
-                session()->flash('success', 'Category has been updated successfully!');
-            }
-            // However if category is not created, display an error message
-            else {
-                session()->flash('error', 'Unable to update category, please try again!');
-            }
-
+            $status = $this->category->update($data);
+            $message = $status ? 'Category updated successfully!' : 'Unable to update category!';
         } else {
-            // Create functionality
-            $category = Category::create([
-                // Array of data
-                'name' => $this->name,
-                // Store the image path
-                'image' => $imagePath
-            ]);
-
-            // If category is created, display success message
-            if ($category) {
-                session()->flash('success', 'Category has been created successfully!');
-            }
-            // However if category is not created, display an error message
-            else {
-                session()->flash('error', 'Unable to create category, please try again!');
-            }
-
+            $status = Category::create($data);
+            $message = $status ? 'Category created successfully!' : 'Unable to create category!';
         }
 
-        // after the category is created,
-        // redirect to the category list page
-        // no page refresh
+        session()->flash($status ? 'success' : 'error', $message);
+
         return $this->redirect(route('categories', absolute: false), navigate: true);
     }
 

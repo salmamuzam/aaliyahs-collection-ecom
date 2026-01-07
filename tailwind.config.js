@@ -20,6 +20,7 @@ export default {
             fontFamily: {
                 sans: ['Source Sans 3', ...defaultTheme.fontFamily.sans],
                 playfair: ['Playfair Display', 'serif'],
+                outfit: ['Outfit', 'sans-serif'],
             },
             colors: {
                 brand: {
@@ -28,7 +29,6 @@ export default {
                     burgundy: '#822659',
                     black: '#1A1A1A',
                     beige: '#F3EDE8',
-                },
                 },
             },
             keyframes: {
@@ -48,6 +48,7 @@ export default {
                 'heart-filled': 'heart-filled 0.5s ease-in-out forwards',
                 'heart-celebrate': 'heart-celebrate 0.5s ease-in-out forwards',
             },
+        },
     },
 
     plugins: [forms, typography],

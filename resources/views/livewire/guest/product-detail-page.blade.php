@@ -1,13 +1,13 @@
-<div class="bg-[#F3EDE8] py-8">
-    <div class="tracking-wide max-w-7xl mx-auto w-full px-4">
-      <div class="brand-card grid items-stretch grid-cols-1 md:grid-cols-2 gap-0 overflow-hidden">
+<div class="bg-[#F3EDE8] py-4 sm:py-6 lg:py-8">
+    <div class="tracking-wide max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8">
+      <div class="brand-card grid items-stretch grid-cols-1 lg:grid-cols-2 gap-0 overflow-hidden max-w-5xl mx-auto">
 
         {{-- Left Side: Product Image --}}
         <div class="relative bg-white border-r border-gray-100">
           <div class="relative w-full h-full md:absolute md:inset-0 flex flex-col items-center justify-center">
              @if(!empty($product->images))
                 {{-- Main Image --}}
-                <div class="relative w-full h-[400px] md:h-full flex items-center justify-center">
+                <div class="relative w-full aspect-[3/4] sm:aspect-[4/5] lg:aspect-auto lg:h-full flex items-center justify-center">
                      <img src="{{ url('storage', $product->images[0]) }}" alt="{{ $product->name }}" id="mainImage" 
                      class="w-full h-full object-cover object-top" />
                 </div>
@@ -29,12 +29,12 @@
         </div>
 
         {{-- Right Side: Details --}}
-        <div class="bg-white py-6 px-6 md:px-8 h-full flex flex-col">
-          <div class="mb-4">
-            <h2 class="text-2xl font-bold text-brand-black brand-heading-playfair capitalize">{{ $product->name }}</h2>
+        <div class="bg-white py-6 px-4 sm:px-6 lg:px-8 h-full flex flex-col">
+          <div class="mb-3 sm:mb-4">
+            <h2 class="text-xl sm:text-2xl font-bold text-brand-black brand-heading-playfair capitalize">{{ $product->name }}</h2>
           </div>
 
-          <div class="flex items-center justify-between mt-2 border-b border-black pb-6">
+          <div class="flex items-center justify-between mt-2 border-b border-black pb-4 sm:pb-6">
             {{-- Category Badge --}}
             @if($product->category)
                 @php
@@ -55,13 +55,13 @@
                  <span class="text-sm text-gray-400 font-medium tracking-widest uppercase">Collection</span>
             @endif
 
-            <h3 class="text-brand-burgundy text-xl font-bold font-sans text-right">LKR {{ number_format($product->price, 2) }}</h3>
+            <h3 class="text-lg sm:text-xl font-bold font-sans text-right text-brand-burgundy">LKR {{ number_format($product->price, 2) }}</h3>
           </div>
 
           {{-- Description --}}
-          <div class="mt-8">
-            <h3 class="text-lg font-bold text-brand-teal uppercase tracking-wider mb-3">Description</h3>
-            <p class="text-brand-black text-base leading-relaxed text-justify">
+          <div class="mt-4 sm:mt-6 lg:mt-8">
+            <h3 class="text-base sm:text-lg font-bold text-brand-teal uppercase tracking-wider mb-2 sm:mb-3">Description</h3>
+            <p class="text-brand-black text-sm sm:text-base leading-relaxed text-justify">
                 {{ $product->description }}
             </p>
           </div>

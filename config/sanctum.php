@@ -47,6 +47,8 @@ return [
     |
     */
 
+    // Expiration: 1 month (43800 minutes).
+    // Balanced for mobile app convenience while maintaining periodic security refreshes.
     'expiration' => 43800,
 
     /*

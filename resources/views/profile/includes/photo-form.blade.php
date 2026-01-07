@@ -1,4 +1,6 @@
-<div x-data="{photoName: null, photoPreview: null}" class="col-span-6">
+<div x-data="{photoName: null, photoPreview: null}" 
+    x-on:saved.window="photoPreview = null; photoName = null"
+    class="col-span-6">
     <!-- Profile Photo File Input -->
     <input type="file" id="photo" class="hidden"
                 wire:model.live="photo"

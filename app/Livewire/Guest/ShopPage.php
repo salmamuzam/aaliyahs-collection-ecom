@@ -9,17 +9,17 @@ use Jantinnerezo\LivewireAlert\Enums\Icon;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Url;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\Attributes\Lazy;
 use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
 
 class ShopPage extends Component
 {
-
     use WithPagination;
 
     #[Url]
-
     // can contain more than one category
     public $selected_categories = [];
 
@@ -29,6 +29,16 @@ class ShopPage extends Component
     #[Url]
     public $sort = 'latest';
 
+    public function updatingPriceRange()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingSelectedCategories()
+    {
+        $this->resetPage();
+    }
+
     #[On('update-favorite-count')]
     public function refreshComponent()
     {
@@ -36,12 +46,12 @@ class ShopPage extends Component
     }
 
     // add product to cart method
-
     public function addToCart($product_id)
     {
         // return total number of item count
         $total_count = CartManagement::addItemToCart($product_id);
         $this->dispatch('update-cart-count', total_count: $total_count);
+
         LivewireAlert::title('Success!')
             ->text('Product added to the cart!')
             ->success()
@@ -89,42 +99,33 @@ class ShopPage extends Component
 
     public function isInFavorites($product_id)
     {
-        $favorites = \App\Helpers\FavoritesManagement::getFavoriteItemsFromCookie();
-        foreach ($favorites as $item) {
-            if ($item['product_id'] == $product_id) {
-                return true;
-            }
-        }
-        return false;
+        return collect(\App\Helpers\FavoritesManagement::getFavoriteItemsFromCookie())
+            ->contains('product_id', $product_id);
+    }
+
+    #[Computed]
+    public function categories()
+    {
+        return cache()->remember('shop_categories', 3600, fn() => Category::all());
     }
 
     #[Title('Products | Aaliyah Collection')]
     public function render()
     {
-        // every product contains product id
-        // filter based on category_id
-        $productQuery = Product::query();
-        if (!empty($this->selected_categories)) {
-            $productQuery->whereIn('category_id', $this->selected_categories);
-        }
-        // when value of price range changes
-        if ($this->price_range) {
-            $productQuery->whereBetween('price', [0, $this->price_range]);
-        }
-
-        if ($this->sort == 'latest') {
-            $productQuery->latest();
-        }
-
-        // sorts the price in ascending order
-
-        if ($this->sort == 'price') {
-            $productQuery->orderBy('price');
-        }
+        $products = Product::query()
+            ->when($this->selected_categories, fn($q) => $q->whereIn('category_id', $this->selected_categories))
+            ->when($this->price_range, fn($q) => $q->whereBetween('price', [0, $this->price_range]))
+            ->when($this->sort === 'latest', fn($q) => $q->latest())
+            ->when($this->sort === 'price', fn($q) => $q->orderBy('price'))
+            ->paginate(6);
 
         return view('livewire.guest.shop-page', [
-            'products' => $productQuery->paginate(6),
-            'categories' => Category::all(),
+            'products' => $products,
+            'categories' => $this->categories,
         ]);
+    }
+    public function placeholder()
+    {
+        return view('livewire.placeholders.shop-skeleton');
     }
 }

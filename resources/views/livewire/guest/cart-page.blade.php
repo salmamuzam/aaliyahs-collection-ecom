@@ -28,6 +28,7 @@
                                         <div class="flex items-center gap-4">
                                              <h4 class="text-base font-sans text-brand-black">Qty:</h4>
                                              <button wire:click="decreaseQty({{ $item['product_id'] }})" type="button"
+                                                 wire:loading.attr="disabled"
                                                  class="flex items-center justify-center w-[18px] h-[18px] bg-brand-green outline-none rounded-md cursor-pointer hover:bg-opacity-90">
                                                  <svg xmlns="http://www.w3.org/2000/svg" class="w-2 fill-white"
                                                      viewBox="0 0 124 124">
@@ -39,6 +40,7 @@
                                              <span
                                                  class="text-base font-sans text-brand-black leading-[16px]">{{ $item['quantity'] }}</span>
                                              <button wire:click="increaseQty({{ $item['product_id'] }})" type="button"
+                                                 wire:loading.attr="disabled"
                                                  class="flex items-center justify-center w-[18px] h-[18px] bg-brand-green outline-none rounded-md cursor-pointer hover:bg-opacity-90">
                                                  <svg xmlns="http://www.w3.org/2000/svg" class="w-2 fill-white"
                                                      viewBox="0 0 42 42">

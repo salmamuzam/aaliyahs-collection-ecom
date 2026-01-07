@@ -14,14 +14,11 @@ class OrderItem extends Model
         'total_amount',
     ];
 
-    // Every order item belongs to one order
-
     public function order()
     {
         return $this->belongsTo(Order::class);
     }
 
-    // Every order item belongs to one product
     public function product()
     {
         return $this->belongsTo(Product::class);

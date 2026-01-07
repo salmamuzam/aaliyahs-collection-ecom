@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
+
 class Address extends Model
 {
     protected $fillable = [
@@ -20,15 +22,28 @@ class Address extends Model
         'country',
     ];
 
-    // Every order has only one address
-    public function Order()
+    public function order()
     {
         return $this->belongsTo(Order::class);
     }
 
-    // create full name
-    public function getFullNameAttribute()
+    protected function fullName(): Attribute
     {
-        return "{$this->first_name} {$this->last_name}";
+        return Attribute::make(get: fn() => "{$this->first_name} {$this->last_name}");
+    }
+
+    protected function firstName(): Attribute
+    {
+        return Attribute::make(set: fn($v) => ucwords(strtolower($v)));
+    }
+
+    protected function lastName(): Attribute
+    {
+        return Attribute::make(set: fn($v) => ucwords(strtolower($v)));
+    }
+
+    protected function city(): Attribute
+    {
+        return Attribute::make(set: fn($v) => ucwords(strtolower($v)));
     }
 }

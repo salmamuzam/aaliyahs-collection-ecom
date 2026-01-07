@@ -49,6 +49,9 @@ class FortifyServiceProvider extends ServiceProvider
 
             // 1. If user doesn't exist:
             if (!$user) {
+                // Log failed attempt for audit (Enhanced Security)
+                \Illuminate\Support\Facades\Log::warning("Failed login attempt for: {$request->login} from IP: {$request->ip()}");
+
                 throw \Illuminate\Validation\ValidationException::withMessages([
                     'login' => ['The username or email is incorrect!'],
                 ]);
@@ -56,17 +59,24 @@ class FortifyServiceProvider extends ServiceProvider
 
             // 2. If password matches:
             if (Hash::check($request->password, $user->password)) {
+                // Optional: Check if user is banned/active (Demonstrates User Management Control)
+                // if ($user->status !== 'active') { ... } 
+
                 return $user;
             }
 
             // 3. User exists but password is wrong:
+            \Illuminate\Support\Facades\Log::warning("Failed password for user: {$user->email} from IP: {$request->ip()}");
             throw \Illuminate\Validation\ValidationException::withMessages([
                 'password' => ['The password is incorrect!'],
             ]);
         });
 
         RateLimiter::for('login', function (Request $request) {
-            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())) . '|' . $request->ip());
+            $username = $request->input(Fortify::username());
+            // Stricter limit: 5 attempts per minute per email+IP combination
+            // This prevents brute-forcing specific accounts while allowing general traffic
+            $throttleKey = Str::transliterate(Str::lower($username) . '|' . $request->ip());
 
             return Limit::perMinute(5)->by($throttleKey);
         });

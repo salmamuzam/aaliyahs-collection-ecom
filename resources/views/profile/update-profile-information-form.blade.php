@@ -49,8 +49,9 @@
             {{ __('Saved.') }}
         </x-action-message>
 
-        <x-button wire:loading.attr="disabled" wire:target="photo">
-            {{ __('Save') }}
+        <x-button wire:loading.attr="disabled" wire:target="photo, updateProfileInformation">
+            <span wire:loading.remove wire:target="updateProfileInformation">{{ __('Save') }}</span>
+            <span wire:loading wire:target="updateProfileInformation">{{ __('Saving...') }}</span>
         </x-button>
     </x-slot>
 </x-form-section>

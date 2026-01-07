@@ -12,11 +12,9 @@ class HomePage extends Component
     #[Title('Home | Aaliyah Collection')]
     public function render()
     {
-        // get the categories
-        $categories = Category::all();
         return view('livewire.guest.home-page', [
-            // pass the categories to the view
-            'categories' => $categories,
+            'categories' => \App\Models\Category::all(),
+            'latestProducts' => \App\Models\Product::latest()->take(4)->get(),
         ]);
     }
 }

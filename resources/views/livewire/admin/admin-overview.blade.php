@@ -55,18 +55,7 @@
                                 <td class="p-4 text-base text-brand-black font-medium font-sans text-center">#{{ $order->id }}</td>
                                 <td class="p-4 text-base text-brand-black font-medium font-sans text-center">{{ $order->user->first_name . ' ' . $order->user->last_name ?? 'Guest' }}</td>
                                 <td class="p-4 text-center font-sans">
-                                    @php
-                                        $variantMap = [
-                                            'new' => 'info',
-                                            'processing' => 'success',
-                                            'shipped' => 'warning',
-                                            'delivered' => 'teal',
-                                            'cancelled' => 'danger',
-                                        ];
-                                    @endphp
-                                    <x-admin.badge :variant="$variantMap[$order->status] ?? 'default'">
-                                        {{ $order->status }}
-                                    </x-admin.badge>
+                                    <x-admin.status-badge :status="$order->status" />
                                 </td>
                                 <td class="p-4 text-center">
                                     <x-admin.badge :variant="$order->payment_status == 'paid' ? 'success' : 'danger'">

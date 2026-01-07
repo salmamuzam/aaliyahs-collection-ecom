@@ -31,47 +31,27 @@ class CategoryList extends Component
         }
     }
 
-    public function fetchCategories()
-    {
-        return Category::where('name', 'like', '%' . $this->search . '%')
-            ->orderBy($this->sortColumn, $this->sortOrder)
-            ->paginate(4);
-    }
-
     public function render()
     {
-        $categories = $this->fetchCategories();
+        $categories = Category::where('name', 'like', '%' . $this->search . '%')
+            ->orderBy($this->sortColumn, $this->sortOrder)
+            ->paginate(4);
 
-        return view('livewire.admin.category-list', [
-            'categories' => $categories
-        ]);
+        return view('livewire.admin.category-list', compact('categories'));
     }
 
     public function deleteCategory(Category $category)
     {
-        if ($category) {
-            if (Storage::exists($category->image)) {
-                Storage::delete($category->image);
-            }
-
-            $deleteResponse = $category->delete();
-
-            if ($deleteResponse) {
-                session()->flash('success', 'Category deleted successfully!');
-            } else {
-                session()->flash('error', 'Unable to delete category, please try again!');
-            }
-        } else {
-            session()->flash('error', 'Category not found!');
+        // Terse way to handle file deletion
+        if ($category->image) {
+            Storage::delete($category->image);
         }
 
-        // Check if we need to redirect to previous page
-        $categories = $this->fetchCategories();
-        if ($categories->isEmpty() && $this->activePageNumber > 1) {
-            $this->gotoPage($this->activePageNumber - 1);
-        } else {
-            $this->gotoPage($this->activePageNumber);
-        }
+        $status = $category->delete();
+        session()->flash($status ? 'success' : 'error', $status ? 'Deleted successfully!' : 'Unable to delete.');
+
+        // Adjust pagination fluently
+        $this->gotoPage(Category::count() <= ($this->activePageNumber - 1) * 4 ? max(1, $this->activePageNumber - 1) : $this->activePageNumber);
     }
 
     public function updatingPage($pageNumber)

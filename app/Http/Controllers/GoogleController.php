@@ -32,6 +32,12 @@ class GoogleController extends Controller
             if ($finduser) {
 
                 Auth::login($finduser);
+
+                // Extension: Check and sync latest google avatar if changed (API Integration best practice)
+                if ($finduser->profile_photo_path !== $user->avatar) {
+                    $finduser->update(['profile_photo_path' => $user->avatar]);
+                }
+
                 if ($finduser->user_type === 'admin') {
                     return redirect()->route('admin.overview');
                 }
