@@ -86,5 +86,7 @@ Route::middleware(['auth:sanctum', 'can:admin'])->prefix('admin')->group(functio
     Route::apiResource('/products', ProductController::class);
 
     // Admin Order Management
-    Route::apiResource('/orders', OrderController::class)->except(['store']);
+    Route::apiResource('/orders', OrderController::class)
+        ->except(['store'])
+        ->names('admin.orders');
 });
