@@ -12,6 +12,12 @@ use App\Http\Controllers\PaymentController;
 // Public Routes (Accessible by everyone)
 // ============================================
 Route::get('/', HomePage::class)->name('home');
+
+// Temporary Migration Route
+Route::get('/force-migrate', function () {
+    \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+    return 'Migrations Ran Successfully: ' . \Illuminate\Support\Facades\Artisan::output();
+});
 Route::get('/shop', ShopPage::class)->name('shop');
 Route::get('/cart', CartPage::class)->name('cart');
 Route::get('/shop/{product}', ProductDetailPage::class)->name('product.detail');
