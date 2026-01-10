@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class OrderPlaced extends Mailable
+class OrderPlaced extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
     public $order;
@@ -20,6 +20,7 @@ class OrderPlaced extends Mailable
     public function __construct($order)
     {
         $this->order = $order;
+        $this->queue = 'high_priority';
     }
 
 
