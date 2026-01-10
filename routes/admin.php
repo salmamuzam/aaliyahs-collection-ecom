@@ -5,6 +5,7 @@ use App\Livewire\Admin\CategoryList;
 use App\Livewire\Admin\ProductForm;
 use App\Livewire\Admin\ProductList;
 use App\Livewire\Admin\AdminOverview;
+use App\Livewire\Admin\OrderDetail;
 use App\Livewire\Admin\OrderManagementComponent;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -32,4 +33,5 @@ Route::middleware([
 
     // Order Management
     Route::get('admin/orders', OrderManagementComponent::class)->name('admin.orders');
+    Route::get('admin/orders/{order}/view', OrderDetail::class)->name('orders.view');
 });

@@ -66,6 +66,11 @@ class OrderManagementComponent extends Component
         session()->flash('message', "Order #{$order->id} cancelled.");
     }
 
+    public function placeholder()
+    {
+        return view('livewire.placeholders.order-management-skeleton');
+    }
+
     public function render()
     {
         $orders = Order::with(['user', 'items.product', 'address'])

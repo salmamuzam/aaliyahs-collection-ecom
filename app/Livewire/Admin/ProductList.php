@@ -37,6 +37,11 @@ class ProductList extends Component
         }
     }
 
+    public function placeholder()
+    {
+        return view('livewire.placeholders.product-list-skeleton');
+    }
+
     public function render()
     {
         $needsJoin = $this->sortColumn === 'category.name';

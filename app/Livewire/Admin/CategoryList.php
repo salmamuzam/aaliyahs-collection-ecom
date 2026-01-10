@@ -31,6 +31,11 @@ class CategoryList extends Component
         }
     }
 
+    public function placeholder()
+    {
+        return view('livewire.placeholders.category-list-skeleton');
+    }
+
     public function render()
     {
         $categories = Category::where('name', 'like', '%' . $this->search . '%')

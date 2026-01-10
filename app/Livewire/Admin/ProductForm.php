@@ -108,6 +108,11 @@ class ProductForm extends Component
 
         return $this->redirect(route('products', absolute: false), navigate: true);
     }
+    public function placeholder()
+    {
+        return view('livewire.placeholders.form-skeleton');
+    }
+
     public function render()
     {
         return view('livewire.admin.product-form');

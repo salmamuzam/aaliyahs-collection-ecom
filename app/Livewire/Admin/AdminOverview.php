@@ -10,6 +10,11 @@ use Livewire\Component;
 
 class AdminOverview extends Component
 {
+    public function placeholder()
+    {
+        return view('livewire.placeholders.admin-overview-skeleton');
+    }
+
     public function render()
     {
         return view('livewire.admin.admin-overview', [

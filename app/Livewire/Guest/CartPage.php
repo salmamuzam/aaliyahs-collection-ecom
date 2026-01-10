@@ -49,6 +49,11 @@ class CartPage extends Component
         $this->dispatch('update-cart-count', total_count: CartManagement::calculateTotalCount($this->cart_items));
     }
 
+    public function placeholder()
+    {
+        return view('livewire.placeholders.cart-skeleton');
+    }
+
     public function render()
     {
         return view('livewire.guest.cart-page');

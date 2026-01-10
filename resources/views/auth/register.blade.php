@@ -58,21 +58,29 @@
                     <x-form.password-input label="Confirm Password" name="password_confirmation" required autocomplete="new-password" placeholder="Confirm password" />
                 </div>
 
-                {{-- 
                 @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                     <div class="mt-4">
-                            <div class="flex items-center">
-                                <input type="checkbox" name="terms" id="terms" required class="h-4 w-4 shrink-0 text-brand-green focus:ring-brand-green border-slate-300 rounded" />
-                                <div class="ml-2 text-base font-sans text-brand-black">
-                                    {!! __('I agree to the :terms_of_service and :privacy_policy', [
-                                            'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" wire:navigate class="brand-link">'.__('Terms of Service').'</a>',
-                                            'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'" wire:navigate class="brand-link">'.__('Privacy Policy').'</a>',
-                                    ]) !!}
-                                </div>
+                        <label class="flex items-center cursor-pointer group">
+                            <div class="relative">
+                                <input type="checkbox" name="terms" id="terms" required 
+                                    class="peer sr-only" />
+                                <div class="w-5 h-5 border-2 border-slate-300 rounded group-hover:border-brand-green peer-checked:bg-brand-green peer-checked:border-brand-green transition-all duration-200"></div>
+                                <svg class="absolute w-3.5 h-3.5 top-0.5 left-0.5 text-white opacity-0 peer-checked:opacity-100 transition-opacity duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                </svg>
                             </div>
+                            <div class="ml-3 text-base font-sans text-brand-black">
+                                {!! __('I agree to the :terms_of_service and :privacy_policy', [
+                                        'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" class="brand-link font-bold">'.__('Terms of Service').'</a>',
+                                        'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'" class="brand-link font-bold">'.__('Privacy Policy').'</a>',
+                                ]) !!}
+                            </div>
+                        </label>
+                        @error('terms')
+                            <span class="text-brand-burgundy text-base mt-1 block">{{ $message }}</span>
+                        @enderror
                     </div>
-                @endif 
-                --}}
+                @endif
 
                 <div class="!mt-8">
                     <x-button.primary class="w-full">

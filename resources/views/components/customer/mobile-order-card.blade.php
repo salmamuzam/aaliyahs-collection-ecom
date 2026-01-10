@@ -4,7 +4,7 @@
     <div class="flex items-center justify-between text-base">
         <div class="flex items-center gap-2">
             <div>
-                <a href="/my-orders/{{ $order->id }}" class="text-brand-teal font-bold hover:underline">#{{ $order->id }}</a>
+                <a wire:navigate href="/my-orders/{{ $order->id }}" class="text-brand-teal font-bold hover:underline">#{{ $order->id }}</a>
             </div>
             <div class="font-sans text-brand-black">{{ $order->created_at->format('d/m/Y') }}</div>
         </div>
@@ -20,6 +20,6 @@
         LKR {{ number_format($order->grand_total, 2) }}
     </div>
     <div>
-        <a href="/my-orders/{{ $order->id }}" class="text-brand-teal hover:underline text-base font-medium">View details →</a>
+        <a wire:navigate href="/my-orders/{{ $order->id }}" class="text-brand-teal hover:underline text-base font-medium">View details →</a>
     </div>
 </div>

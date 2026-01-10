@@ -43,6 +43,11 @@ class FavoritesPage extends Component
             ->show();
     }
 
+    public function placeholder()
+    {
+        return view('livewire.placeholders.wishlist-skeleton');
+    }
+
     public function render()
     {
         return view('livewire.guest.favorites-page');

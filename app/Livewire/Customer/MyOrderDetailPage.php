@@ -20,6 +20,11 @@ class MyOrderDetailPage extends Component
 
     }
 
+    public function placeholder()
+    {
+        return view('livewire.placeholders.my-order-detail-skeleton');
+    }
+
     public function render()
     {
         // fetch order and ensure it belongs to the authenticated user

@@ -25,10 +25,10 @@ class CreateNewUser implements CreatesNewUsers
             // Last Name Validation
             'last_name' => ['required', 'string', 'max:255'],
             // Username Validation
-            'username' => ['required', 'string' , 'max:255', 'unique:users'],
+            'username' => ['required', 'string', 'max:255', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
-            'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
+            'terms' => \Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
         return User::create([
@@ -36,7 +36,7 @@ class CreateNewUser implements CreatesNewUsers
             'last_name' => $input['last_name'],
             'username' => $input['username'],
             'email' => $input['email'],
-            'password' => Hash::make($input['password']),
+            'password' => $input['password'],
         ]);
     }
 }

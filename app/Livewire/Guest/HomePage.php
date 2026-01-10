@@ -10,6 +10,11 @@ class HomePage extends Component
 {
     // Custom title
     #[Title('Home | Aaliyah Collection')]
+    public function placeholder()
+    {
+        return view('livewire.placeholders.home-skeleton');
+    }
+
     public function render()
     {
         return view('livewire.guest.home-page', [
