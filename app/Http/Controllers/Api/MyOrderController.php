@@ -88,10 +88,8 @@ class MyOrderController extends Controller
                 $order->items()->createMany($orderItemsData);
                 $order->address()->create(array_merge($validated, ['user_id' => auth()->id(), 'country' => 'Sri Lanka']));
 
-                // Send Email fluently
-                rescue(fn() => Mail::to($request->user())->send(new OrderPlaced($order)), function ($e) {
-                    Log::error('Order Email Failed: ' . $e->getMessage());
-                });
+                // Fire Event for background processing (Email, Stock, etc.)
+                \App\Events\OrderPlaced::dispatch($order);
 
                 return ResponseHelper::success(
                     message: 'Order placed successfully!',

@@ -19,19 +19,26 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         try {
-            $products = Product::with('category')
-                ->when($request->search, function ($query, $search) {
-                    $query->where(function ($q) use ($search) {
-                        $q->where('name', 'like', "%{$search}%")
-                            ->orWhere('description', 'like', "%{$search}%")
-                            ->orWhere('price', 'like', "%{$search}%")
-                            ->orWhereHas('category', fn($q) => $q->where('name', 'like', "%{$search}%"));
-                    });
-                })
-                ->when($request->category_name, function ($query, $categoryName) {
-                    $query->whereHas('category', fn($q) => $q->where('name', $categoryName));
-                })
-                ->paginate(10);
+            $page = $request->input('page', 1);
+            $search = $request->input('search', '');
+            $categoryName = $request->input('category_name', '');
+            $cacheKey = 'products_index_' . md5($page . $search . $categoryName);
+
+            $products = \Illuminate\Support\Facades\Cache::remember($cacheKey, 600, function () use ($request) {
+                return Product::with('category')
+                    ->when($request->search, function ($query, $search) {
+                        $query->where(function ($q) use ($search) {
+                            $q->where('name', 'like', "%{$search}%")
+                                ->orWhere('description', 'like', "%{$search}%")
+                                ->orWhere('price', 'like', "%{$search}%")
+                                ->orWhereHas('category', fn($q) => $q->where('name', 'like', "%{$search}%"));
+                        });
+                    })
+                    ->when($request->category_name, function ($query, $categoryName) {
+                        $query->whereHas('category', fn($q) => $q->where('name', $categoryName));
+                    })
+                    ->paginate(10);
+            });
 
             return ResponseHelper::success(
                 message: 'Products fetched successfully!',
@@ -55,6 +62,9 @@ class ProductController extends Controller
 
             $product = Product::create($data);
             $product->load('category');
+
+            // Clear product caches
+            \Illuminate\Support\Facades\Cache::flush();
 
             return ResponseHelper::success(message: 'Product created successfully!', data: new ProductResource($product), statusCode: 201);
         } catch (Exception $e) {
@@ -93,6 +103,9 @@ class ProductController extends Controller
             $product->update($data);
             $product->load('category');
 
+            // Clear product caches
+            \Illuminate\Support\Facades\Cache::flush();
+
             return ResponseHelper::success(message: 'Product has been updated successfully!', data: new ProductResource($product));
         } catch (Exception $e) {
             Log::error('Unable to update product: ' . $e->getMessage());
@@ -107,6 +120,10 @@ class ProductController extends Controller
     {
         try {
             $product->delete();
+
+            // Clear product caches
+            \Illuminate\Support\Facades\Cache::flush();
+
             return ResponseHelper::success(message: 'Product has been deleted successfully!');
         } catch (Exception $e) {
             Log::error('Unable to delete product: ' . $e->getMessage());
@@ -120,11 +137,13 @@ class ProductController extends Controller
     public function related(Product $product)
     {
         try {
-            $relatedProducts = Product::where('category_id', $product->category_id)
-                ->where('id', '!=', $product->id)
-                ->inRandomOrder()
-                ->limit(4)
-                ->get();
+            $relatedProducts = \Illuminate\Support\Facades\Cache::remember('product_related_' . $product->id, 3600, function () use ($product) {
+                return Product::where('category_id', $product->category_id)
+                    ->where('id', '!=', $product->id)
+                    ->inRandomOrder()
+                    ->limit(4)
+                    ->get();
+            });
 
             return ResponseHelper::success(
                 message: 'Related products fetched!',

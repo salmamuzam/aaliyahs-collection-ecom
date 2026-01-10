@@ -38,7 +38,7 @@
             <x-section-header title="OUR COLLECTIONS" align="center" />
 
             <div class="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-                @foreach ($categories as $category)
+                @foreach ($this->categories as $category)
                     <!-- Category 1 -->
                     <div wire:key="{{ $category->id }}"
                         class="shadow-sm bg-white p-1.5 overflow-hidden cursor-pointer relative hover:shadow-md rounded-md border border-gray-300">

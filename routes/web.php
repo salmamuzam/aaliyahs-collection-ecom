@@ -43,4 +43,19 @@ require __DIR__ . '/auth.php';
 // ============================================
 // Include Admin Routes
 // ============================================
+// ============================================
+// Debug Route
+// ============================================
+Route::get('/test-mail-debug', function () {
+    try {
+        \Illuminate\Support\Facades\Mail::raw('This is a test email checking SMTP configuration.', function ($message) {
+            $message->to('aaliyahscollection@gmail.com') // Sending to the admin/support email or current user if possible
+                ->subject('SMTP Debug Test');
+        });
+        return 'Email sent successfully! If you do not receive it, check your SPAM folder or SMTP Provider logs.';
+    } catch (\Exception $e) {
+        return 'Error sending email: ' . $e->getMessage();
+    }
+});
+
 require __DIR__ . '/admin.php';

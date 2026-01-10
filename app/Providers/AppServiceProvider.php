@@ -30,5 +30,10 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('admin', function (User $user) {
             return $user->user_type === 'admin';
         });
+
+        \Illuminate\Support\Facades\Event::listen(
+            \App\Events\OrderPlaced::class,
+            \App\Listeners\SendOrderConfirmationEmail::class,
+        );
     }
 }
