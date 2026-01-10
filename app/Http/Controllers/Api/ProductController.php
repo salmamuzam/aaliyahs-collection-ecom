@@ -165,8 +165,8 @@ class ProductController extends Controller
         $updatedImages = $currentImages ?? [];
         foreach ($request->file('images') as $index => $image) {
             $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
-            // Replace or add image at specific index
-            $updatedImages[$index] = $image->storeAs('uploads/products', $imageName, 'public');
+            // Append new images to the list (Matches Livewire behavior)
+            $updatedImages[] = $image->storeAs('uploads/products', $imageName, 'public');
         }
         return $updatedImages;
     }

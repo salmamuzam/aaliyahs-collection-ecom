@@ -82,6 +82,9 @@ Route::middleware('auth:sanctum')->group(function () {
 // ==========================
 Route::middleware(['auth:sanctum', 'can:admin'])->prefix('admin')->group(function () {
 
+    // Admin General Stats
+    Route::get('/dashboard/stats', [App\Http\Controllers\Api\DashboardController::class, 'index']);
+
     Route::apiResource('/categories', CategoryController::class);
     Route::apiResource('/products', ProductController::class);
 

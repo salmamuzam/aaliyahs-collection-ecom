@@ -47,6 +47,10 @@ class CategoryController extends Controller
 
             $category = Category::create($data);
 
+            // Consistency: Clear related caches
+            cache()->forget('api_home_categories');
+            cache()->flush(); // Clear paginated category lists
+
             return ResponseHelper::success(message: 'Category has been created successfully!', data: new CategoryResource($category), statusCode: 201);
         } catch (Exception $e) {
             Log::error('Unable to create category: ' . $e->getMessage());
@@ -80,6 +84,11 @@ class CategoryController extends Controller
             }
 
             $category->update($data);
+
+            // Consistency: Clear related caches
+            cache()->forget('api_home_categories');
+            cache()->flush(); // Clear paginated category lists
+
             return ResponseHelper::success(message: 'Category has been updated successfully!', data: new CategoryResource($category));
         } catch (Exception $e) {
             Log::error('Unable to update category: ' . $e->getMessage());
@@ -94,6 +103,11 @@ class CategoryController extends Controller
     {
         try {
             $category->delete();
+
+            // Consistency: Clear related caches
+            cache()->forget('api_home_categories');
+            cache()->flush();
+
             return ResponseHelper::success(message: 'Category has been deleted successfully!');
         } catch (Exception $e) {
             Log::error('Unable to delete category: ' . $e->getMessage());
