@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request; // Import this
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ProductController;
@@ -67,6 +68,19 @@ Route::get('/shop/{product}/related', [ProductController::class, 'related']);
 Route::post('/cart/calculate', [CartController::class, 'calculate']); // Cart Logic
 Route::post('/wishlist/fetch', [WishlistController::class, 'index']); // Wishlist Logic
 
+// --- SECURITY DEMONSTRATION ENDPOINT (For documentation) ---
+Route::get('/vuln-sql', function (Request $request) {
+    $email = $request->input('email');
+    // Demonstration of SAFE Eloquent Query (prevents SQL Injection)
+    $user = \App\Models\User::where('email', $email)->first();
+
+    if (!$user) {
+        return response()->json(['status' => 'safe', 'message' => 'No user found. Injection attempt failed or user does not exist.']);
+    }
+
+    return response()->json(['status' => 'success', 'data' => $user->only('id', 'first_name')]);
+});
+// -------------------------------------------------------------
 
 // ==========================
 // Protected User Routes
