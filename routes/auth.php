@@ -22,7 +22,11 @@ Route::middleware([
 
     Route::get('/success', SuccessPage::class)->name('auth.success');
     Route::get('/cancel', CancelPage::class)->name('auth.cancel');
-
-    // Home redirection based on user type (defined in Fortify config)
-    Route::get('/home', [HomeController::class, 'index'])->name('home.redirect');
 });
+
+// Redirect route for all authenticated users (Admins go to overview, Customers go to shop/home)
+Route::middleware([
+    'auth',
+    config('jetstream.auth_session'),
+    'verified'
+])->get('/home', [HomeController::class, 'index'])->name('home.redirect');

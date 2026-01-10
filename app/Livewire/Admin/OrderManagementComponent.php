@@ -53,12 +53,6 @@ class OrderManagementComponent extends Component
         session()->flash('message', "Order #{$order->id} is processing.");
     }
 
-    public function markAsPaid(Order $order)
-    {
-        $order->update(['payment_status' => 'paid']);
-        session()->flash('message', "Order #{$order->id} marked as paid.");
-    }
-
     public function cancelOrder(Order $order)
     {
         $order->update(['status' => 'cancelled']);

@@ -71,8 +71,8 @@
                             </div>
                             <div class="ml-3 text-base font-sans text-brand-black">
                                 {!! __('I agree to the :terms_of_service and :privacy_policy', [
-                                        'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" class="brand-link font-bold">'.__('Terms of Service').'</a>',
-                                        'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'" class="brand-link font-bold">'.__('Privacy Policy').'</a>',
+                                        'terms_of_service' => '<a wire:navigate href="'.route('terms.show').'" class="brand-link font-bold">'.__('Terms of Service').'</a>',
+                                        'privacy_policy' => '<a wire:navigate href="'.route('policy.show').'" class="brand-link font-bold">'.__('Privacy Policy').'</a>',
                                 ]) !!}
                             </div>
                         </label>

@@ -51,7 +51,7 @@
 
                         <div class="space-y-3">
                             <p class="text-brand-teal font-bold uppercase tracking-wider text-sm">Description</p>
-                            <div class="text-brand-black text-base md:text-lg leading-relaxed text-center text-justify">
+                            <div class="text-brand-black text-base md:text-lg leading-relaxed text-justify">
                                 {{ $product->description }}
                             </div>
                         </div>
