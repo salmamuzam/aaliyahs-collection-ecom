@@ -8,18 +8,25 @@ use Illuminate\Support\Facades\Mail;
 use App\Events\OrderStatusUpdated;
 
 use Livewire\WithPagination;
+use Livewire\WithoutUrlPagination;
 
 class OrderManagementComponent extends Component
 {
-    use WithPagination;
+    use WithPagination, WithoutUrlPagination;
 
     public $search = '';
-    public $sortColumn = 'created_at';
-    public $sortOrder = 'desc';
+    public $activePageNumber = 1;
+    public $sortColumn = 'id';
+    public $sortOrder = 'asc';
 
     public function updatedSearch()
     {
         $this->resetPage();
+    }
+
+    public function updatingPage($pageNumber)
+    {
+        $this->activePageNumber = $pageNumber;
     }
 
     public function sortBy($column)
@@ -34,9 +41,22 @@ class OrderManagementComponent extends Component
 
     public function approveOrder(Order $order)
     {
-        $order->update(['status' => 'processing']);
+        $updateData = ['status' => 'processing'];
+
+        // Only for stripe payment it must be paid, COD remains unpaid/pending
+        if ($order->payment_method === 'stripe') {
+            $updateData['payment_status'] = 'paid';
+        }
+
+        $order->update($updateData);
         OrderStatusUpdated::dispatch($order);
         session()->flash('message', "Order #{$order->id} is processing.");
+    }
+
+    public function markAsPaid(Order $order)
+    {
+        $order->update(['payment_status' => 'paid']);
+        session()->flash('message', "Order #{$order->id} marked as paid.");
     }
 
     public function cancelOrder(Order $order)

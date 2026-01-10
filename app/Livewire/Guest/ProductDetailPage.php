@@ -18,6 +18,19 @@ class ProductDetailPage extends Component
     public $product;
     public $quantity = 1;
     public $isFavorite = false;
+    public $currentImageIndex = 0;
+
+    public function nextImage()
+    {
+        $count = count($this->product->images);
+        $this->currentImageIndex = ($this->currentImageIndex + 1) % $count;
+    }
+
+    public function prevImage()
+    {
+        $count = count($this->product->images);
+        $this->currentImageIndex = ($this->currentImageIndex - 1 + $count) % $count;
+    }
 
     public function mount(Product $product)
     {

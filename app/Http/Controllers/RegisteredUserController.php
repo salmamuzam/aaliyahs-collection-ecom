@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Fortify\Fortify;
@@ -46,8 +48,8 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'string', 'confirmed'],
         ]);
 
-        $user = \App\Models\User::create(array_merge($data, [
-            'password' => \Illuminate\Support\Facades\Hash::make($data['password']),
+        $user = User::create(array_merge($data, [
+            'password' => Hash::make($data['password']),
         ]));
 
         event(new Registered($user));
