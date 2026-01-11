@@ -25,6 +25,29 @@ class MyOrderDetailPage extends Component
         return view('livewire.placeholders.my-order-detail-skeleton');
     }
 
+    public function downloadInvoice()
+    {
+        $order = Order::where('id', $this->order_id)
+            ->where('user_id', auth()->id())
+            ->firstOrFail();
+
+        $order_items = OrderItem::with('product')
+            ->where('order_id', $order->id)
+            ->get();
+
+        $address = Address::where('order_id', $order->id)->first();
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.invoice', [
+            'order' => $order,
+            'order_items' => $order_items,
+            'address' => $address
+        ]);
+
+        return response()->streamDownload(function () use ($pdf) {
+            echo $pdf->output();
+        }, 'invoice-' . $order->id . '.pdf');
+    }
+
     public function render()
     {
         // fetch order and ensure it belongs to the authenticated user
