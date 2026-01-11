@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Invoice #{{ $order->id }}</title>
     <style>
+        @page { margin: 0px; }
         body {
             font-family: 'Times New Roman', serif;
             color: #1A1A1A; 
@@ -11,6 +12,14 @@
             line-height: 1.6;
             margin: 0;
             padding: 0;
+            background-color: #F3EDE8; /* Brand Beige */
+        }
+        .invoice-border {
+            border: 4px solid #000;
+            padding: 30px;
+            margin: 20px;
+            min-height: 960px; /* Frame the A4 page */
+            background-color: transparent;
         }
 
         /* Helpers */
@@ -74,7 +83,7 @@
 
         /* Bordered Container */
         .bordered-container {
-            border: 1px solid #e5e7eb;
+            border: 1px solid #000;
         }
 
         /* Table */
@@ -83,18 +92,18 @@
             border-collapse: collapse;
         }
         th {
-            background-color: #f3f4f6;
-            color: #004D61;
+            background-color: transparent; /* Match page bg */
+            color: #3E5641; /* Brand Green */
             font-weight: 700;
             text-align: left;
             padding: 15px; /* More padding */
-            border-bottom: 1px solid #e5e7eb;
+            border-bottom: 1px solid #000;
             font-size: 12px;
             text-transform: uppercase;
         }
         td {
             padding: 15px; /* More cell padding */
-            border-bottom: 1px solid #f3f4f6;
+            border-bottom: 1px solid #000;
             color: #333;
             vertical-align: top;
         }
@@ -104,7 +113,7 @@
             width: 55%;
             padding: 25px; /* More padding */
             vertical-align: top;
-            border-right: 1px solid #e5e7eb;
+            border-right: 1px solid #000;
         }
         .bottom-right {
             width: 45%;
@@ -113,7 +122,7 @@
         }
         
         .grand-total-row td {
-            background-color: #004D61;
+            background-color: #822659; /* Brand Burgundy */
             color: #fff;
             font-weight: 700;
             font-size: 16px; /* Bigger total */
@@ -125,7 +134,7 @@
         .footer {
             margin-top: 60px;
             text-align: center;
-            border-top: 1px solid #eee;
+            border-top: 1px solid #000;
             padding-top: 30px;
         }
         .footer p { margin: 0 0 5px 0; font-size: 16px; color: #444; } /* Bigger contact */
@@ -135,6 +144,7 @@
     </style>
 </head>
 <body>
+    <div class="invoice-border">
 
     <!-- Header -->
     <div class="header clearfix">
@@ -189,43 +199,43 @@
             </thead>
             <tbody>
                 @foreach($order_items as $item)
-                <tr>
-                    <td>
+                <tr style="{{ $loop->last ? '' : 'border-bottom: 1px solid #000;' }}">
+                    <td style="padding: 15px; {{ $loop->last ? 'border-bottom: none;' : 'border-bottom: 1px solid #000;' }}">
                         <span class="text-bold">{{ $item->product->name }}</span><br>
                         <span style="font-size: 11px; color: #666;">{{ $item->product->category->name }}</span>
                     </td>
-                    <td>{{ number_format($item->unit_amount, 2) }}</td>
-                    <td class="text-center">{{ $item->quantity }}</td>
-                    <td class="text-right">{{ number_format($item->total_amount, 2) }}</td>
+                    <td style="padding: 15px; {{ $loop->last ? 'border-bottom: none;' : 'border-bottom: 1px solid #000;' }}">{{ number_format($item->unit_amount, 2) }}</td>
+                    <td class="text-center" style="padding: 15px; {{ $loop->last ? 'border-bottom: none;' : 'border-bottom: 1px solid #000;' }}">{{ $item->quantity }}</td>
+                    <td class="text-right" style="padding: 15px; {{ $loop->last ? 'border-bottom: none;' : 'border-bottom: 1px solid #000;' }}">{{ number_format($item->total_amount, 2) }}</td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
 
         <!-- Bottom Split Section -->
-        <table style="width: 100%; border-top: 1px solid #e5e7eb;">
+        <table style="width: 100%; border-top: 1px solid #000;">
             <tr>
                 <!-- Left: Payment Info -->
-                <td class="bottom-left" style="border-right: 1px solid #e5e7eb; border-bottom: none;">
+                <td class="bottom-left" style="border-right: 1px solid #000; border-bottom: none;">
                     <div class="section-title">Payment Details</div>
                     <p style="margin: 0 0 5px 0; color: #333;">
                         Method: <span class="text-bold">{{ $order->payment_method == 'cod' ? 'Cash on Delivery' : 'Card' }}</span>
                     </p>
                     <p style="margin: 0; color: #333;">
-                        Status: <span style="background-color: #822659; color: #fff; padding: 3px 8px; font-weight: bold; border-radius: 4px; font-size: 11px;">{{ strtoupper($order->payment_status) }}</span>
+                        Status: <span style="background-color: #3E5641; color: #fff; padding: 3px 8px; font-weight: bold; border-radius: 4px; font-size: 11px;">{{ strtoupper($order->payment_status) }}</span>
                     </p>
                 </td>
 
                 <!-- Right: Totals -->
-                <td class="bottom-right" style="padding: 0; border-bottom: none;">
+                <td class="bottom-right" style="padding: 0; border-bottom: none; vertical-align: bottom;">
                     <table style="width: 100%; margin: 0; border-collapse: collapse;">
                         <tr>
-                            <td style="padding: 10px 20px; border-bottom: 1px solid #f3f4f6;">Subtotal</td>
-                            <td style="padding: 10px 20px; border-bottom: 1px solid #f3f4f6;" class="text-right text-bold">{{ number_format($order->grand_total, 2) }}</td>
+                            <td style="padding: 10px 20px; border-bottom: 1px solid #000;">Subtotal</td>
+                            <td style="padding: 10px 20px; border-bottom: 1px solid #000;" class="text-right">{{ number_format($order->grand_total, 2) }}</td>
                         </tr>
                         <tr>
-                            <td style="padding: 10px 20px; border-bottom: 1px solid #f3f4f6;">Shipping</td>
-                            <td style="padding: 10px 20px; border-bottom: 1px solid #f3f4f6;" class="text-right">0.00</td>
+                            <td style="padding: 10px 20px; border-bottom: 1px solid #000;">Shipping</td>
+                            <td style="padding: 10px 20px; border-bottom: 1px solid #000; color: #3E5641; font-weight: bold;" class="text-right">Free</td>
                         </tr>
                         <tr class="grand-total-row">
                             <td style="padding: 15px 20px;">Total</td>
@@ -243,5 +253,6 @@
         <p class="small">Thank you for shopping with Aaliyah's Collection!</p>
     </div>
 
+    </div>
 </body>
 </html>

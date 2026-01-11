@@ -33,6 +33,8 @@
     {{-- Include the footer --}}
     @include('components.layouts.partials.footer')
     
+
+
     @stack('modals')
     @livewireScripts
 </body>

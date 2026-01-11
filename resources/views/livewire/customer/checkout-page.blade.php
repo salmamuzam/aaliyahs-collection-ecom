@@ -49,9 +49,7 @@
                 @csrf
                 <div>
                 <!-- Offline Message -->
-                <div wire:offline class="w-full p-2 mb-4 text-sm text-center text-red-700 bg-red-100 border border-red-300 rounded-md">
-                    You are currently offline. Please check your internet connection.
-                </div>
+
                 <x-section-header title="DELIVERY DETAILS" size="text-xl" />
                 <div class="grid gap-y-6 gap-x-4">
                   <x-form.input label="First Name" name="first_name" wire:model.live="first_name" placeholder="Enter First Name" readonly class="bg-gray-100 cursor-not-allowed" />
