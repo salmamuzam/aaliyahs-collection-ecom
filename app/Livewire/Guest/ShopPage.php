@@ -29,6 +29,14 @@ class ShopPage extends Component
     #[Url]
     public $sort = 'latest';
 
+    public $favoriteIds = [];
+
+    public function mount()
+    {
+        $favorites = \App\Helpers\FavoritesManagement::getFavoriteItemsFromCookie();
+        $this->favoriteIds = array_column($favorites, 'product_id');
+    }
+
     public function updatingPriceRange()
     {
         $this->resetPage();
@@ -84,6 +92,11 @@ class ShopPage extends Component
                 ->timer(3000)
                 ->toast()
                 ->show();
+
+            // Remove from local array
+            if (($key = array_search($product_id, $this->favoriteIds)) !== false) {
+                unset($this->favoriteIds[$key]);
+            }
         } else {
             $total_count = \App\Helpers\FavoritesManagement::addItemToFavorites($product_id);
             $this->dispatch('update-favorite-count', total_count: $total_count);
@@ -94,13 +107,17 @@ class ShopPage extends Component
                 ->timer(3000)
                 ->toast()
                 ->show();
+
+            // Add to local array
+            if (!in_array($product_id, $this->favoriteIds)) {
+                $this->favoriteIds[] = $product_id;
+            }
         }
     }
 
     public function isInFavorites($product_id)
     {
-        return collect(\App\Helpers\FavoritesManagement::getFavoriteItemsFromCookie())
-            ->contains('product_id', $product_id);
+        return in_array($product_id, $this->favoriteIds);
     }
 
     #[Computed]
