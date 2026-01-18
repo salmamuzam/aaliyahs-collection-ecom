@@ -29,20 +29,38 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => \App\Http\Middleware\Admin::class,
             'customer' => \App\Http\Middleware\Customer::class,
+            'ability' => \Laravel\Sanctum\Http\Middleware\CheckAbilities::class,
+            'abilities' => \Laravel\Sanctum\Http\Middleware\CheckForAnyAbility::class,
         ]);
     })
 
     ->withExceptions(function (Exceptions $exceptions): void {
-        // Handle model not found exceptions
+        // Handle Validation Exceptions for API
+        $exceptions->render(function (\Illuminate\Validation\ValidationException $e, \Illuminate\Http\Request $request) {
+            if ($request->is('api/*')) {
+                return \App\Helpers\ResponseHelper::error(
+                    message: 'The given data was invalid.',
+                    data: $e->errors(),
+                    statusCode: 422
+                );
+            }
+        });
+
+        // Handle Authentication Exceptions for API
+        $exceptions->render(function (\Illuminate\Auth\AuthenticationException $e, \Illuminate\Http\Request $request) {
+            if ($request->is('api/*')) {
+                return \App\Helpers\ResponseHelper::error(message: 'Unauthenticated.', statusCode: 401);
+            }
+        });
+
+        // Handle Not Found Exceptions
         $exceptions->render(function (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $e, \Illuminate\Http\Request $request) {
             if ($request->is('api/*')) {
-                // Check if it's a model not found error
                 $previous = $e->getPrevious();
                 if ($previous instanceof \Illuminate\Database\Eloquent\ModelNotFoundException) {
                     $model = class_basename($previous->getModel());
                     return \App\Helpers\ResponseHelper::error(message: $model . ' not found!', statusCode: 404);
                 }
-                // Generic 404 for other cases
                 return \App\Helpers\ResponseHelper::error(message: 'Resource not found!', statusCode: 404);
             }
         });

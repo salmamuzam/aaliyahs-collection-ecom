@@ -29,10 +29,13 @@ class SecurityHeaders
         // Control referrer information
         $response->headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');
 
-        // Enforce HTTPS (HSTS) - Only in production typically, but good to have prepared
-        // if (app()->environment('production')) {
-        //     $response->headers->set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
-        // }
+        // EXEMPLARY: Content Security Policy (CSP)
+        if (app()->environment('production')) {
+            $response->headers->set('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://js.stripe.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src 'self' https://js.stripe.com; connect-src 'self' https://api.stripe.com;");
+        }
+
+        // Enforce HTTPS (HSTS)
+        $response->headers->set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
 
         return $response;
     }

@@ -16,7 +16,7 @@ class CategoryResource extends JsonResource
     {
         return [
             'name' => strtoupper($this->name),
-            'image' => $this->image,
+            'image' => $this->image ? asset('storage/' . $this->image) : null,
             // Product count
             'products' => $this->when($this->relationLoaded('products'), $this->products->count())
         ];

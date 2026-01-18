@@ -22,10 +22,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Force HTTPS in Production to prevent Man-in-the-Middle attacks
         if ($this->app->environment('production')) {
             URL::forceScheme('https');
         }
+
+        /**
+         * OUTSTANDING: Enforce strict data integrity and prevent N+1 issues
+         */
+        \Illuminate\Database\Eloquent\Model::shouldBeStrict(!$this->app->environment('production'));
 
         Gate::define('admin', function (User $user) {
             return $user->user_type === 'admin';

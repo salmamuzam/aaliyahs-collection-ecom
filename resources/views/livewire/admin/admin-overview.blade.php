@@ -1,8 +1,10 @@
-<div class="px-6 lg:px-12 pt-6 lg:pt-10 pb-4 lg:pb-8">
+<div wire:poll.30s class="px-6 lg:px-12 pt-6 lg:pt-10 pb-4 lg:pb-8 relative">
+
     <x-admin.page-header title="Dashboard" />
 
     <div class="pb-4">
-        <div class="grid lg:grid-cols-3 sm:grid-cols-2 gap-x-6 gap-y-6 lg:gap-y-12 lg:max-w-7xl mx-auto">
+        <div class="grid lg:grid-cols-4 sm:grid-cols-2 gap-x-6 gap-y-6 lg:max-w-full mx-auto">
+            
             {{-- Total Categories --}}
             <x-admin.stats-card :href="route('categories')" :count="$totalCategories" label="Categories">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-12 h-12 text-brand-teal" viewBox="0 0 24 24">
@@ -26,6 +28,14 @@
                     <path d="M267.75 127.5H229.5v153l132.6 81.6 20.4-33.15-114.75-68.85z" />
                 </svg>
             </x-admin.stats-card>
+
+             {{-- Total Customers --}}
+            <x-admin.stats-card href="#" :count="$totalCustomers" label="Customers">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-12 h-12 text-brand-teal" viewBox="0 0 24 24">
+                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                </svg>
+            </x-admin.stats-card>
+
         </div>
     </div>
 

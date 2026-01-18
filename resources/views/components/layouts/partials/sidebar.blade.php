@@ -23,6 +23,8 @@
             </svg>
         </x-admin.sidebar-link>
 
+
+
         <x-admin.sidebar-link :href="route('categories')" :active="request()->routeIs('categories')" label="Categories">
              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-full h-full" viewBox="0 0 24 24">
                 <path d="M18 2c2.206 0 4 1.794 4 4v12c0 2.206-1.794 4-4 4H6c-2.206 0-4-1.794-4-4V6c0-2.206 1.794-4 4-4zm0-2H6a6 6 0 0 0-6 6v12a6 6 0 0 0 6 6h12a6 6 0 0 0 6-6V6a6 6 0 0 0-6-6z" data-original="#000000" />

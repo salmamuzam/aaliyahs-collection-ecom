@@ -18,15 +18,19 @@ class HomeController extends Controller
     public function index()
     {
         try {
-            // Performance Optimization: Cache categories for 1 hour
-            // This satisfies the "Performance Optimization" requirement in the rubric.
-            $categories = \Illuminate\Support\Facades\Cache::remember('api_home_categories', 3600, function () {
-                return Category::all();
+            $data = \Illuminate\Support\Facades\Cache::remember('api_home_data', 3600, function () {
+                return [
+                    'categories' => CategoryResource::collection(Category::all()),
+                    'latest_products' => \App\Http\Resources\ProductResource::collection(
+                        \App\Models\Product::with('category')->latest()->take(8)->get()
+                    ),
+                    'featured_products' => \App\Http\Resources\ProductResource::collection(
+                        \App\Models\Product::with('category')->inRandomOrder()->take(4)->get()
+                    ),
+                ];
             });
 
-            return ResponseHelper::success(message: 'Home data fetched successfully!', data: [
-                'categories' => CategoryResource::collection($categories)
-            ], statusCode: 200);
+            return ResponseHelper::success(message: 'Home data fetched successfully!', data: $data, statusCode: 200);
 
         } catch (Exception $e) {
             Log::error('Home Index Error: ' . $e->getMessage() . '-Line No: ' . $e->getLine());

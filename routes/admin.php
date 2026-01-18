@@ -7,6 +7,7 @@ use App\Livewire\Admin\ProductList;
 use App\Livewire\Admin\AdminOverview;
 use App\Livewire\Admin\OrderDetail;
 use App\Livewire\Admin\OrderManagementComponent;
+use App\Livewire\Admin\AnalyticsComponent;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 
@@ -18,6 +19,7 @@ Route::middleware([
     'admin'
 ])->group(function () {
     Route::get('/admin/overview', AdminOverview::class)->name('admin.overview');
+    Route::get('/admin/analytics', AnalyticsComponent::class)->name('admin.analytics');
 
     // Category Management
     Route::get('admin/categories', CategoryList::class)->name('categories');

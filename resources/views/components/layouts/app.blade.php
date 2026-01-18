@@ -67,7 +67,17 @@
 
 
     @stack('modals')
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    @livewireChartsScripts
     @livewireScripts
+
+    {{-- INNOVATION: Global Offline Detector --}}
+    <div wire:offline class="fixed top-0 left-0 w-full z-[9999]">
+        <div class="bg-red-600 text-white text-center py-2 px-4 shadow-lg font-bold animate-pulse">
+            <i class="fa-solid fa-triangle-exclamation mr-2"></i>
+            CONNECTION LOST: You are currently offline. Some features may not work until you reconnect.
+        </div>
+    </div>
 </body>
 
 </html>

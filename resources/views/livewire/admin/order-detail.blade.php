@@ -1,6 +1,10 @@
 <div class="px-6 lg:px-12 pt-6 lg:pt-10 pb-4 lg:pb-8">
     <x-admin.page-header title="Order Details #{{ $order->id }}">
         <x-slot:actions>
+            <a href="{{ route('order.invoice', $order->id) }}"
+                class="px-5 py-2.5 text-base font-semibold text-white bg-brand-burgundy rounded-lg hover:bg-opacity-90 transition-colors shadow-sm mr-2">
+                <i class="fa-solid fa-file-pdf mr-2"></i> Download Invoice
+            </a>
             <a wire:navigate href="{{ route('admin.orders') }}"
                 class="px-5 py-2.5 text-base font-semibold text-white bg-brand-green rounded-lg hover:bg-opacity-90 transition-colors shadow-sm">
                 Back

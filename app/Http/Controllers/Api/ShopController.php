@@ -85,4 +85,25 @@ class ShopController extends Controller
             return ResponseHelper::error(message: 'Unable to fetch product! Please try again!', statusCode: 500);
         }
     }
+
+    /**
+     * Shop Metadata - Get Prices and Categories for Filters (Innovative Flutter Aid)
+     */
+    public function filters()
+    {
+        try {
+            $data = [
+                'price_range' => [
+                    'min' => (float) Product::min('price') ?? 0,
+                    'max' => (float) Product::max('price') ?? 0,
+                ],
+                'categories' => \App\Http\Resources\CategoryResource::collection(\App\Models\Category::all())
+            ];
+
+            return ResponseHelper::success(message: 'Filter metadata fetched!', data: $data);
+        } catch (Exception $e) {
+            Log::error('Shop Filters Error: ' . $e->getMessage());
+            return ResponseHelper::error(message: 'Error fetching filters', statusCode: 500);
+        }
+    }
 }

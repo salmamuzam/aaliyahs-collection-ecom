@@ -22,7 +22,7 @@ class FavoritesManagement
         }
 
         if ($existing_item === null) {
-            $product = Product::where('id', $product_id)->first(['id', 'name', 'price', 'images']);
+            $product = Product::where('id', '=', $product_id, 'and')->first();
             if ($product) {
                 $favorite_items[] = [
                     'product_id' => $product_id,

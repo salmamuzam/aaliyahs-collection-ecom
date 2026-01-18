@@ -6,12 +6,14 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Address;
 use Livewire\Attributes\Title;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 
 class OrderDetail extends Component
 {
     #[Title('Order Details | Admin')]
 
+    #[Locked]
     public $orderId;
 
     public function mount($order)

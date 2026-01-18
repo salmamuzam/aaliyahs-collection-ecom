@@ -7,6 +7,14 @@ use App\Livewire\Guest\HomePage;
 use App\Livewire\Guest\ProductDetailPage;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\InvoiceController;
+
+// ============================================
+// Secured Shared Routes (Invoices/Profile etc)
+// ============================================
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::get('/orders/{order}/invoice', [InvoiceController::class, 'download'])->name('order.invoice');
+});
 
 // ============================================
 // Public Routes (Accessible by everyone)

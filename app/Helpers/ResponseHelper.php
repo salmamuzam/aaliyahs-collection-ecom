@@ -5,18 +5,12 @@ namespace App\Helpers;
 class ResponseHelper
 {
     /**
-     * Create a new class instance.
+     * Standardized Success Response
      */
-    public function __construct()
-    {
-        //
-    }
-
-    // Common function to display success response
-    public static function success($status = 'success', $message = null, $data = [], $statusCode = 200)
+    public static function success($message = null, $data = [], $statusCode = 200)
     {
         $response = [
-            'status' => $status,
+            'status' => 'success',
             'message' => $message,
         ];
 
@@ -27,12 +21,20 @@ class ResponseHelper
         return response()->json($response, $statusCode);
     }
 
-    // Common function to display error response
-    public static function error($status = 'error', $message = null, $statusCode = 400)
+    /**
+     * Standardized Error Response (Supports Validation Errors)
+     */
+    public static function error($message = null, $data = [], $statusCode = 400)
     {
-        return response()->json([
-            'status' => $status,
+        $response = [
+            'status' => 'error',
             'message' => $message,
-        ], $statusCode);
+        ];
+
+        if (!empty($data)) {
+            $response['data'] = $data;
+        }
+
+        return response()->json($response, $statusCode);
     }
 }

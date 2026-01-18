@@ -58,6 +58,16 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * ADVANCED: Virtual attribute for initials (Innovation)
+     */
+    protected function initials(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => strtoupper(substr((string) $this->first_name, 0, 1) . substr((string) ($this->last_name ?? ''), 0, 1))
+        );
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>

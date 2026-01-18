@@ -41,6 +41,11 @@ class OrderManagementComponent extends Component
 
     public function approveOrder(Order $order)
     {
+        // AUTHORIZATION (Exemplary Security Layer 2)
+        if (!auth()->user()->user_type === 'admin') {
+            abort(403);
+        }
+
         $updateData = ['status' => 'processing'];
 
         // Only for stripe payment it must be paid, COD remains unpaid/pending
@@ -55,6 +60,11 @@ class OrderManagementComponent extends Component
 
     public function cancelOrder(Order $order)
     {
+        // AUTHORIZATION (Exemplary Security Layer 2)
+        if (!auth()->user()->user_type === 'admin') {
+            abort(403);
+        }
+
         $order->update(['status' => 'cancelled']);
         OrderStatusUpdated::dispatch($order);
         session()->flash('message', "Order #{$order->id} cancelled.");

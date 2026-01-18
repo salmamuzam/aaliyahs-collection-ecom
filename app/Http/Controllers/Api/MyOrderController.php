@@ -88,12 +88,43 @@ class MyOrderController extends Controller
                 $order->items()->createMany($orderItemsData);
                 $order->address()->create(array_merge($validated, ['user_id' => auth()->id(), 'country' => 'Sri Lanka']));
 
-                // Fire Event for background processing (Email, Stock, etc.)
+                // Logic for Payment Redirection (Stripe API)
+                $paymentUrl = null;
+                if ($validated['payment_method'] === 'stripe') {
+                    try {
+                        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+                        $session = \Stripe\Checkout\Session::create([
+                            'payment_method_types' => ['card'],
+                            'customer_email' => $request->user()->email,
+                            'line_items' => [
+                                [
+                                    'price_data' => [
+                                        'currency' => 'lkr',
+                                        'product_data' => ['name' => 'Order #' . $order->id],
+                                        'unit_amount' => (int) ($grandTotal * 100),
+                                    ],
+                                    'quantity' => 1,
+                                ]
+                            ],
+                            'mode' => 'payment',
+                            'success_url' => route('success') . '?session_id={CHECKOUT_SESSION_ID}&order_id=' . $order->id,
+                            'cancel_url' => route('payment.cancel'),
+                        ]);
+                        $paymentUrl = $session->url;
+                    } catch (\Exception $e) {
+                        Log::error("Stripe API Error: " . $e->getMessage());
+                    }
+                }
+
+                // Fire Event for background processing
                 \App\Events\OrderPlaced::dispatch($order);
 
                 return ResponseHelper::success(
                     message: 'Order placed successfully!',
-                    data: new OrderResource($order->load('items.product', 'address')),
+                    data: [
+                        'order' => new OrderResource($order->load('items.product', 'address')),
+                        'payment_url' => $paymentUrl // Flutter can open this in WebView
+                    ],
                     statusCode: 201
                 );
             });

@@ -10,6 +10,11 @@ class Product extends Model
 {
     protected $fillable = ['name', 'description', 'category_id', 'price', 'images'];
 
+    /**
+     * PERFORMANCE: Eager load relationships by default to prevent N+1 issues
+     */
+    protected $with = ['category'];
+
     protected function casts(): array
     {
         return ['images' => 'array'];
@@ -20,6 +25,11 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
     public function scopePriceRange($query, $min, $max)
     {
         return $query->whereBetween('price', [$min, $max]);
@@ -28,5 +38,19 @@ class Product extends Model
     protected function formattedPrice(): Attribute
     {
         return Attribute::make(get: fn() => 'LKR ' . number_format($this->price, 2));
+    }
+
+    /**
+     * AUTO-MAINTENANCE: Invalidate relevant caches when products change
+     */
+    protected static function booted()
+    {
+        static::saved(function () {
+            \Illuminate\Support\Facades\Cache::forget('home_latest_products');
+        });
+
+        static::deleted(function () {
+            \Illuminate\Support\Facades\Cache::forget('home_latest_products');
+        });
     }
 }

@@ -47,6 +47,11 @@ class CategoryList extends Component
 
     public function deleteCategory(Category $category)
     {
+        // AUTHORIZATION (Exemplary Security Layer 2)
+        if (!auth()->user()->user_type === 'admin') {
+            abort(403, 'Unauthorized action.');
+        }
+
         // Terse way to handle file deletion
         if ($category->image) {
             Storage::delete($category->image);

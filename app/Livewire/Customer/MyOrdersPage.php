@@ -8,10 +8,10 @@ use Livewire\Component;
 use Livewire\WithPagination;
 
 #[Title('My Orders | Aaliyah Collection')]
-
 class MyOrdersPage extends Component
 {
     use WithPagination;
+
 
     public function render()
     {

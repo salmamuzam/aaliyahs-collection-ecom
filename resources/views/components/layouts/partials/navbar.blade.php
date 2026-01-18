@@ -77,10 +77,11 @@
 
         <div class="flex items-center max-sm:ml-auto">
             <ul class="flex space-x-4">
-            {{-- Only visible when user is logged in --}}
+              {{-- Only visible when user is logged in --}}
               @auth()
               @include('components.layouts.partials.navbar-right-auth')
               @endauth
+
                 <li
                     class="mt-1.5 relative px-1 lg:hover:after:absolute lg:after:bg-white lg:after:w-0 lg:hover:after:w-full lg:hover:after:h-[2px] lg:after:block lg:after:-bottom-4 lg:after:transition-all lg:after:duration-300">
                     <livewire:guest.favorites-icon />

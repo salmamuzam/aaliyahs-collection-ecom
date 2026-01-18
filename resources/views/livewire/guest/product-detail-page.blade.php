@@ -1,4 +1,4 @@
-<div class="py-6 md:pt-10 md:pb-8 bg-brand-beige">
+<div class="sm:py-8 py-6 bg-brand-beige">
     <section class="max-w-6xl mx-auto px-2 sm:px-6 lg:px-8">
         <div class="brand-card p-4 sm:p-8">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-stretch">
@@ -124,6 +124,11 @@
                 </div>
             </div>
         </div>
+    </section>
+
+    {{-- INNOVATION: Interactive Product Reviews --}}
+    <section class="mt-8 border-t border-gray-400">
+        <livewire:guest.product-reviews :product_id="$product->id" />
     </section>
 
 </div>

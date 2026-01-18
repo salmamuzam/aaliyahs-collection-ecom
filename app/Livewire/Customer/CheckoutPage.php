@@ -13,6 +13,8 @@ use Livewire\Component;
 #[Title('Checkout | Aaliyah Collection')]
 class CheckoutPage extends Component
 {
+    use \App\Traits\HasHoneypot;
+
     public $first_name;
     public $last_name;
     public $email;
@@ -61,6 +63,8 @@ class CheckoutPage extends Component
 
     public function placeOrder()
     {
+        $this->validateHoneypot();
+
         $this->validate([
             // Validated input fields
             'first_name' => 'required',
@@ -94,23 +98,21 @@ class CheckoutPage extends Component
             $order->shipping_method = 'none';
             //access logged in first name and last name
             $order->notes = 'Order placed by' . auth()->user()->first_name . ' ' . auth()->user()->last_name;
-            $address = new Address();
-            $address->first_name = $this->first_name;
-            $address->last_name = $this->last_name;
-            $address->email = $this->email;
-            $address->phone = $this->phone;
-            $address->street_address = $this->street_address;
-            $address->city = $this->city;
-            $address->province = $this->province;
-            $address->postal_code = $this->postal_code;
-            $address->country = 'Sri Lanka';
-
             $order->save();
 
-            // Create and save address
-            $address->order_id = $order->id;
-            $address->user_id = auth()->user()->id;
-            $address->save();
+            // Create and save address professionally
+            $order->address()->create([
+                'user_id' => auth()->user()->id,
+                'first_name' => (string) $this->first_name,
+                'last_name' => (string) $this->last_name,
+                'email' => (string) $this->email,
+                'phone' => (string) $this->phone,
+                'street_address' => (string) $this->street_address,
+                'city' => (string) $this->city,
+                'province' => (string) $this->province,
+                'postal_code' => (string) $this->postal_code,
+                'country' => 'Sri Lanka',
+            ]);
 
             // Create order items for each product in cart
             foreach ($cart_items as $item) {

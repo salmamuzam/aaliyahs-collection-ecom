@@ -5,10 +5,9 @@ namespace App\Livewire\Guest;
 use App\Helpers\CartManagement;
 use Livewire\Attributes\Title;
 use Livewire\Component;
-use Livewire\Attributes\Computed;
+use Livewire\Attributes\Lazy;
 
 #[Title('Cart | Aaliyah Collection')]
-
 class CartPage extends Component
 {
 

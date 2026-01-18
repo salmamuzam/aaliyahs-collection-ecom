@@ -5,6 +5,7 @@ namespace App\Livewire\Admin;
 use App\Models\Category;
 use Livewire\Component;
 use Livewire\Attributes\Validate;
+use Livewire\Attributes\Locked;
 use Livewire\WithFileUploads;
 use Livewire\Attributes\Title;
 
@@ -14,6 +15,7 @@ class CategoryForm extends Component
 
     #[Title('Admin Dashboard | Manage Categories')]
 
+    #[Locked]
     public $category = null;
     public $isView = false;
 
@@ -41,6 +43,11 @@ class CategoryForm extends Component
 
     public function saveCategory()
     {
+        // Authorization check (Layer 2)
+        if (!auth()->user()->user_type === 'admin') {
+            abort(403);
+        }
+
         $this->validate();
 
         $this->validate([

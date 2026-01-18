@@ -17,12 +17,17 @@ class ProductResource extends JsonResource
     {
         $images = $this->images ?? [];
 
+        // Convert relative paths to absolute URLs
+        $imageUrls = array_map(function ($path) {
+            return asset('storage/' . $path);
+        }, $images);
+
         return [
             'id' => $this->id,
             'name' => strtoupper($this->name),
             'description' => $this->description,
             'price' => number_format($this->price, 2),
-            'images' => $images,
+            'images' => $imageUrls,
             'category' => new CategoryResource($this->whenLoaded('category')),
         ];
     }

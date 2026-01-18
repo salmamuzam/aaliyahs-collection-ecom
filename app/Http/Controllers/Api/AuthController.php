@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\ForgotPasswordRequest;
 use App\Http\Requests\ResetPasswordRequest;
@@ -17,6 +16,8 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Http\Request;
 use Laravel\Fortify\Contracts\TwoFactorAuthenticationProvider;
+use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\RateLimiter;
 
 class AuthController extends Controller
 {
@@ -38,7 +39,11 @@ class AuthController extends Controller
                 'password' => Hash::make($data['password']),
             ]));
 
-            return ResponseHelper::success(message: 'User registered successfully!', data: $user, statusCode: 201);
+            return ResponseHelper::success(
+                message: 'User registered successfully!',
+                data: new UserResource($user),
+                statusCode: 201
+            );
         } catch (Exception $e) {
             Log::error('Registration Error: ' . $e->getMessage());
             return ResponseHelper::error(message: 'Registration failed!', statusCode: 500);
@@ -46,28 +51,41 @@ class AuthController extends Controller
     }
 
     /**
-     * Login a user.
+     * Login a user with Brute Force Protection and Multi-Device Support.
      */
     public function login(LoginRequest $request)
     {
+        // Rate Limiting: Prevent Brute Force Attacks
+        $throttleKey = strtolower((string) $request->input('login')) . '|' . $request->ip();
+        if (RateLimiter::tooManyAttempts($throttleKey, 5)) {
+            $seconds = RateLimiter::availableIn($throttleKey);
+            return ResponseHelper::error(
+                message: "Too many login attempts. Please try again in {$seconds} seconds.",
+                statusCode: 429
+            );
+        }
+
         try {
             $fieldType = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-            $user = User::where($fieldType, $request->login)->first();
+            $user = User::where((string) $fieldType, '=', (string) $request->login)->first();
 
             if (!$user || !Hash::check($request->password, $user->password)) {
+                RateLimiter::hit($throttleKey, 60);
                 return ResponseHelper::error(message: 'Invalid credentials!', statusCode: 400);
             }
+
+            RateLimiter::clear($throttleKey);
 
             if ($user->hasEnabledTwoFactorAuthentication()) {
                 if ($request->input('two_factor_code')) {
                     $isValid = app(TwoFactorAuthenticationProvider::class)->verify(
                         decrypt($user->two_factor_secret),
-                        $request->input('two_factor_code')
+                        (string) $request->input('two_factor_code')
                     );
                     if (!$isValid)
                         return ResponseHelper::error(message: 'Invalid Two-Factor Code!', statusCode: 400);
                 } elseif ($request->input('two_factor_recovery_code')) {
-                    $recoveryCode = $request->input('two_factor_recovery_code');
+                    $recoveryCode = (string) $request->input('two_factor_recovery_code');
                     $validCode = collect($user->recoveryCodes())->first(function ($code) use ($recoveryCode) {
                         return hash_equals($code, $recoveryCode) ? $code : null;
                     });
@@ -77,34 +95,76 @@ class AuthController extends Controller
                         return ResponseHelper::error(message: 'Invalid Recovery Code!', statusCode: 400);
                     }
                 } else {
-                    return response()->json(['status' => 'error', 'message' => 'Two-Factor Authentication Required', 'two_factor_required' => true], 422);
+                    return ResponseHelper::error(
+                        message: 'Two-Factor Authentication Required',
+                        data: ['two_factor_required' => true],
+                        statusCode: 422
+                    );
                 }
             }
 
-            $token = $user->createToken('android-device', ['access-api'])->plainTextToken;
-            return ResponseHelper::success(message: 'You are logged in successfully!', data: ['user' => $user, 'token' => $token], statusCode: 200);
+            // ASSIGN GRANULAR ABILITIES (Sanctum Mastery)
+            $abilities = $user->user_type === 'admin' ? ['admin:access', 'customer:access'] : ['customer:access'];
+
+            $token = $user->createToken('android-device', $abilities)->plainTextToken;
+
+            return ResponseHelper::success(
+                message: 'You are logged in successfully!',
+                data: [
+                    'user' => new UserResource($user),
+                    'token' => $token
+                ],
+                statusCode: 200
+            );
         } catch (Exception $e) {
-            Log::error('Unable to login user: ' . $e->getMessage() . '-Line No: ' . $e->getLine());
+            Log::error('Unable to login user: ' . $e->getMessage());
             return ResponseHelper::error(message: 'Unable to login! Please try again!', statusCode: 500);
         }
     }
 
     /**
-     * Logout logic
+     * Logout logic and Token Revocation
      */
-    public function logout()
+    public function logout(Request $request)
     {
         try {
-            if (Auth::check()) {
-                // Revoke the token that was used to authenticate the current request
-                Auth::user()->currentAccessToken()->delete();
+            if ($request->user()) {
+                $request->user()->currentAccessToken()->delete();
                 return ResponseHelper::success(message: 'Logged out successfully!', statusCode: 200);
             }
             return ResponseHelper::error(message: 'Not logged in!', statusCode: 401);
         } catch (Exception $e) {
-            Log::error('Logout Failed: ' . $e->getMessage() . '-Line No: ' . $e->getLine());
-            return ResponseHelper::error(message: 'Logout failed! Please try again!', statusCode: 500);
+            Log::error('Logout Failed: ' . $e->getMessage());
+            return ResponseHelper::error(message: 'Logout failed!', statusCode: 500);
         }
+    }
+
+    /**
+     * Manage Active Devices (Sanctum Multi-Device Support)
+     */
+    public function getActiveTokens(Request $request)
+    {
+        $tokens = $request->user()->tokens->map(function ($token) use ($request) {
+            return [
+                'id' => $token->id,
+                'name' => $token->name,
+                'abilities' => $token->abilities,
+                'last_used_at' => $token->last_used_at ? $token->last_used_at->diffForHumans() : 'Never',
+                'created_at' => $token->created_at->toDateTimeString(),
+                'is_current' => $token->id === $request->user()->currentAccessToken()->id
+            ];
+        });
+
+        return ResponseHelper::success(message: 'Active devices fetched.', data: $tokens);
+    }
+
+    /**
+     * Revoke a specific token (Security Enhancement)
+     */
+    public function revokeToken(Request $request, $tokenId)
+    {
+        $request->user()->tokens()->where('id', '=', $tokenId)->delete();
+        return ResponseHelper::success(message: 'Device revoked successfully.');
     }
 
     /**
@@ -118,8 +178,8 @@ class AuthController extends Controller
                 ? ResponseHelper::success(message: __($status), statusCode: 200)
                 : ResponseHelper::error(message: __($status), statusCode: 400);
         } catch (Exception $e) {
-            Log::error('Forgot Password Error: ' . $e->getMessage() . '-Line No: ' . $e->getLine());
-            return ResponseHelper::error(message: 'Unable to send reset link! Please try again!', statusCode: 500);
+            Log::error('Forgot Password Error: ' . $e->getMessage());
+            return ResponseHelper::error(message: 'Unable to send reset link!', statusCode: 500);
         }
     }
 
@@ -135,7 +195,6 @@ class AuthController extends Controller
                     $user->forceFill(['password' => Hash::make($password)])->setRememberToken(str()->random(60));
                     $user->save();
                     event(new \Illuminate\Auth\Events\PasswordReset($user));
-                    // Advanced Security: Revoke all existing tokens to force re-login on all devices
                     $user->tokens()->delete();
                 }
             );
@@ -143,8 +202,8 @@ class AuthController extends Controller
                 ? ResponseHelper::success(message: __($status), statusCode: 200)
                 : ResponseHelper::error(message: __($status), statusCode: 400);
         } catch (Exception $e) {
-            Log::error('Reset Password Error: ' . $e->getMessage() . '-Line No: ' . $e->getLine());
-            return ResponseHelper::error(message: 'Unable to reset password! Please try again!', statusCode: 500);
+            Log::error('Reset Password Error: ' . $e->getMessage());
+            return ResponseHelper::error(message: 'Unable to reset password!', statusCode: 500);
         }
     }
 
@@ -164,8 +223,8 @@ class AuthController extends Controller
             }
             return ResponseHelper::success(message: 'Email verified successfully!', statusCode: 200);
         } catch (Exception $e) {
-            Log::error('Email Verify Error: ' . $e->getMessage() . '-Line No: ' . $e->getLine());
-            return ResponseHelper::error(message: 'Unable to verify email! Please try again!', statusCode: 500);
+            Log::error('Email Verify Error: ' . $e->getMessage());
+            return ResponseHelper::error(message: 'Unable to verify email!', statusCode: 500);
         }
     }
 
@@ -181,8 +240,8 @@ class AuthController extends Controller
             $request->user()->sendEmailVerificationNotification();
             return ResponseHelper::success(message: 'Verification link sent successfully!', statusCode: 200);
         } catch (Exception $e) {
-            Log::error('Resend Verify Error: ' . $e->getMessage() . '-Line No: ' . $e->getLine());
-            return ResponseHelper::error(message: 'Unable to send verification! Please try again!', statusCode: 500);
+            Log::error('Resend Verify Error: ' . $e->getMessage());
+            return ResponseHelper::error(message: 'Unable to send verification!', statusCode: 500);
         }
     }
 }

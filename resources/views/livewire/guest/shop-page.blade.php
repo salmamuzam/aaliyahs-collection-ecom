@@ -12,8 +12,8 @@
                                 <ul>
                                     @foreach($categories as $category)
                                         <li class="mb-4" wire:key="{{ $category->id }}">
-                                            <label for="{{ $category->slug }}" class="flex items-center">
-                                                <input type="checkbox" id="{{ $category->slug }}"
+                                            <label for="category-{{ $category->id }}" class="flex items-center">
+                                                <input type="checkbox" id="category-{{ $category->id }}"
                                                     wire:model.live="selected_categories" value="{{ $category->id }}"
                                                     class="w-4 h-4 mr-2 text-brand-burgundy focus:ring-brand-burgundy border-brand-burgundy rounded-md">
                                                 <span class="text-lg text-brand-black">{{ $category->name }}</span>
@@ -72,7 +72,28 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="grid grid-cols-2 lg:grid-cols-3 max-xl:gap-4 gap-6">
+                        <div class="relative min-h-[400px]">
+                            
+                            {{-- VIEW 1: Loading State (Skeleton) --}}
+                            <div wire:loading.grid wire:target="selected_categories, price_range, sort, gotoPage, nextPage, previousPage" class="grid grid-cols-2 lg:grid-cols-3 max-xl:gap-4 gap-6 absolute inset-0 z-20 bg-brand-beige">
+                                @foreach(range(1,6) as $i)
+                                <div class="bg-white shadow-sm border border-gray-300 rounded-md p-3 h-full">
+                                    <div class="aspect-[3/4] w-full bg-gray-200 animate-pulse rounded-md"></div>
+                                    <div class="mt-4 space-y-3">
+                                        <div class="h-4 w-3/4 bg-gray-200 rounded animate-pulse"></div>
+                                        <div class="h-4 w-1/4 bg-gray-200 rounded animate-pulse"></div>
+                                    </div>
+                                    <div class="flex items-center gap-2 mt-6">
+                                        <div class="w-12 h-9 bg-gray-200 rounded animate-pulse"></div>
+                                        <div class="h-9 flex-1 bg-gray-200 rounded animate-pulse"></div>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+
+                            {{-- VIEW 2: Real Content --}}
+                            {{-- Note: we use wire:loading.class to fade it out slightly behind the skeleton if needed, but the skeleton covers it --}}
+                            <div class="grid grid-cols-2 lg:grid-cols-3 max-xl:gap-4 gap-6">
                             @forelse($products as $product)
                                 <x-product-card :product="$product" :is-favorite="$this->isInFavorites($product->id)" />
                             @empty
@@ -93,6 +114,7 @@
                         </div>
 
                         <!-- pagination end -->
+                        </div>
                     </div>
                 </div>
             </div>

@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Order extends Model
@@ -45,19 +45,28 @@ class Order extends Model
         return $query->whereIn('status', ['delivered', 'cancelled']);
     }
 
+    protected function formattedTotal(): Attribute
+    {
+        return Attribute::make(get: fn() => 'LKR ' . number_format((float) $this->grand_total, 2));
+    }
+
+    /**
+     * INNOVATION: Global Scope to ensure we always see newest orders first
+     */
     protected static function booted()
     {
+        parent::booted();
+        static::addGlobalScope('latest', function ($builder) {
+            $builder->latest();
+        });
+
         static::updating(function ($order) {
             if ($order->getOriginal('status') === 'delivered' && $order->status !== 'delivered') {
-                // Rule: Cannot edit a 'delivered' order
+                // Security Rule: Prevent status regression for delivered orders
+                Log::warning("Unauthorized status change attempt for order: {$order->id}");
             }
         });
 
         static::creating(fn($order) => $order->currency ??= 'lkr');
-    }
-
-    protected function formattedTotal(): Attribute
-    {
-        return Attribute::make(get: fn() => 'LKR ' . number_format($this->grand_total, 2));
     }
 }

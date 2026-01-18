@@ -5,11 +5,47 @@ namespace App\Livewire\Guest;
 use App\Models\Category;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use App\Helpers\CartManagement;
+use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
 
 class HomePage extends Component
 {
     // Custom title
     #[Title('Home | Aaliyah Collection')]
+
+    public function addToCart($product_id)
+    {
+        $total_count = CartManagement::addItemToCart($product_id);
+        $this->dispatch('update-cart-count', total_count: $total_count);
+        LivewireAlert::title('Success!')->text('Product added to the cart!')->success()->position('top-end')->timer(3000)->toast()->show();
+    }
+
+    public function toggleFavorite($product_id)
+    {
+        $favorites = \App\Helpers\FavoritesManagement::getFavoriteItemsFromCookie();
+        $isFavorited = false;
+        foreach ($favorites as $item) {
+            if ($item['product_id'] == $product_id) {
+                $isFavorited = true;
+                break;
+            }
+        }
+        if ($isFavorited) {
+            $favorites = \App\Helpers\FavoritesManagement::removeFavoriteItem($product_id);
+            $total_count = count($favorites);
+            $this->dispatch('update-favorite-count', total_count: $total_count);
+            LivewireAlert::title('Removed!')->text('Product removed from favorites!')->warning()->position('top-end')->timer(3000)->toast()->show();
+        } else {
+            $total_count = \App\Helpers\FavoritesManagement::addItemToFavorites($product_id);
+            $this->dispatch('update-favorite-count', total_count: $total_count);
+            LivewireAlert::title('Success!')->text('Product added to favorites!')->success()->position('top-end')->timer(3000)->toast()->show();
+        }
+    }
+
+    public function isInFavorites($product_id)
+    {
+        return collect(\App\Helpers\FavoritesManagement::getFavoriteItemsFromCookie())->contains('product_id', $product_id);
+    }
     public function placeholder()
     {
         return view('livewire.placeholders.home-skeleton');
@@ -25,7 +61,17 @@ class HomePage extends Component
     public function getLatestProductsProperty()
     {
         return \Illuminate\Support\Facades\Cache::remember('home_latest_products', 600, function () {
-            return \App\Models\Product::latest()->take(4)->get();
+            return \App\Models\Product::latest('created_at')->take(4)->get();
+        });
+    }
+
+    public function getBestSellersProperty()
+    {
+        return \Illuminate\Support\Facades\Cache::remember('home_best_sellers', 3600, function () {
+            return \App\Models\Product::withCount('orderItems')
+                ->orderBy('order_items_count', 'desc')
+                ->take(4)
+                ->get();
         });
     }
 

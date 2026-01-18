@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Resources\UserResource;
 use App\Helpers\ResponseHelper;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -24,7 +25,7 @@ class ProfileController extends Controller
     public function userProfile()
     {
         try {
-            return ResponseHelper::success(message: 'User profile fetched successfully!', data: Auth::user(), statusCode: 200);
+            return ResponseHelper::success(message: 'User profile fetched successfully!', data: new UserResource(Auth::user()), statusCode: 200);
         } catch (Exception $e) {
             Log::error('Unable to fetch user profile: ' . $e->getMessage() . '-Line No: ' . $e->getLine());
             return ResponseHelper::error(message: 'Unable to fetch user profile! Please try again!', statusCode: 500);
@@ -39,7 +40,7 @@ class ProfileController extends Controller
             if ($request->hasFile('photo')) {
                 $user->updateProfilePhoto($request->file('photo'));
             }
-            return ResponseHelper::success(message: 'Profile updated successfully!', data: $user, statusCode: 200);
+            return ResponseHelper::success(message: 'Profile updated successfully!', data: new UserResource($user), statusCode: 200);
         } catch (Exception $e) {
             Log::error('Unable to update profile: ' . $e->getMessage() . '-Line No: ' . $e->getLine());
             return ResponseHelper::error(message: 'Unable to update profile! Please try again!', statusCode: 500);

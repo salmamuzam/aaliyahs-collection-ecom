@@ -57,9 +57,22 @@
         </div>
     </div>
 
+    {{-- Best Sellers Section --}}
+    <div class="py-10 sm:px-8 px-6" style="background-color: #e5edef;">
+        <div class="max-w-screen-xl mx-auto">
+            <x-section-header title="BEST SELLERS" align="center" />
+            
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                @foreach ($this->bestSellers as $product)
+                    <x-product-card :product="$product" :is-favorite="$this->isInFavorites($product->id)" />
+                @endforeach
+            </div>
+        </div>
+    </div>
+
     {{-- Why Us Section --}}
 
-    <section class="text-brand-teal py-10 px-6 sm:px-8 bg-brand-burgundy bg-opacity-10">
+    <section class="text-black py-10 px-6 sm:px-8 bg-brand-burgundy bg-opacity-10">
         <div class="max-w-screen-xl mx-auto">
             <x-section-header title="WHY US?" align="center" class="mb-8" />
             <div class="grid grid-cols-2 gap-y-12 gap-x-8 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
@@ -70,4 +83,7 @@
             </div>
         </div>
     </section>
+
+    {{-- INNOVATION: Social Proof (Latest Reviews) --}}
+    <livewire:guest.latest-reviews />
 </div>

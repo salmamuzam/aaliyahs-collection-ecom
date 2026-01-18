@@ -9,8 +9,6 @@ use Livewire\WithoutUrlPagination;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Title;
 
-
-
 class ProductList extends Component
 {
     use withPagination, WithoutUrlPagination;
@@ -28,8 +26,6 @@ class ProductList extends Component
     public function sortBy($columnName)
     {
         if ($this->sortColumn === $columnName) {
-            // Assign sort order
-            // check current sort order
             $this->sortOrder = $this->sortOrder === 'asc' ? 'desc' : 'asc';
         } else {
             $this->sortColumn = $columnName;
@@ -64,6 +60,11 @@ class ProductList extends Component
 
     public function deleteProduct(Product $product)
     {
+        // AUTHORIZATION (Exemplary Security Layer 2)
+        if (!auth()->user()->user_type === 'admin') {
+            abort(403, 'Unauthorized action.');
+        }
+
         // Terse file deletion
         collect($product->images ?? [])->each(fn($img) => Storage::delete($img));
 

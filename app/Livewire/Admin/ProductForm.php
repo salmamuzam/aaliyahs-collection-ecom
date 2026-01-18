@@ -5,6 +5,7 @@ namespace App\Livewire\Admin;
 use App\Models\Category;
 use App\Models\Product;
 use Livewire\Attributes\Validate;
+use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\Attributes\Title;
@@ -15,6 +16,7 @@ class ProductForm extends Component
 
     #[Title('Admin Dashboard | Manage Products')]
 
+    #[Locked]
     public $product = null;
 
     public $isView = false;
@@ -67,6 +69,11 @@ class ProductForm extends Component
 
     public function saveProduct()
     {
+        // Internal Method Authorization (Layer 2)
+        if (!auth()->user()->user_type === 'admin') {
+            abort(403);
+        }
+
         $this->validate();
 
         $this->validate([
