@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use Illuminate\Support\Facades\Log;
+
 class ImageHelper
 {
     /**
@@ -36,10 +38,12 @@ class ImageHelper
         $cloudName = 'dhpirmjdb';
 
         // CORRECTION: Normalize path for Cloudinary
-        // 1. Remove 'storage/' prefix if accidentally saved in DB
-        $cleanPath = preg_replace('/^storage\//', '', $path);
+        $cleanPath = $path;
 
-        // 2. Ensure 'uploads/' prefix for categories/products if missing
+        // A. Remove 'storage/' prefix if accidentally saved in DB
+        $cleanPath = preg_replace('/^storage\//', '', $cleanPath);
+
+        // B. Ensure 'uploads/' prefix for categories/products if missing
         // (Legacy files were synced to 'uploads/categories' and 'uploads/products')
         if (!str_starts_with($cleanPath, 'uploads/')) {
             if (str_starts_with($cleanPath, 'categories/') || str_starts_with($cleanPath, 'products/')) {
@@ -47,6 +51,14 @@ class ImageHelper
             }
         }
 
-        return "https://res.cloudinary.com/{$cloudName}/image/upload/v1/{$cleanPath}";
+        $finalUrl = "https://res.cloudinary.com/{$cloudName}/image/upload/v1/{$cleanPath}";
+
+        // DEBUG: Log the paths to see why categories are failing
+        // Only log if it's potentially a category to reduce noise
+        if (str_contains($cleanPath, 'categories')) {
+            Log::info("ImageHelper DEBUG: Original='$path' | Clean='$cleanPath' | Final='$finalUrl'");
+        }
+
+        return $finalUrl;
     }
 }
