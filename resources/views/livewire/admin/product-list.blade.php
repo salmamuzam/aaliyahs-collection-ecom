@@ -48,7 +48,7 @@
                             <td class="p-4 text-center">
                                 <div class="flex justify-center">
                                     @if(!empty($product->images) && isset($product->images[0]))
-                                        <img class="w-12 h-auto aspect-[3/4] rounded-md object-cover object-top border border-gray-200" src="{{ asset('storage/' . $product->images[0]) }}">
+                                        <img class="w-12 h-auto aspect-[3/4] rounded-md object-cover object-top border border-gray-200" src="{{ \App\Helpers\ImageHelper::getUrl($product->images[0]) }}">
                                     @endif
                                 </div>
                             </td>

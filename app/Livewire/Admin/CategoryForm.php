@@ -60,7 +60,7 @@ class CategoryForm extends Component
         ]);
 
         $imagePath = $this->image
-            ? $this->image->storeAs('uploads/categories', time() . '.' . $this->image->extension(), 'public')
+            ? \App\Helpers\CloudinaryHelper::upload($this->image, 'categories')
             : $this->category?->image;
 
         $data = ['name' => $this->name, 'image' => $imagePath];

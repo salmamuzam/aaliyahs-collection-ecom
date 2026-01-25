@@ -67,7 +67,7 @@
                     {{-- User Info --}}
                     <div class="flex items-center gap-2">
                          @if($review->user->profile_photo_path)
-                            <img src="{{ Storage::url($review->user->profile_photo_path) }}" alt="{{ $review->user->first_name }}" class="w-6 h-6 rounded-full object-cover">
+                            <img src="{{ \App\Helpers\ImageHelper::getUrl($review->user->profile_photo_path) }}" alt="{{ $review->user->first_name }}" class="w-6 h-6 rounded-full object-cover">
                         @else
                             <div class="w-6 h-6 rounded-full bg-brand-beige flex items-center justify-center text-xs font-bold text-brand-burgundy ring-1 ring-brand-burgundy/20">
                                 {{ substr($review->user->first_name, 0, 1) }}

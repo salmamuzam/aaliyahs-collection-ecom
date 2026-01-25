@@ -91,8 +91,10 @@ class ProductForm extends Component
         $imagePaths = $this->existingImages;
 
         foreach ($this->images as $image) {
-            $imageName = time() . '_' . uniqid() . '.' . $image->extension();
-            $imagePaths[] = $image->storeAs('uploads/products', $imageName, 'public');
+            $path = \App\Helpers\CloudinaryHelper::upload($image, 'products');
+            if ($path) {
+                $imagePaths[] = $path;
+            }
         }
 
         $data = [

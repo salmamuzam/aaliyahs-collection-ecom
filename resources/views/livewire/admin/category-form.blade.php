@@ -24,7 +24,7 @@
             @if($category && $category->image)
                 <div class="col-span-full">
                     <label class="block mb-2 text-base font-medium text-brand-black">Current Image</label>
-                    <img class="object-cover h-40 border border-gray-200 rounded-md shadow-sm" src="{{ Storage::url($category->image) }}" alt="Category Image">
+                    <img class="object-cover h-40 border border-gray-200 rounded-md shadow-sm" src="{{ \App\Helpers\ImageHelper::getUrl($category->image) }}" alt="Category Image">
                 </div>
             @endif
 

@@ -44,7 +44,7 @@
                         class="shadow-sm bg-white p-1.5 overflow-hidden cursor-pointer relative hover:shadow-md rounded-md border border-gray-300">
                         <a href="/shop?selected_categories[0]={{ $category->id }}" class="block" wire:navigate>
                             <div class="bg-gray-200 aspect-square rounded-md overflow-hidden">
-                                <img src='{{ url('storage', $category->image) }}' alt="{{ $category->name }}"
+                                <img src='{{ \App\Helpers\ImageHelper::getUrl($category->image) }}' alt="{{ $category->name }}"
                                     class="object-cover object-top w-full h-full" />
                             </div>
                             <div class="p-3 pb-1.5 text-center">

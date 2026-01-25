@@ -38,7 +38,9 @@
                         <tr class="hover:bg-gray-100 transition-colors">
                             <td class="p-4 text-center">
                                 <div class="flex justify-center">
-                                    <img class="w-12 h-auto aspect-[3/4] rounded-md object-cover object-top border border-gray-200" src="{{ asset('storage/' . $category->image) }}">
+                                    @if(!empty($category->image))
+                                        <img class="w-12 h-auto aspect-[3/4] rounded-md object-cover object-top border border-gray-200" src="{{ \App\Helpers\ImageHelper::getUrl($category->image) }}">
+                                    @endif
                                 </div>
                             </td>
                             <td class="p-4 text-base text-brand-black font-medium text-center">

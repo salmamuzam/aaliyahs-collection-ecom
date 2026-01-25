@@ -45,7 +45,7 @@
                        wire:navigate
                        class="flex items-center px-4 py-3 hover:bg-gray-50 border-b border-gray-100 last:border-0 transition-colors group">
                         @if(!empty($product->images))
-                            <img src="{{ Storage::url($product->images[0]) }}" class="w-10 h-10 object-cover rounded shadow-sm group-hover:scale-105 transition-transform">
+                            <img src="{{ \App\Helpers\ImageHelper::getUrl($product->images[0]) }}" class="w-10 h-10 object-cover rounded shadow-sm group-hover:scale-105 transition-transform">
                         @else
                            <div class="w-10 h-10 bg-gray-100 rounded flex items-center justify-center">
                                <i class="fa-solid fa-image text-gray-400"></i>

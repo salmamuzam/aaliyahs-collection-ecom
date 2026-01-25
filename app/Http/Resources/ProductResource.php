@@ -17,9 +17,9 @@ class ProductResource extends JsonResource
     {
         $images = $this->images ?? [];
 
-        // Convert relative paths to absolute URLs
+        // Convert relative paths to Cloudinary URLs
         $imageUrls = array_map(function ($path) {
-            return asset('storage/' . $path);
+            return \App\Helpers\ImageHelper::getUrl($path);
         }, $images);
 
         return [

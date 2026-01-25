@@ -10,7 +10,7 @@
         <div class="w-full p-4 rounded-md mx-auto shadow-sm border border-gray-300 bg-white relative">
             <div class="w-[76px] h-[76px] rounded-full overflow-hidden absolute right-0 left-0 mx-auto -top-10 border-2 border-brand-burgundy bg-white shadow-sm z-10">
                 @if($review->user->profile_photo_path)
-                    <img src="{{ Storage::url($review->user->profile_photo_path) }}" class="w-full h-full object-cover" alt="{{ $review->user->first_name }}" />
+                    <img src="{{ \App\Helpers\ImageHelper::getUrl($review->user->profile_photo_path) }}" class="w-full h-full object-cover" alt="{{ $review->user->first_name }}" />
                 @else
                     <div class="w-full h-full bg-brand-beige flex items-center justify-center text-brand-burgundy font-bold text-2xl uppercase">
                         {{ substr($review->user->first_name, 0, 1) }}{{ substr($review->user->last_name, 0, 1) }}
