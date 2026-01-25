@@ -2,8 +2,6 @@
 
 namespace App\Helpers;
 
-use Illuminate\Support\Facades\Log;
-
 class ImageHelper
 {
     /**
@@ -45,20 +43,14 @@ class ImageHelper
 
         // B. Ensure 'uploads/' prefix for categories/products if missing
         // (Legacy files were synced to 'uploads/categories' and 'uploads/products')
+        // BUT also handle the case where files ARE in 'uploads/' root (like the ones we just synced)
+        // logic: if it starts with 'categories/' or 'products/', force uploads/
         if (!str_starts_with($cleanPath, 'uploads/')) {
             if (str_starts_with($cleanPath, 'categories/') || str_starts_with($cleanPath, 'products/')) {
                 $cleanPath = 'uploads/' . $cleanPath;
             }
         }
 
-        $finalUrl = "https://res.cloudinary.com/{$cloudName}/image/upload/v1/{$cleanPath}";
-
-        // DEBUG: Log the paths to see why categories are failing
-        // Only log if it's potentially a category to reduce noise
-        if (str_contains($cleanPath, 'categories')) {
-            Log::info("ImageHelper DEBUG: Original='$path' | Clean='$cleanPath' | Final='$finalUrl'");
-        }
-
-        return $finalUrl;
+        return "https://res.cloudinary.com/{$cloudName}/image/upload/v1/{$cleanPath}";
     }
 }

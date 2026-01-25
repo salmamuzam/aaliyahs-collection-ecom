@@ -13,11 +13,11 @@ class SyncImagesToCloudinary extends Command
 
     public function handle()
     {
-        $this->info("Starting PROFILE PHOTOS Cloudinary Sync...");
+        $this->info("Starting MISSING UPLOADS Sync...");
 
         $basePath = storage_path('app/public');
-        // Scanning profile-photos this time
-        $folders = ['profile-photos'];
+        // We need to scan 'uploads' root because some files are there!
+        $folders = ['uploads'];
 
         $count = 0;
         $errors = 0;
@@ -30,6 +30,7 @@ class SyncImagesToCloudinary extends Command
                 continue;
             }
 
+            // Checking FILES only in this directory (not recursive, or handled by subfolders separately)
             $files = File::files($path);
             $this->info("Found " . count($files) . " files in $folder.");
 
@@ -37,7 +38,8 @@ class SyncImagesToCloudinary extends Command
                 $filename = $file->getFilename();
                 $nameWithoutExt = pathinfo($filename, PATHINFO_FILENAME);
 
-                // For profile photos, we keep the folder structure 'profile-photos/filename'
+                // DB has "uploads/filename.png".
+                // So public_id should be "uploads/filename".
                 $publicId = $folder . '/' . $nameWithoutExt;
 
                 $this->info("Uploading $folder/$filename as $publicId...");
