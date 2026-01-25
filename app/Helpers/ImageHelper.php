@@ -28,6 +28,15 @@ class ImageHelper
 
         // 3. Otherwise, it's a Cloudinary image (New images)
         $cloudName = 'dhpirmjdb';
-        return "https://res.cloudinary.com/{$cloudName}/image/upload/v1/{$path}";
+
+        // CORRECTION: Legacy images in DB might be "categories/xyz.jpg"
+        // But we synced them to "uploads/categories/xyz.jpg" in Cloudinary.
+        // So we fix the path here.
+        $cleanPath = $path;
+        if ((str_starts_with($path, 'categories/') || str_starts_with($path, 'products/')) && !str_starts_with($path, 'uploads/')) {
+            $cleanPath = 'uploads/' . $path;
+        }
+
+        return "https://res.cloudinary.com/{$cloudName}/image/upload/v1/{$cleanPath}";
     }
 }

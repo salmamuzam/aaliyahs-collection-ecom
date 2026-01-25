@@ -58,7 +58,7 @@
                     @foreach($order_items as $item)
                         <div wire:key="{{ $item->id }}" class="flex items-center gap-4 max-sm:flex-col lg:py-4 {{ !$loop->first ? 'max-sm:border-t max-sm:pt-4 max-sm:border-gray-300' : '' }}">
                             <div class="w-24 h-auto shrink-0 rounded-md overflow-hidden aspect-[3/4] border border-gray-300">
-                                <img src="{{ url('storage', $item->product->images[0]) }}" alt="{{ $item->product->name }}" class="w-full h-full object-cover object-top" />
+                                <img src="{{ \App\Helpers\ImageHelper::getUrl($item->product->images[0]) }}" alt="{{ $item->product->name }}" class="w-full h-full object-cover object-top" />
                             </div>
                             <div class="flex-1 max-sm:text-center">
                                 <h4 class="text-base font-medium text-brand-black">{{ $item->product->name }}</h4>

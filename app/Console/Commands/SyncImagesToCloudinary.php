@@ -13,10 +13,11 @@ class SyncImagesToCloudinary extends Command
 
     public function handle()
     {
-        $this->info("Starting FULL Cloudinary Sync...");
+        $this->info("Starting FULL Cloudinary Sync (Missing Folders Included)...");
 
         $basePath = storage_path('app/public');
-        $folders = ['uploads/categories', 'uploads/products'];
+        // Only scanning the ones we missed to save time
+        $folders = ['categories', 'products'];
 
         $count = 0;
         $errors = 0;
@@ -37,14 +38,11 @@ class SyncImagesToCloudinary extends Command
                 $nameWithoutExt = pathinfo($filename, PATHINFO_FILENAME);
 
                 // The public_id MUST match the relative path stored in the DB
-                // DB has "uploads/categories/xxx.jpg", so public_id is "uploads/categories/xxx"
                 $publicId = $folder . '/' . $nameWithoutExt;
 
                 $this->info("Uploading $folder/$filename as $publicId...");
 
                 try {
-                    // We pass "" as the folder param to avoid double nesting, 
-                    // because $publicId already contains the folder structure.
                     $result = CloudinaryHelper::upload($file->getPathname(), "", $publicId);
 
                     if ($result) {
@@ -55,6 +53,8 @@ class SyncImagesToCloudinary extends Command
                         $errors++;
                     }
                 } catch (\Exception $e) {
+                    // Try waiting a bit if rate limited
+                    sleep(1);
                     $this->error("Exception: " . $e->getMessage());
                     $errors++;
                 }

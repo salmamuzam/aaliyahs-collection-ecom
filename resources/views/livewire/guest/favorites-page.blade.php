@@ -9,7 +9,7 @@
                     <div wire:key="{{ $item['product_id'] }}" class="bg-white shadow-sm border border-gray-300 rounded-md p-3">
                         <a href="/shop/{{ $item['product_id'] }}" class="block" wire:navigate>
                             <div class="aspect-[3/4] overflow-hidden rounded-md">
-                                <img src="{{ url('storage', $item['image']) }}"
+                                <img src="{{ \App\Helpers\ImageHelper::getUrl($item['image']) }}"
                                     alt="{{ $item['name'] }}"
                                     class="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-300" />
                             </div>

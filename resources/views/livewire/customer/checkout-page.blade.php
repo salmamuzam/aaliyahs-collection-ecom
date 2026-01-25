@@ -10,7 +10,7 @@
                 @foreach($cart_items as $item)
                 <div class="flex items-center gap-4 max-sm:flex-col">
                   <div class="w-24 h-auto shrink-0 rounded-md overflow-hidden aspect-[3/4]">
-                    <img src="{{ url('storage', $item['image']) }}" class="object-cover object-top w-full h-full" />
+                    <img src="{{ \App\Helpers\ImageHelper::getUrl($item['image']) }}" class="object-cover object-top w-full h-full" />
                   </div>
                   <div class="flex flex-col w-full gap-2">
                     {{-- Header: Name + Qty --}}

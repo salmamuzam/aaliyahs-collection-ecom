@@ -11,7 +11,7 @@
                             class="relative p-6 brand-card">
                             <div class="flex items-center gap-4 max-sm:flex-col max-sm:gap-6">
                                 <div class="w-52 h-auto shrink-0 bg-gray-100 rounded-md overflow-hidden border border-gray-200 aspect-[3/4]">
-                                    <img src='{{ url('storage', $item['image']) }}' class="object-cover object-top w-full h-full"
+                                    <img src='{{ \App\Helpers\ImageHelper::getUrl($item['image']) }}' class="object-cover object-top w-full h-full"
                                         alt="{{ $item['name'] }}" />
                                 </div>
                                 <div class="w-full sm:border-l sm:pl-4 sm:border-gray-300">

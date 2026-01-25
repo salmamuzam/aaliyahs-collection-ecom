@@ -8,7 +8,7 @@
                     @if(!empty($product->images))
                     <div class="absolute inset-0 w-full h-full">
                         <img class="w-full h-full object-cover object-top transition-all duration-300" 
-                             src="{{ url('storage', $product->images[$currentImageIndex]) }}" alt="{{ $product->name }}">
+                             src="{{ \App\Helpers\ImageHelper::getUrl($product->images[$currentImageIndex]) }}" alt="{{ $product->name }}">
                     </div>
                     
                     @if(count($product->images) > 1)

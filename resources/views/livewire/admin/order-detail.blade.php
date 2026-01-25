@@ -24,7 +24,7 @@
                         <div class="p-6 flex items-center gap-6">
                             <div class="w-20 h-24 flex-shrink-0 bg-gray-100 rounded-md overflow-hidden border border-gray-200">
                                 @if(!empty($item->product->images))
-                                    <img src="{{ url('storage', $item->product->images[0]) }}" class="w-full h-full object-cover object-top">
+                                    <img src="{{ \App\Helpers\ImageHelper::getUrl($item->product->images[0]) }}" class="w-full h-full object-cover object-top">
                                 @endif
                             </div>
                             <div class="flex-1">
