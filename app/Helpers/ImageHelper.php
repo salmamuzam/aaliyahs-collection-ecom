@@ -29,12 +29,16 @@ class ImageHelper
         // 3. Otherwise, it's a Cloudinary image (New images)
         $cloudName = 'dhpirmjdb';
 
-        // CORRECTION: Legacy images in DB might be "categories/xyz.jpg"
-        // But we synced them to "uploads/categories/xyz.jpg" in Cloudinary.
-        // So we fix the path here.
-        $cleanPath = $path;
-        if ((str_starts_with($path, 'categories/') || str_starts_with($path, 'products/')) && !str_starts_with($path, 'uploads/')) {
-            $cleanPath = 'uploads/' . $path;
+        // CORRECTION: Normalize path for Cloudinary
+        // 1. Remove 'storage/' prefix if accidentally saved in DB
+        $cleanPath = preg_replace('/^storage\//', '', $path);
+
+        // 2. Ensure 'uploads/' prefix for categories/products if missing
+        // (Legacy files were synced to 'uploads/categories' and 'uploads/products')
+        if (!str_starts_with($cleanPath, 'uploads/')) {
+            if (str_starts_with($cleanPath, 'categories/') || str_starts_with($cleanPath, 'products/')) {
+                $cleanPath = 'uploads/' . $cleanPath;
+            }
         }
 
         return "https://res.cloudinary.com/{$cloudName}/image/upload/v1/{$cleanPath}";
