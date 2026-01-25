@@ -27,9 +27,6 @@ Route::get('/wishlist', \App\Livewire\Guest\FavoritesPage::class)->name('wishlis
 
 // New Guest Pages (Livewire)
 Route::get('/categories', \App\Livewire\Guest\CategoriesPage::class)->name('categories');
-Route::get('/checkout', \App\Livewire\Guest\CheckoutPage::class)->name('checkout');
-Route::get('/my-orders', \App\Livewire\Guest\MyOrdersPage::class)->name('my-orders');
-Route::get('/my-orders/{order}', \App\Livewire\Guest\OrderDetailPage::class)->name('my-orders.show');
 
 // ============================================
 // Payment Gateway Routes (PayHere)
