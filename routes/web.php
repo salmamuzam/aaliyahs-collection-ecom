@@ -35,6 +35,9 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
+        if (auth()->user()->user_type === 'admin') {
+            return redirect()->route('admin.overview');
+        }
         return redirect()->route('home');
     })->name('dashboard');
 });
