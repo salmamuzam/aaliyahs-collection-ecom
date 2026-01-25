@@ -43,7 +43,7 @@ class OrderPlaced extends Mailable implements ShouldQueue
             markdown: 'mail.orders.placed',
             with: [
                 // pass the current order
-                'url' => route('my-orders.show', $this->order),
+                'url' => route('customer.my-orders.show', $this->order),
             ]
         );
     }

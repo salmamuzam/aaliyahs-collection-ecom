@@ -12,7 +12,7 @@ We are happy to inform you that your order has been approved.
 
 Thank you for choosing Aaliyah's Collection!
 
-@component('mail::button', ['url' => route('my-orders.show', $order->id)])
+@component('mail::button', ['url' => route('customer.my-orders.show', $order->id)])
 View Order Details
 @endcomponent
 
