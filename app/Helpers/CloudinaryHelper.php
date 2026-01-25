@@ -9,11 +9,12 @@ class CloudinaryHelper
     /**
      * Upload a file to Cloudinary via REST API.
      * 
-     * @param \Illuminate\Http\UploadedFile $file
+     * @param \Illuminate\Http\UploadedFile|string $file
      * @param string $folder
+     * @param string|null $publicId
      * @return string|null
      */
-    public static function upload($file, $folder = 'products')
+    public static function upload($file, $folder = 'products', $publicId = null)
     {
         $cloudName = env('CLOUDINARY_CLOUD_NAME', 'dhpirmjdb');
         $apiKey = env('CLOUDINARY_API_KEY', '795574284513261');
@@ -25,9 +26,17 @@ class CloudinaryHelper
         // Generate signature (required for signed uploads)
         $timestamp = time();
         $params = [
-            'folder' => $folder,
             'timestamp' => $timestamp,
         ];
+
+        if ($folder) {
+            $params['folder'] = $folder;
+        }
+
+        if ($publicId) {
+            // Cloudinary public_id should NOT have an extension
+            $params['public_id'] = preg_replace('/\.[^.]+$/', '', $publicId);
+        }
 
         // Generate signature correctly (alphabetical order, no URL encoding in the base string)
         ksort($params);
@@ -38,20 +47,27 @@ class CloudinaryHelper
         $signatureString = rtrim($signatureString, '&') . $apiSecret;
         $signature = sha1($signatureString);
 
+        // Prepare the file payload
+        $fileSource = ($file instanceof \Illuminate\Http\UploadedFile)
+            ? fopen($file->getRealPath(), 'r')
+            : fopen($file, 'r');
+
+        $fileName = ($file instanceof \Illuminate\Http\UploadedFile)
+            ? $file->getClientOriginalName()
+            : basename($file);
+
         // Perform the request
         $response = Http::attach(
             'file',
-            fopen($file->getRealPath(), 'r'),
-            $file->getClientOriginalName()
+            $fileSource,
+            $fileName
         )->post($url, array_merge($params, [
                         'api_key' => $apiKey,
                         'signature' => $signature,
                     ]));
 
         if ($response->successful()) {
-            // Return the public_id or the full secure_url
-            // We'll return the relative path (public_id) to stay consistent with your DB
-            return $response->json()['public_id'];
+            return $response->json()['secure_url'];
         }
 
         \Illuminate\Support\Facades\Log::error('Cloudinary Upload Failed: ' . $response->body());
