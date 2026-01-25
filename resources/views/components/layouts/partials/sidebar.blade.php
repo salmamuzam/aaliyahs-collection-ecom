@@ -2,7 +2,8 @@
     <div class="flex flex-col flex-wrap items-center justify-center cursor-pointer">
 
         <img class="flex items-center justify-center w-20 h-20 text-3xl font-bold text-brand-black bg-gray-300 rounded-full"
-            src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+            src="{{ Auth::user()->profile_photo_path ? \App\Helpers\ImageHelper::getUrl(Auth::user()->profile_photo_path) : Auth::user()->profile_photo_url }}" 
+            alt="{{ Auth::user()->name }}" />
 
 
         <div class="mt-4 text-center">
