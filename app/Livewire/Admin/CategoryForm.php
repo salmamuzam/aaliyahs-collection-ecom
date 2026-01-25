@@ -57,6 +57,7 @@ class CategoryForm extends Component
             'image.image' => 'Must be a valid image!',
             'image.mimes' => 'Accepted: jpg, jpeg, png, svg, webp!',
             'image.max' => 'Limit: 2MB!',
+            'image.uploaded' => 'The file is too large or upload failed. Check your server limits (PHP upload_max_filesize).',
         ]);
 
         $imagePath = $this->image

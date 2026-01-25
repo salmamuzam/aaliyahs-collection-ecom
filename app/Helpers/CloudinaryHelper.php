@@ -29,14 +29,19 @@ class CloudinaryHelper
             'timestamp' => $timestamp,
         ];
 
+        // Generate signature correctly (alphabetical order, no URL encoding in the base string)
         ksort($params);
-        $paramString = http_build_query($params);
-        $signature = sha1($paramString . $apiSecret);
+        $signatureString = "";
+        foreach ($params as $key => $value) {
+            $signatureString .= "$key=$value&";
+        }
+        $signatureString = rtrim($signatureString, '&') . $apiSecret;
+        $signature = sha1($signatureString);
 
         // Perform the request
         $response = Http::attach(
             'file',
-            file_get_contents($file->getRealPath()),
+            fopen($file->getRealPath(), 'r'),
             $file->getClientOriginalName()
         )->post($url, array_merge($params, [
                         'api_key' => $apiKey,

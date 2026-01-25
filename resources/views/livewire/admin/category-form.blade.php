@@ -36,7 +36,7 @@
                         class="brand-form-input file:mr-4 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-brand-green file:text-white hover:file:bg-opacity-90" />
                     <p class="mt-2 text-xs text-gray-500">JPG, JPEG, PNG, SVG, and WEBP supported.</p>
 
-                    @if($image)
+                    @if($image && method_exists($image, 'temporaryUrl'))
                         @php
                             $allowedExtensions = ['jpg', 'jpeg', 'png', 'svg', 'webp'];
                             $extension = strtolower($image->getClientOriginalExtension());

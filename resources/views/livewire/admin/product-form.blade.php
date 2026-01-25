@@ -96,6 +96,10 @@
                             $allowedExtensions = ['jpg', 'jpeg', 'png', 'svg', 'webp'];
                             $hasInvalidFiles = false;
                             foreach($images as $img) {
+                                if (!method_exists($img, 'getClientOriginalExtension')) {
+                                    $hasInvalidFiles = true;
+                                    break;
+                                }
                                 $ext = strtolower($img->getClientOriginalExtension());
                                 if (!in_array($ext, $allowedExtensions)) {
                                     $hasInvalidFiles = true;
@@ -106,7 +110,7 @@
 
                         @if($hasInvalidFiles)
                             <div class="mt-4">
-                                <p class="text-base font-medium text-brand-burgundy">Invalid file type. Please upload JPG, JPEG, PNG, SVG, or WEBP images only.</p>
+                                <p class="text-base font-medium text-brand-burgundy">Invalid file type or upload failed. Please upload valid images only.</p>
                             </div>
                         @else
                             <div class="mt-4">
@@ -114,7 +118,9 @@
                                 <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
                                     @foreach($images as $image)
                                         <div class="aspect-[3/4] overflow-hidden rounded-md border border-gray-200">
-                                            <img src="{{ $image->temporaryUrl() }}" class="object-cover object-top w-full h-full">
+                                            @if(method_exists($image, 'temporaryUrl'))
+                                                <img src="{{ $image->temporaryUrl() }}" class="object-cover object-top w-full h-full">
+                                            @endif
                                         </div>
                                     @endforeach
                                 </div>

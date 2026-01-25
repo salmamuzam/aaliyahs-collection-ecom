@@ -82,6 +82,7 @@ class ProductForm extends Component
             'images.*.image' => 'Each file must be a valid image!',
             'images.*.mimes' => 'Images must be jpg, jpeg, png, svg, or webp!',
             'images.*.max' => 'Each image must not exceed 2MB!',
+            'images.*.uploaded' => 'One or more files failed to upload. Check your server limits.',
         ]);
 
         if (empty($this->images) && empty($this->existingImages)) {
