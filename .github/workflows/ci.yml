@@ -37,7 +37,10 @@ jobs:
           mkdir -p database
           touch database/database.sqlite
 
-      - name: Execute Tests (Unit and Feature tests) via Pest
+      - name: Security Audit
+      run: composer audit
+
+    - name: Execute Tests (Unit and Feature tests) via Pest
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
