@@ -22,13 +22,13 @@ Route::middleware([
     Route::get('/admin/analytics', AnalyticsComponent::class)->name('admin.analytics');
 
     // Category Management
-    Route::get('admin/categories', CategoryList::class)->name('categories');
+    Route::get('admin/categories', CategoryList::class)->name('admin.categories');
     Route::get('admin/categories/create', CategoryForm::class)->name('categories.create');
     Route::get('admin/categories/{category}/view', CategoryForm::class)->name('categories.view');
     Route::get('admin/categories/{category}/edit', CategoryForm::class)->name('categories.edit');
 
     // Product Management
-    Route::get('admin/products', ProductList::class)->name('products');
+    Route::get('admin/products', ProductList::class)->name('admin.products');
     Route::get('admin/products/create', ProductForm::class)->name('products.create');
     Route::get('admin/products/{product}/view', ProductForm::class)->name('products.view');
     Route::get('admin/products/{product}/edit', ProductForm::class)->name('products.edit');
