@@ -39,12 +39,4 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::get('/debug-config', function () {
-    return [
-        'cloudinary_config' => config('cloudinary'),
-        'filesystems' => config('filesystems.disks.cloudinary'),
-        'env_url' => env('CLOUDINARY_URL'),
-    ];
-});
-
 require __DIR__ . '/admin.php';
