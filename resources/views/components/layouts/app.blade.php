@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" href="{{ asset('favicon.ico') }}">
 
     @if (auth()->user()?->user_type === 'admin' && (request()->routeIs('admin.overview') || (request()->routeIs('profile.show') && request('view') === 'admin') || request()->routeIs('categories*') || request()->routeIs('products*') || request()->is('admin*')))
         <title>{{ $title ?? 'Admin Dashboard' }}</title>
