@@ -16,9 +16,15 @@ class ImageHelper
             return asset('images/placeholder.jpg');
         }
 
-        // 1. If it's already a full URL (like Google profile pics), return it
+        // 1. If it's already a full URL
         if (filter_var($path, FILTER_VALIDATE_URL)) {
-            return $path;
+            // Exception: If it's a localhost URL, treat it as local path and fix it
+            if (str_contains($path, 'localhost') || str_contains($path, '127.0.0.1')) {
+                $path = parse_url($path, PHP_URL_PATH); // /storage/categories/xyz.jpg
+                $path = ltrim($path, '/'); // storage/categories/xyz.jpg
+            } else {
+                return $path;
+            }
         }
 
         // 2. SMART CHECK: Does this file exist in your local storage? (Old images)
