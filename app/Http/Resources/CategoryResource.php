@@ -15,6 +15,7 @@ class CategoryResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'name' => strtoupper($this->name),
             'image' => $this->image ? asset('storage/' . $this->image) : null,
             // Product count

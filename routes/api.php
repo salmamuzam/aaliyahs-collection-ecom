@@ -29,6 +29,7 @@ Route::prefix('v1')->middleware(['throttle:60,1'])->group(function () {
     Route::get('/shop', [ShopController::class, 'index']);
     Route::get('/shop/filters', [ShopController::class, 'filters']);
     Route::get('/shop/{id}', [ShopController::class, 'show']);
+    Route::get('/products/best-selling', [ProductController::class, 'bestSelling']);
     Route::post('/cart/calculate', [CartController::class, 'calculate']);
     Route::post('/wishlist/fetch', [WishlistController::class, 'index']);
 
@@ -58,6 +59,7 @@ Route::prefix('v1')->middleware(['throttle:60,1'])->group(function () {
             Route::get('user', 'userProfile');
             Route::match(['put', 'patch'], 'user/profile-information', 'updateProfile');
             Route::delete('user/profile-photo', 'deleteProfilePhoto');
+            Route::delete('user/delete-account', 'deleteAccount');
             Route::post('change-password', 'changePassword');
         });
 

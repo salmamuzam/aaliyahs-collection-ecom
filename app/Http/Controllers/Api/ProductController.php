@@ -155,6 +155,34 @@ class ProductController extends Controller
         }
     }
 
+    /**
+     * Fetch best selling products (based on total quantity sold)
+     */
+    public function bestSelling()
+    {
+        try {
+            $bestSellers = \Illuminate\Support\Facades\Cache::remember('products_best_selling', 3600, function () {
+                return Product::with('category')
+                    ->withCount([
+                        'orderItems as total_sold' => function ($query) {
+                            $query->select(\Illuminate\Support\Facades\DB::raw('sum(quantity)'));
+                        }
+                    ])
+                    ->orderByDesc('total_sold')
+                    ->take(10)
+                    ->get();
+            });
+
+            return ResponseHelper::success(
+                message: 'Best selling products fetched!',
+                data: ProductResource::collection($bestSellers)
+            );
+        } catch (Exception $e) {
+            Log::error('Best Selling Products Error: ' . $e->getMessage());
+            return ResponseHelper::error(message: 'Error fetching best selling products', statusCode: 500);
+        }
+    }
+
     // --- Helper Methods ---
 
     private function resolveCategory(array $data): array
