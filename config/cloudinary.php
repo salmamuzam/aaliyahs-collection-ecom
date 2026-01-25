@@ -27,9 +27,9 @@ return [
      * Cloudinary Configuration
      */
     'cloud' => [
-        'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
-        'api_key' => env('CLOUDINARY_API_KEY'),
-        'api_secret' => env('CLOUDINARY_API_SECRET'),
+        'cloud_name' => env('CLOUDINARY_CLOUD_NAME', 'dhpirmjdb'),
+        'api_key' => env('CLOUDINARY_API_KEY', '795574284513261'),
+        'api_secret' => env('CLOUDINARY_API_SECRET', '-9yPCdHVRrnlx9EKDzBAIie6YYQ'),
     ],
 
 ];
