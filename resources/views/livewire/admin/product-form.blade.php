@@ -4,7 +4,7 @@
             <h2 class="text-2xl text-brand-teal brand-heading-playfair">
                 {{ $isView ? 'View' : ($product ? 'Edit' : 'Create') }} Product
             </h2>
-            <a wire:navigate href="{{ route('products') }}" class="px-5 py-2.5 text-base font-semibold text-white bg-brand-green rounded-lg hover:bg-opacity-90 transition-colors shadow-sm">
+            <a wire:navigate href="{{ route('admin.products') }}" class="px-5 py-2.5 text-base font-semibold text-white bg-brand-green rounded-lg hover:bg-opacity-90 transition-colors shadow-sm">
                 Back
             </a>
         </div>
@@ -60,7 +60,7 @@
                             <div class="relative group">
                                 <div class="aspect-[3/4] overflow-hidden rounded-md border border-gray-200">
                                     <img class="object-cover object-top w-full h-full"
-                                         src="{{ Storage::url($image) }}" alt="Product Image {{ $index + 1 }}">
+                                         src="{{ \App\Helpers\ImageHelper::getUrl($image) }}" alt="Product Image {{ $index + 1 }}">
                                 </div>
                                 @if(!$isView)
                                     <button type="button" wire:click="removeExistingImage({{ $index }})" class="absolute top-2 right-2 bg-brand-teal hover:bg-opacity-90 rounded-md p-1.5 transition-all">

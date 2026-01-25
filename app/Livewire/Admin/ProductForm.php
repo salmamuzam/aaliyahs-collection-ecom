@@ -50,7 +50,7 @@ class ProductForm extends Component
     public function mount(Product $product)
     {
         $this->categories = Category::all();
-        $this->isView = request()->routeIs('products.view');
+        $this->isView = request()->routeIs('admin.products.view');
 
         if ($product->exists) {
             $this->product = $product;
@@ -115,7 +115,7 @@ class ProductForm extends Component
 
         session()->flash($status ? 'success' : 'error', $message);
 
-        return $this->redirect(route('products', absolute: false), navigate: true);
+        return $this->redirect(route('admin.products', absolute: false), navigate: true);
     }
     public function placeholder()
     {

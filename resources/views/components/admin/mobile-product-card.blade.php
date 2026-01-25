@@ -3,7 +3,7 @@
 <div class="bg-white shadow-sm border border-gray-300 rounded-md p-3">
     <div class="aspect-[3/4] overflow-hidden rounded-md">
         @if(!empty($product->images) && isset($product->images[0]))
-            <img src='{{ asset('storage/' . $product->images[0]) }}' 
+            <img src='{{ \App\Helpers\ImageHelper::getUrl($product->images[0]) }}' 
                 alt="{{ $product->name }}"
                 class="w-full h-full object-cover object-top" />
         @endif
@@ -18,7 +18,7 @@
     </div>
 
     <div class="flex items-center justify-center gap-2 mt-4">
-        <a wire:navigate href="{{ route('products.edit', $product->id) }}" title="Edit"
+        <a wire:navigate href="{{ route('admin.products.edit', $product->id) }}" title="Edit"
             class="bg-indigo-50 hover:bg-indigo-100 w-10 h-10 flex items-center justify-center rounded-md cursor-pointer transition-all">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
@@ -26,7 +26,7 @@
                     d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
             </svg>
         </a>
-        <a wire:navigate href="{{ route('products.view', $product->id) }}" title="View"
+        <a wire:navigate href="{{ route('admin.products.view', $product->id) }}" title="View"
             class="bg-amber-50 hover:bg-amber-100 w-10 h-10 flex items-center justify-center rounded-md cursor-pointer transition-all">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-600" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">

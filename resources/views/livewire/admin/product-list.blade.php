@@ -1,7 +1,7 @@
 <div class="px-6 lg:px-12 pt-6 lg:pt-10 pb-4 lg:pb-8">
     <x-admin.page-header title="All products">
         <x-slot:actions>
-            <a wire:navigate href="{{ route('products.create') }}"
+            <a wire:navigate href="{{ route('admin.products.create') }}"
                 class="flex items-center px-5 py-2.5 text-base font-semibold text-center text-white rounded-lg bg-brand-green hover:bg-opacity-90 transition-colors shadow-sm shadow-green-100">
                 <svg class="h-4 w-4 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
                     aria-hidden="true">
@@ -63,13 +63,13 @@
                              </td>
                             <td class="p-4">
                                 <div class="flex items-center justify-center space-x-3">
-                                    <a wire:navigate href="{{ route('products.edit', $product->id) }}" title="Edit"
+                                    <a wire:navigate href="{{ route('admin.products.edit', $product->id) }}" title="Edit"
                                         class="p-2 text-indigo-600 hover:bg-indigo-50 rounded-md transition-colors">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                         </svg>
                                     </a>
-                                    <a wire:navigate href="{{ route('products.view', $product->id) }}" title="Preview"
+                                    <a wire:navigate href="{{ route('admin.products.view', $product->id) }}" title="Preview"
                                         class="p-2 text-amber-600 hover:bg-amber-50 rounded-md transition-colors">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />

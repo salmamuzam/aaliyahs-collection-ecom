@@ -33,7 +33,7 @@ class CategoryForm extends Component
     // Fetch the categories of the given id based on the model
     public function mount(Category $category)
     {
-        $this->isView = request()->routeIs('categories.view');
+        $this->isView = request()->routeIs('admin.categories.view');
 
         if ($category->exists) {
             $this->category = $category;
@@ -75,7 +75,7 @@ class CategoryForm extends Component
 
         session()->flash($status ? 'success' : 'error', $message);
 
-        return $this->redirect(route('categories', absolute: false), navigate: true);
+        return $this->redirect(route('admin.categories', absolute: false), navigate: true);
     }
 
     public function placeholder()

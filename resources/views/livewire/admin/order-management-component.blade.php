@@ -51,7 +51,7 @@
                             </td>
                             <td class="p-4 text-center">
                                     <div class="flex items-center justify-center gap-2">
-                                <a wire:navigate href="{{ route('orders.view', $order->id) }}" title="View Details"
+                                <a wire:navigate href="{{ route('admin.orders.view', $order->id) }}" title="View Details"
                                     class="p-2 text-amber-600 hover:bg-amber-50 rounded-md transition-colors">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />

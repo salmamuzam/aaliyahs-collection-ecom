@@ -23,17 +23,17 @@ Route::middleware([
 
     // Category Management
     Route::get('admin/categories', CategoryList::class)->name('admin.categories');
-    Route::get('admin/categories/create', CategoryForm::class)->name('categories.create');
-    Route::get('admin/categories/{category}/view', CategoryForm::class)->name('categories.view');
-    Route::get('admin/categories/{category}/edit', CategoryForm::class)->name('categories.edit');
+    Route::get('admin/categories/create', CategoryForm::class)->name('admin.categories.create');
+    Route::get('admin/categories/{category}/view', CategoryForm::class)->name('admin.categories.view');
+    Route::get('admin/categories/{category}/edit', CategoryForm::class)->name('admin.categories.edit');
 
     // Product Management
     Route::get('admin/products', ProductList::class)->name('admin.products');
-    Route::get('admin/products/create', ProductForm::class)->name('products.create');
-    Route::get('admin/products/{product}/view', ProductForm::class)->name('products.view');
-    Route::get('admin/products/{product}/edit', ProductForm::class)->name('products.edit');
+    Route::get('admin/products/create', ProductForm::class)->name('admin.products.create');
+    Route::get('admin/products/{product}/view', ProductForm::class)->name('admin.products.view');
+    Route::get('admin/products/{product}/edit', ProductForm::class)->name('admin.products.edit');
 
     // Order Management
     Route::get('admin/orders', OrderManagementComponent::class)->name('admin.orders');
-    Route::get('admin/orders/{order}/view', OrderDetail::class)->name('orders.view');
+    Route::get('admin/orders/{order}/view', OrderDetail::class)->name('admin.orders.view');
 });
