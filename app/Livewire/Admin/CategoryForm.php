@@ -51,7 +51,7 @@ class CategoryForm extends Component
         $this->validate();
 
         $this->validate([
-            'image' => ($this->category?->image ? 'nullable' : 'required') . '|image|mimes:jpg,jpeg,png,svg,webp|max:2048'
+            'image' => ($this->category?->image ? 'nullable' : 'required') . '|image|mimes:jpg,jpeg,png,svg,webp|max:10240'
         ], [
             'image.required' => 'Category image is required!',
             'image.image' => 'Must be a valid image!',

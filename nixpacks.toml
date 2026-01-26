@@ -9,7 +9,7 @@ PHP_POST_MAX_SIZE = "12M"
 cmds = ["npm install", "npm run build", "composer install --no-dev --optimize-autoloader", "php artisan optimize:clear", "php artisan optimize"]
 
 [start]
-cmd = "mkdir -p storage/app/livewire-tmp && php artisan migrate --force && chmod -R 777 storage bootstrap/cache && php-fpm -D && nginx -g 'daemon off;'"
+cmd = "mkdir -p storage/app/public/livewire-tmp && php artisan migrate --force && chmod -R 777 storage bootstrap/cache && php-fpm -D && nginx -g 'daemon off;'"
 
 [staticAssets]
 path = "public"
