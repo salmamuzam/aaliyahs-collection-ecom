@@ -4,14 +4,14 @@ namespace App\Livewire\Admin;
 
 use App\Models\Product;
 use Livewire\Component;
-use Livewire\withPagination;
+use Livewire\WithPagination;
 use Livewire\WithoutUrlPagination;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Title;
 
 class ProductList extends Component
 {
-    use withPagination, WithoutUrlPagination;
+    use WithPagination, WithoutUrlPagination;
 
     #[Title('Admin Dashboard | Products')]
 
