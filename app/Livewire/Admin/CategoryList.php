@@ -53,7 +53,7 @@ class CategoryList extends Component
         }
 
         // Terse way to handle file deletion
-        if ($category->image) {
+        if ($category->image && !str_starts_with($category->image, 'http')) {
             Storage::delete($category->image);
         }
 

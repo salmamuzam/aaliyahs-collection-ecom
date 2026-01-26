@@ -66,7 +66,7 @@ class ProductList extends Component
         }
 
         // Terse file deletion
-        collect($product->images ?? [])->each(fn($img) => Storage::delete($img));
+        collect($product->images ?? [])->each(fn($img) => (!str_starts_with($img, 'http')) ? Storage::delete($img) : null);
 
         $status = $product->delete();
         session()->flash($status ? 'success' : 'error', $status ? 'Product deleted!' : 'Deletion failed.');
