@@ -34,7 +34,7 @@ class HomeController extends Controller
 
         } catch (Exception $e) {
             Log::error('Home Index Error: ' . $e->getMessage() . '-Line No: ' . $e->getLine());
-            return ResponseHelper::error(message: 'Error: ' . $e->getMessage(), statusCode: 500);
+            return ResponseHelper::error(message: 'Unable to fetch home data! Please try again!', statusCode: 500);
         }
     }
 }
