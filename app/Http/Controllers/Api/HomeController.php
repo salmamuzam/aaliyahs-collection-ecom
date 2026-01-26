@@ -27,6 +27,17 @@ class HomeController extends Controller
                     'featured_products' => \App\Http\Resources\ProductResource::collection(
                         \App\Models\Product::with('category.products:id,category_id')->inRandomOrder()->take(4)->get()
                     ),
+                    'best_sellers' => \App\Http\Resources\ProductResource::collection(
+                        \App\Models\Product::with('category')
+                            ->withCount([
+                                'orderItems as total_sold' => function ($query) {
+                                    $query->select(\Illuminate\Support\Facades\DB::raw('sum(quantity)'));
+                                }
+                            ])
+                            ->orderByDesc('total_sold')
+                            ->take(6)
+                            ->get()
+                    ),
                 ];
             });
 

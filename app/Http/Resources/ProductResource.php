@@ -28,6 +28,7 @@ class ProductResource extends JsonResource
             'description' => $this->description,
             'price' => number_format($this->price, 2),
             'images' => $imageUrls,
+            'total_sold' => $this->total_sold ?? 0,
             'category' => new CategoryResource($this->whenLoaded('category')),
         ];
     }

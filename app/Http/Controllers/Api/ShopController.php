@@ -41,27 +41,49 @@ class ShopController extends Controller
                 }
             }
 
-            // 3. Price Range (Max Price)
-            if ($request->has('price_range')) {
-                $query->whereBetween('price', [0, $request->price_range]);
+            // 3. Price Range (Min/Max)
+            if ($request->has('min_price')) {
+                $query->where('price', '>=', $request->min_price);
+            }
+            if ($request->has('max_price')) {
+                $query->where('price', '<=', $request->max_price);
+            }
+            // Backward compatibility for 'price_range'
+            if ($request->has('price_range') && !$request->has('max_price')) {
+                $query->where('price', '<=', $request->price_range);
             }
 
             // 4. Sorting
-            if ($request->has('sort')) {
-                if ($request->sort == 'latest') {
+            $sort = $request->input('sort', 'latest');
+            switch ($sort) {
+                case 'price_asc':
+                case 'low_to_high':
+                case 'low-to-high':
+                case 'price':
+                    $query->orderBy('price', 'asc');
+                    break;
+                case 'price_desc':
+                case 'high_to_low':
+                case 'high-to-low':
+                    $query->orderBy('price', 'desc');
+                    break;
+                case 'oldest':
+                    $query->oldest();
+                    break;
+                case 'latest':
+                default:
                     $query->latest();
-                } elseif ($request->sort == 'price') {
-                    $query->orderBy('price');
-                }
-            } else {
-                // Default sort
-                $query->latest();
+                    break;
             }
 
             // Pagination (Matches ShopPage: 6 items)
-            $products = $query->paginate(6);
+            $products = $query->paginate($request->input('per_page', 6));
 
-            return ResponseHelper::success(message: 'Shop products fetched successfully!', data: ProductResource::collection($products), statusCode: 200);
+            return ResponseHelper::success(
+                message: 'Shop products fetched successfully!',
+                data: ProductResource::collection($products)->response()->getData(true),
+                statusCode: 200
+            );
 
         } catch (Exception $e) {
             Log::error('Shop Index Error: ' . $e->getMessage() . '-Line No: ' . $e->getLine());

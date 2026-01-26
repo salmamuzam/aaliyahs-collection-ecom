@@ -20,7 +20,7 @@ class UserResource extends JsonResource
             'last_name' => $this->last_name,
             'username' => $this->username,
             'email' => $this->email,
-            'profile_photo_url' => $this->profile_photo_url, // Absolute URL (from Jetstream)
+            'profile_photo_url' => \App\Helpers\ImageHelper::getUrl($this->profile_photo_path), // Handled by Helper for portability
             'email_verified_at' => $this->email_verified_at,
         ];
     }
