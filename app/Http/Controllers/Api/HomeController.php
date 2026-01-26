@@ -18,14 +18,14 @@ class HomeController extends Controller
     public function index()
     {
         try {
-            $data = \Illuminate\Support\Facades\Cache::remember('api_home_data', 3600, function () {
+            $data = \Illuminate\Support\Facades\Cache::remember('api_home_data_strict_v1', 3600, function () {
                 return [
                     'categories' => CategoryResource::collection(Category::with('products:id,category_id')->get()),
                     'latest_products' => \App\Http\Resources\ProductResource::collection(
-                        \App\Models\Product::with('category')->latest()->take(8)->get()
+                        \App\Models\Product::with('category.products:id,category_id')->latest()->take(8)->get()
                     ),
                     'featured_products' => \App\Http\Resources\ProductResource::collection(
-                        \App\Models\Product::with('category')->inRandomOrder()->take(4)->get()
+                        \App\Models\Product::with('category.products:id,category_id')->inRandomOrder()->take(4)->get()
                     ),
                 ];
             });
