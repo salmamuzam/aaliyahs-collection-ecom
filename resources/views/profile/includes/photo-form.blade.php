@@ -18,7 +18,7 @@
 
     <!-- Current Profile Photo -->
     <div class="mt-2" x-show="! photoPreview">
-        <img src="{{ $this->user->profile_photo_url }}" alt="{{ $this->user->name }}" class="object-cover rounded-full size-20 border border-gray-300 shadow-sm">
+        <img src="{{ $this->user->profile_photo_path ? \App\Helpers\ImageHelper::getUrl($this->user->profile_photo_path) : $this->user->profile_photo_url }}" alt="{{ $this->user->name }}" class="object-cover rounded-full size-20 border border-gray-300 shadow-sm">
     </div>
 
     <!-- New Profile Photo Preview -->
