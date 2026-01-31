@@ -43,6 +43,7 @@ return [
 
     'mailtrap' => [
         'token' => env('MAILTRAP_API_TOKEN'),
+        'host' => 'sandbox.api.mailtrap.io',
     ],
 
 ];
