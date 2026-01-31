@@ -39,5 +39,11 @@ class AppServiceProvider extends ServiceProvider
             \App\Events\OrderPlaced::class,
             \App\Listeners\SendOrderConfirmationEmail::class,
         );
+
+        \Illuminate\Support\Facades\Mail::extend('mailtrap', function (array $config = []) {
+            return (new \Symfony\Component\Mailer\Bridge\Mailtrap\Transport\MailtrapTransportFactory)->create(
+                \Symfony\Component\Mailer\Transport\Dsn::fromString("mailtrap://{$config['token']}@{$config['host']}")
+            );
+        });
     }
 }
