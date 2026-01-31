@@ -45,5 +45,11 @@ class AppServiceProvider extends ServiceProvider
                 \Symfony\Component\Mailer\Transport\Dsn::fromString("mailtrap+api://" . config('services.mailtrap.token') . "@" . config('services.mailtrap.host'))
             );
         });
+
+        \Illuminate\Support\Facades\Mail::extend('brevo', function (array $config = []) {
+            return (new \Symfony\Component\Mailer\Bridge\Brevo\Transport\BrevoTransportFactory)->create(
+                \Symfony\Component\Mailer\Transport\Dsn::fromString("brevo+api://" . config('services.brevo.key') . "@default")
+            );
+        });
     }
 }

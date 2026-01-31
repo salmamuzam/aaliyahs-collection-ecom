@@ -46,4 +46,8 @@ return [
         'host' => 'sandbox.api.mailtrap.io',
     ],
 
+    'brevo' => [
+        'key' => env('BREVO_API_KEY'),
+    ],
+
 ];

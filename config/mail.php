@@ -101,6 +101,10 @@ return [
             'transport' => 'mailtrap',
         ],
 
+        'brevo' => [
+            'transport' => 'brevo',
+        ],
+
     ],
 
     /*
