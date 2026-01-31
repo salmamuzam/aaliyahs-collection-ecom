@@ -20,7 +20,9 @@
         "laravel/tinker": "^2.10.1",
         "livewire/livewire": "^3.7",
         "srmklive/paypal": "^3.0",
-        "stripe/stripe-php": "*"
+        "stripe/stripe-php": "*",
+        "symfony/http-client": "*",
+        "symfony/mailtrap-mailer": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
