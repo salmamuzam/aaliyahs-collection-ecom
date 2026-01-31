@@ -19,6 +19,7 @@ class OrderPlaced extends Mailable implements ShouldQueue
      */
     public function __construct($order)
     {
+        // Stores the order so we can use it in email template
         $this->order = $order;
         $this->queue = 'high_priority';
     }
@@ -30,6 +31,7 @@ class OrderPlaced extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
+            // Creates an envelope
             subject: 'Order Received - Aaliyah Collection',
         );
     }

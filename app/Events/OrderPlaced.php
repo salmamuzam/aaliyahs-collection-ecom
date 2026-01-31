@@ -24,6 +24,7 @@ class OrderPlaced
      */
     public function __construct(\App\Models\Order $order)
     {
+        
         $this->order = $order;
     }
 

@@ -16,7 +16,7 @@ class SendOrderConfirmationEmail implements ShouldQueue
     public function handle(OrderPlaced $event): void
     {
         \Illuminate\Support\Facades\Log::info('QUEUED LISTENER: Dispatching Mailable for Order ' . $event->order->id);
-
+        
         \Illuminate\Support\Facades\Mail::to($event->order->user)->send(new \App\Mail\OrderPlaced($event->order));
     }
 }
