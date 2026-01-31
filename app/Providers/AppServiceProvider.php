@@ -42,7 +42,7 @@ class AppServiceProvider extends ServiceProvider
 
         \Illuminate\Support\Facades\Mail::extend('mailtrap', function (array $config = []) {
             return (new \Symfony\Component\Mailer\Bridge\Mailtrap\Transport\MailtrapTransportFactory)->create(
-                \Symfony\Component\Mailer\Transport\Dsn::fromString("mailtrap://" . config('services.mailtrap.token') . "@" . config('services.mailtrap.host'))
+                \Symfony\Component\Mailer\Transport\Dsn::fromString("mailtrap+api://" . config('services.mailtrap.token') . "@" . config('services.mailtrap.host'))
             );
         });
     }
