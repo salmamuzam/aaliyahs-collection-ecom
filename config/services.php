@@ -41,4 +41,8 @@ return [
         'redirect' => env('GOOGLE_REDIRECT_URI', env('APP_URL') . '/auth/google/callback'),
     ],
 
+    'mailtrap' => [
+        'token' => env('MAILTRAP_API_TOKEN'),
+    ],
+
 ];
