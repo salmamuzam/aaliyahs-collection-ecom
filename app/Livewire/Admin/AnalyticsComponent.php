@@ -23,7 +23,7 @@ class AnalyticsComponent extends Component
 
     public function render()
     {
-        return view('livewire.admin.analytics-component', [
+        return view('livewire.admin.analytics.analytics-component', [
             'highValueCustomers' => $this->getHighValueCustomers()
         ]);
     }

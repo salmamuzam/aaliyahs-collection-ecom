@@ -15,6 +15,7 @@ use Livewire\WithPagination;
 use Livewire\Attributes\Lazy;
 use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
 
+#[Lazy]
 class ShopPage extends Component
 {
     use WithPagination;
@@ -136,13 +137,13 @@ class ShopPage extends Component
             ->when($this->sort === 'price', fn($q) => $q->orderBy('price'))
             ->paginate(6);
 
-        return view('livewire.guest.shop-page', [
+        return view('livewire.guest.shop.shop-page', [
             'products' => $products,
             'categories' => $this->categories,
         ]);
     }
     public function placeholder()
     {
-        return view('livewire.placeholders.shop-skeleton');
+        return view('livewire.guest.shop.skeleton');
     }
 }

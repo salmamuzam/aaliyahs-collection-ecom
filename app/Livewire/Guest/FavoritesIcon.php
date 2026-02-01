@@ -23,6 +23,6 @@ class FavoritesIcon extends Component
 
     public function render()
     {
-        return view('livewire.guest.favorites-icon');
+        return view('livewire.guest.navbar.favorites-icon');
     }
 }

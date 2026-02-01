@@ -77,11 +77,11 @@ class ProductDetailPage extends Component
 
     public function render()
     {
-        return view('livewire.guest.product-detail-page');
+        return view('livewire.guest.product-detail.product-detail-page');
     }
 
     public function placeholder()
     {
-        return view('livewire.placeholders.product-detail-skeleton');
+        return view('livewire.guest.product-detail.skeleton');
     }
 }

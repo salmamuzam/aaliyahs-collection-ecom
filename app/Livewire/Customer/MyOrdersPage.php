@@ -21,7 +21,7 @@ class MyOrdersPage extends Component
             ->latest()
             ->paginate(4);
 
-        return view('livewire.customer.my-orders-page', [
+        return view('livewire.customer.orders.my-orders-page', [
             'orders' => $my_orders,
         ]);
     }

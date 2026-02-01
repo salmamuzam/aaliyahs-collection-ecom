@@ -36,6 +36,6 @@ class NavbarSearch extends Component
 
     public function render()
     {
-        return view('livewire.guest.navbar-search');
+        return view('livewire.guest.navbar.navbar-search');
     }
 }

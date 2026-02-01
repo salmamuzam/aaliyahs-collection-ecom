@@ -3,7 +3,7 @@
         {{-- Logo Section --}}
         <div class="max-w-[480px] w-full mb-4 text-center">
             <div class="flex justify-center transition-all duration-300 hover:scale-105 active:scale-95">
-                <x-authentication-card-logo />
+                <x-auth.authentication-card-logo />
             </div>
         </div>
 
@@ -26,12 +26,12 @@
 
                 {{-- Code --}}
                 <div x-show="! recovery">
-                    <x-form.input label="Code" name="code" type="text" inputmode="numeric" autofocus x-ref="code" autocomplete="one-time-code" placeholder="Enter code" required />
+                    <x-shared.form.input label="Code" name="code" type="text" inputmode="numeric" autofocus x-ref="code" autocomplete="one-time-code" placeholder="Enter code" required />
                 </div>
 
                 {{-- Recovery Code --}}
                 <div x-show="recovery" style="display: none;">
-                    <x-form.input label="Recovery Code" name="recovery_code" type="text" x-ref="recovery_code" autocomplete="one-time-code" placeholder="Enter recovery code" required />
+                    <x-shared.form.input label="Recovery Code" name="recovery_code" type="text" x-ref="recovery_code" autocomplete="one-time-code" placeholder="Enter recovery code" required />
                 </div>
 
                 <div class="flex items-center justify-end mt-4">
@@ -56,7 +56,7 @@
                 </div>
 
                 <div class="!mt-8">
-                    <x-button.primary>
+                    <x-shared.button.primary>
                         Log in
                     </x-button.primary>
                 </div>

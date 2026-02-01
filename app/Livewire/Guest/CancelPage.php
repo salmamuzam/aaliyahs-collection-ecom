@@ -8,6 +8,6 @@ class CancelPage extends Component
 {
     public function render()
     {
-        return view('livewire.guest.cancel-page');
+        return view('livewire.guest.cancel.cancel-page');
     }
 }

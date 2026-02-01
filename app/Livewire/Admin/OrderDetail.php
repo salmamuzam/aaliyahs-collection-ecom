@@ -23,14 +23,14 @@ class OrderDetail extends Component
 
     public function placeholder()
     {
-        return view('livewire.placeholders.order-detail-skeleton');
+        return view('livewire.admin.orders.detail-skeleton');
     }
 
     public function render()
     {
         $order = Order::with(['user', 'address', 'items.product'])->findOrFail($this->orderId);
 
-        return view('livewire.admin.order-detail', [
+        return view('livewire.admin.orders.order-detail', [
             'order' => $order
         ]);
     }

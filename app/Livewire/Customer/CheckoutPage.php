@@ -187,7 +187,7 @@ class CheckoutPage extends Component
         // fetch items from cookie
         $cart_items = CartManagement::getCartItemsFromCookie();
         $grand_total = CartManagement::calculateGrandTotal($cart_items);
-        return view('livewire.customer.checkout-page', [
+        return view('livewire.customer.checkout.checkout-page', [
             'cart_items' => $cart_items,
             'grand_total' => $grand_total
         ]);

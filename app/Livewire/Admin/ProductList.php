@@ -35,7 +35,7 @@ class ProductList extends Component
 
     public function placeholder()
     {
-        return view('livewire.placeholders.product-list-skeleton');
+        return view('livewire.admin.products.list-skeleton');
     }
 
     public function render()
@@ -55,7 +55,7 @@ class ProductList extends Component
             ->when($needsJoin, fn($q) => $q->orderBy('categories.name', $this->sortOrder), fn($q) => $q->orderBy($this->sortColumn, $this->sortOrder))
             ->paginate(4);
 
-        return view('livewire.admin.product-list', compact('products'));
+        return view('livewire.admin.products.product-list', compact('products'));
     }
 
     public function deleteProduct(Product $product)

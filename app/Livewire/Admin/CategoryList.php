@@ -33,7 +33,7 @@ class CategoryList extends Component
 
     public function placeholder()
     {
-        return view('livewire.placeholders.category-list-skeleton');
+        return view('livewire.admin.categories.list-skeleton');
     }
 
     public function render()
@@ -42,7 +42,7 @@ class CategoryList extends Component
             ->orderBy($this->sortColumn, $this->sortOrder)
             ->paginate(4);
 
-        return view('livewire.admin.category-list', compact('categories'));
+        return view('livewire.admin.categories.category-list', compact('categories'));
     }
 
     public function deleteCategory(Category $category)

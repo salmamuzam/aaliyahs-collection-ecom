@@ -15,7 +15,7 @@ class SuccessPage extends Component
         // Fetch the order using the address relationship
         // Get current logged in user_id
         $latest_order = Order::with('address')->where('user_id', auth()->user()->id)->latest()->first();
-        return view('livewire.guest.success-page', [
+        return view('livewire.guest.success.success-page', [
             'order' => $latest_order,
         ]);
     }

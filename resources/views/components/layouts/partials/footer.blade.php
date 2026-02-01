@@ -2,7 +2,7 @@
     <div class="max-w-screen-xl mx-auto">
         <div class="flex flex-wrap items-center gap-6 md:justify-between max-md:flex-col">
             <div>
-                <a href='/' wire:navigate><img src="{{ asset('images/icons/white_logo.png')}}"
+                <a href='/' wire:navigate><img src="{{ asset('images/logo/white_logo.png')}}"
                         alt="Aaliyah's Collection Logo" class="h-10" /></a>
             </div>
 

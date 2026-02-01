@@ -22,7 +22,7 @@ class MyOrderDetailPage extends Component
 
     public function placeholder()
     {
-        return view('livewire.placeholders.my-order-detail-skeleton');
+        return view('livewire.customer.orders.detail-skeleton');
     }
 
     public function downloadInvoice()
@@ -62,7 +62,7 @@ class MyOrderDetailPage extends Component
         // fetch address
         $address = Address::where('order_id', $order->id)->first();
 
-        return view('livewire.customer.my-order-detail-page', [
+        return view('livewire.customer.orders.my-order-detail-page', [
             'order_items' => $order_items,
             'address' => $address,
             'order' => $order,

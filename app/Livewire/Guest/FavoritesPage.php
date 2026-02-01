@@ -45,11 +45,11 @@ class FavoritesPage extends Component
 
     public function placeholder()
     {
-        return view('livewire.placeholders.wishlist-skeleton');
+        return view('livewire.guest.favorites.skeleton');
     }
 
     public function render()
     {
-        return view('livewire.guest.favorites-page');
+        return view('livewire.guest.favorites.favorites-page');
     }
 }

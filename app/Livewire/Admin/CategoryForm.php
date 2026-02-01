@@ -81,11 +81,11 @@ class CategoryForm extends Component
 
     public function placeholder()
     {
-        return view('livewire.placeholders.form-skeleton');
+        return view('livewire.admin.partials.form-skeleton');
     }
 
     public function render()
     {
-        return view('livewire.admin.category-form');
+        return view('livewire.admin.categories.category-form');
     }
 }

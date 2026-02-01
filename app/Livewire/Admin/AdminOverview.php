@@ -12,12 +12,12 @@ class AdminOverview extends Component
 {
     public function placeholder()
     {
-        return view('livewire.placeholders.admin-overview-skeleton');
+        return view('livewire.admin.dashboard.skeleton');
     }
 
     public function render()
     {
-        return view('livewire.admin.admin-overview', [
+        return view('livewire.admin.dashboard.admin-overview', [
             'totalOrders' => Order::count('*'),
             'totalProducts' => Product::count('*'),
             'totalCategories' => Category::count('*'),

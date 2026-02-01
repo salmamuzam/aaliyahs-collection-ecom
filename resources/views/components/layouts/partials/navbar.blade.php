@@ -26,7 +26,7 @@
     </section>
 
     <div class="flex flex-wrap items-center justify-between py-3 px-4 sm:px-10 bg-brand-teal lg:gap-y-4 gap-y-6 gap-x-4">
-        <a href="/" wire:navigate><img src="{{ asset('images/icons/white_logo.png')}}"
+        <a href="/" wire:navigate><img src="{{ asset('images/logo/white_logo.png')}}"
                 alt="Aaliyah's Collection Logo" class="h-10">
         </a>
 
@@ -48,7 +48,7 @@
             <ul
                 class="lg:!flex lg:gap-x-10 max-lg:space-y-3 max-lg:fixed max-lg:bg-brand-teal max-lg:w-2/3 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:px-10 max-lg:py-4 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50">
                 <li class="hidden mb-6 max-lg:block">
-                    <a href="{{ url('/') }}" wire:navigate><img src="{{ asset('images/icons/white_logo.png') }}"
+                    <a href="{{ url('/') }}" wire:navigate><img src="{{ asset('images/logo/white_logo.png') }}"
                             alt="Aaliyah's Collection Logo" class="w-20" />
                     </a>
                 </li>
@@ -84,11 +84,11 @@
 
                 <li
                     class="mt-1.5 relative px-1 lg:hover:after:absolute lg:after:bg-white lg:after:w-0 lg:hover:after:w-full lg:hover:after:h-[2px] lg:after:block lg:after:-bottom-4 lg:after:transition-all lg:after:duration-300">
-                    <livewire:guest.favorites-icon />
+                    <livewire:guest.navbar.favorites-icon />
                 </li>
                 <li
                     class="mt-1.5 relative px-1 lg:hover:after:absolute lg:after:bg-white lg:after:w-0 lg:hover:after:w-full lg:hover:after:h-[2px] lg:after:block lg:after:-bottom-4 lg:after:transition-all lg:after:duration-300">
-                    <livewire:guest.cart-icon />
+                    <livewire:guest.navbar.cart-icon />
                 </li>
             </ul>
             <button id="toggleOpen" @click="open = !open" class="ml-6 cursor-pointer lg:hidden">

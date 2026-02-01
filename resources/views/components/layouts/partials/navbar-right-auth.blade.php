@@ -1,6 +1,6 @@
 <!-- Settings Dropdown -->
 <div class="relative ms-3">
-    <x-dropdown align="right" width="48">
+    <x-shared.dropdown align="right" width="48">
         <x-slot name="trigger">
             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                 <button
@@ -29,16 +29,16 @@
                 {{ __('Manage Account') }}
             </div>
 
-            <x-dropdown-link href="{{ route('profile.show') }}" wire:navigate>
+            <x-shared.dropdown-link href="{{ route('profile.show') }}" wire:navigate>
                 {{ __('Profile') }}
             </x-dropdown-link>
 
-            <x-dropdown-link href="/my-orders" wire:navigate>
+            <x-shared.dropdown-link href="/my-orders" wire:navigate>
                 {{ __('My Orders') }}
             </x-dropdown-link>
 
             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                <x-dropdown-link href="{{ route('api-tokens.index') }}">
+                <x-shared.dropdown-link href="{{ route('api-tokens.index') }}">
                     {{ __('API Tokens') }}
                 </x-dropdown-link>
             @endif
@@ -49,7 +49,7 @@
             <form method="POST" action="{{ route('logout') }}" x-data>
                 @csrf
 
-                <x-dropdown-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
+                <x-shared.dropdown-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
                     {{ __('Log Out') }}
                 </x-dropdown-link>
             </form>

@@ -120,11 +120,25 @@ class ProductReviews extends Component
         ];
     }
 
+    public function getCanReviewProperty()
+    {
+        if (!auth()->check()) {
+            return false;
+        }
+
+        return Order::where('user_id', auth()->id())
+            ->where('status', 'delivered')
+            ->whereHas('items', function ($query) {
+                $query->where('product_id', $this->product_id);
+            })->exists();
+    }
+
     public function render()
     {
-        return view('livewire.guest.product-reviews', [
+        return view('livewire.guest.reviews.product-reviews', [
             'reviews' => $this->reviews,
             'stats' => $this->stats,
+            'canReview' => $this->canReview,
         ]);
     }
 }

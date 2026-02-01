@@ -2,9 +2,9 @@
     <div class="w-full">
         <div class="py-10 brand-container">
             @if(auth()->user()?->user_type === 'admin')
-                <x-admin.page-header title="Profile" />
+                <x-admin.common.page-header title="Profile" />
             @else
-                <x-customer.page-header title="YOUR PROFILE" />
+                <x-customer.common.page-header title="YOUR PROFILE" />
             @endif
 
             @if (Laravel\Fortify\Features::canUpdateProfileInformation())
@@ -43,5 +43,6 @@
         </div>
     </div>
 </x-app-layout>
+
 
 

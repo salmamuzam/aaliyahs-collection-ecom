@@ -23,6 +23,6 @@ class CartIcon extends Component
 
     public function render()
     {
-        return view('livewire.guest.cart-icon');
+        return view('livewire.guest.navbar.cart-icon');
     }
 }

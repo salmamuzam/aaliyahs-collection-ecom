@@ -20,7 +20,7 @@ class LatestReviews extends Component
 
     public function render()
     {
-        return view('livewire.guest.latest-reviews', [
+        return view('livewire.guest.reviews.latest-reviews', [
             'reviews' => $this->reviews
         ]);
     }

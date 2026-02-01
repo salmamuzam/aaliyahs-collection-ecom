@@ -120,11 +120,11 @@ class ProductForm extends Component
     }
     public function placeholder()
     {
-        return view('livewire.placeholders.form-skeleton');
+        return view('livewire.admin.partials.form-skeleton');
     }
 
     public function render()
     {
-        return view('livewire.admin.product-form');
+        return view('livewire.admin.products.product-form');
     }
 }

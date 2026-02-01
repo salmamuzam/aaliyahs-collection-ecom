@@ -3,7 +3,7 @@
         {{-- Logo Section --}}
         <div class="max-w-[480px] w-full mb-4 text-center">
             <div class="flex justify-center transition-all duration-300 hover:scale-105 active:scale-95">
-                <x-authentication-card-logo />
+                <x-auth.authentication-card-logo />
             </div>
         </div>
 
@@ -21,10 +21,10 @@
                 @csrf
 
                 {{-- Password --}}
-                <x-form.password-input label="Password" name="password" required autocomplete="current-password" autofocus placeholder="Enter password" />
+                <x-shared.form.password-input label="Password" name="password" required autocomplete="current-password" autofocus placeholder="Enter password" />
 
                 <div class="!mt-8">
-                    <x-button.primary>
+                    <x-shared.button.primary>
                         Confirm
                     </x-button.primary>
                 </div>

@@ -72,7 +72,7 @@ class OrderManagementComponent extends Component
 
     public function placeholder()
     {
-        return view('livewire.placeholders.order-management-skeleton');
+        return view('livewire.admin.orders.list-skeleton');
     }
 
     public function render()
@@ -94,7 +94,7 @@ class OrderManagementComponent extends Component
             })
             ->paginate(5);
 
-        return view('livewire.admin.order-management-component', [
+        return view('livewire.admin.orders.order-management-component', [
             'orders' => $orders
         ]);
     }

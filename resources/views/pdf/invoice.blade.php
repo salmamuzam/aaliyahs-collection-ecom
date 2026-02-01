@@ -4,236 +4,277 @@
     <meta charset="utf-8">
     <title>Invoice #{{ $order->id }}</title>
     <style>
+        :root {
+            --bg-clr: #df3c5b;
+            --white: #fff;
+            --invoice-left-bg: #e7e7e9;
+            --primary-clr: #2f2929;
+            --secondary-clr: #df3c5b;
+        }
+
         body {
-            font-family: 'Helvetica', 'Arial', sans-serif;
-            color: #333;
-            font-size: 14px;
+            background: #fff; /* Changed from variable for PDF rendering */
+            font-family: "Helvetica", "Arial", sans-serif;
+            font-size: 12px;
+            line-height: 20px;
+            color: #2f2929;
             margin: 0;
             padding: 0;
         }
 
-        .container {
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* Helper Classes */
-        .text-right { text-align: right; }
-        .text-center { text-align: center; }
-        .text-uppercase { text-transform: uppercase; }
-        .font-bold { font-weight: bold; }
-        .text-teal { color: #134E4A; }
-        .text-burgundy { color: #5A1217; }
-        .text-white { color: #fff; }
-        .bg-teal { background-color: #134E4A; }
-        .bg-burgundy { background-color: #5A1217; }
-        .border-b { border-bottom: 1px solid #ddd; }
-        .mb-2 { margin-bottom: 10px; }
-        .mt-4 { margin-top: 20px; }
-        .p-2 { padding: 10px; }
-
-        /* Header */
-        .header {
-            width: 100%;
-            margin-bottom: 40px;
-        }
-        .header td { vertical-align: top; }
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
-            color: #5A1217;
-            margin-bottom: 5px;
-        }
-        .company-info { font-size: 12px; color: #666; line-height: 1.4; }
-
-        .invoice-details { text-align: right; }
-        .invoice-title {
-            font-size: 32px;
-            font-weight: bold;
-            color: #134E4A;
+        .main_title {
+            font-weight: 700;
+            font-size: 16px;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
+            color: #df3c5b;
         }
 
-        /* Billing Info table */
-        .info-table {
-            width: 100%;
-            margin-bottom: 30px;
-            border-collapse: collapse;
-        }
-        .info-table td {
-            width: 50%;
-            vertical-align: top;
-            padding: 10px;
-            background-color: #f9fafb;
-            border: 1px solid #eee;
-        }
-        .info-header {
-            font-weight: bold;
-            color: #134E4A;
-            text-transform: uppercase;
-            font-size: 11px;
-            margin-bottom: 8px;
-            border-bottom: 2px solid #5A1217;
-            display: inline-block;
-            padding-bottom: 3px;
+        .p_title {
+            font-weight: 700;
+            font-size: 14px;
+            margin-top: 10px;
         }
 
-        /* Items Table */
-        .items-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 30px;
+        .p_title > span {
+            font-weight: 400;
+            font-size: 12px;
         }
-        .items-table th {
-            background-color: #134E4A;
-            color: white;
-            padding: 12px;
-            text-align: left;
-            text-transform: uppercase;
-            font-size: 11px;
-            letter-spacing: 0.5px;
-        }
-        .items-table td {
-            padding: 12px;
-            border-bottom: 1px solid #eee;
-            font-size: 13px;
-        }
-        .items-table tr:nth-child(even) { background-color: #fcfcfc; }
 
-        /* Totals */
-        .totals-container {
-            width: 100%;
-            margin-top: 20px;
-        }
-        .totals-table {
-            width: 50%;
-            float: right;
-            border-collapse: collapse;
-        }
-        .totals-table td {
-            padding: 8px 12px;
+        .text_right {
             text-align: right;
         }
-        .totals-label { font-weight: bold; color: #666; }
-        .grand-total-row td {
-            background-color: #5A1217;
-            color: white;
-            font-weight: bold;
-            font-size: 16px;
-            padding: 12px;
+
+        .text_center {
+            text-align: center;
         }
 
-        /* Footer */
-        .footer {
-            margin-top: 60px;
-            text-align: center;
-            font-size: 11px;
-            color: #888;
-            border-top: 1px solid #eee;
-            padding-top: 20px;
+        .divider {
+            width: 75px;
+            height: 3px;
+            background: #df3c5b;
+            margin: 5px 0;
         }
+
+        .invoice {
+            width: 100%;
+            height: auto;
+            background: #fff;
+            margin: 0;
+            display: table; /* Using table for layout instead of flex */
+        }
+
+        .invoice_left {
+            display: table-cell;
+            width: 35%;
+            background: #e7e7e9;
+            padding: 40px 30px;
+            vertical-align: top;
+        }
+
+        .invoice_right {
+            display: table-cell;
+            width: 65%;
+            padding: 40px 30px;
+            vertical-align: top;
+        }
+
+        .section_margin {
+            margin-bottom: 40px;
+        }
+
+        .logo_text {
+            font-size: 28px;
+            line-height: 32px;
+            color: #df3c5b;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .title h1 {
+            font-size: 32px;
+            line-height: 38px;
+            color: #df3c5b;
+            margin: 0;
+        }
+
+        /* table styling */
+        .i_table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .i_table_head {
+            background: #e7e7e9;
+        }
+
+        .i_table th {
+            padding: 10px;
+            text-align: left;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .i_table td {
+            padding: 10px;
+            border-bottom: 1px solid #e7e7e9;
+        }
+
+        .i_table_foot td {
+            padding: 5px 10px;
+            border: 0;
+        }
+
+        .grand_total_wrap {
+            margin-top: 10px;
+            background: #e7e7e9;
+        }
+
+        .grand_total_wrap td {
+            font-weight: 700;
+            font-size: 16px;
+            padding: 10px;
+        }
+
+        .terms {
+            margin-top: 40px;
+        }
+
+        .w_55 { width: 55%; }
+        .w_15 { width: 15%; }
+        .w_50 { width: 50%; }
+
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <table class="header">
-            <tr>
-                <td>
-                    <div class="logo">Aaliyah's Collection</div>
-                    <div class="company-info">
-                        Kurunegala, Sri Lanka<br>
-                        Email: aaliyahscollection@gmail.com<br>
-                        Phone: 0778997783
-                    </div>
-                </td>
-                <td class="invoice-details">
-                    <div class="invoice-title">INVOICE</div>
-                    <div><strong>Invoice #:</strong> {{ $order->id }}</div>
-                    <div><strong>Date:</strong> {{ $order->created_at->format('M d, Y') }}</div>
-                    <div><strong>Status:</strong> <span class="text-uppercase">{{ $order->status }}</span></div>
-                </td>
-            </tr>
-        </table>
+    <div class="invoice">
+        <!-- LEFT COLUMN -->
+        <div class="invoice_left">
+            <div class="logo_text">
+                Aaliyah's Collection
+            </div>
 
-        <!-- Billing & Payment Info -->
-        <table class="info-table">
-            <tr>
-                <td>
-                    <div class="info-header">Bill To</div>
-                    <strong>{{ $order->address->first_name }} {{ $order->address->last_name }}</strong><br>
-                    {{ $order->address->street_address }}<br>
-                    {{ $order->address->city }} {{ $order->address->postal_code }}<br>
-                    {{ $order->address->country ?? 'Sri Lanka' }}<br>
-                    {{ $order->address->phone }}
-                </td>
-                <td>
-                    <div class="info-header">Payment Information</div>
-                    <strong>Method:</strong> <span class="text-uppercase">{{ str_replace('_', ' ', $order->payment_method) }}</span><br>
-                    <strong>Status:</strong> <span class="text-uppercase text-{{ $order->payment_status == 'paid' ? 'teal' : 'burgundy' }}">{{ $order->payment_status }}</span><br>
-                    <strong>Currency:</strong> {{ strtoupper($order->currency) }}
-                </td>
-            </tr>
-        </table>
+            <div class="section_margin">
+                <div class="main_title">
+                    Invoice To
+                    <div class="divider"></div>
+                </div>
+                <div class="p_title">
+                    {{ $address->first_name }} {{ $address->last_name }}<br>
+                    <span>Customer</span>
+                </div>
+                <div class="p_title">
+                    <p>{{ $address->street_address }}</p>
+                    <p>{{ $address->city }}, {{ $address->country ?? 'Sri Lanka' }}</p>
+                    <p>{{ $address->phone }}</p>
+                </div>
+            </div>
 
-        <!-- Line Items -->
-        <table class="items-table">
-            <thead>
-                <tr>
-                    <th style="width: 50%;">Product</th>
-                    <th style="width: 10%; text-align: center;">Qty</th>
-                    <th style="width: 20%; text-align: right;">Unit Price</th>
-                    <th style="width: 20%; text-align: right;">Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($order_items as $item)
-                <tr>
-                    <td>
-                        <span class="font-bold">{{ $item->product->name }}</span>
-                    </td>
-                    <td class="text-center">{{ $item->quantity }}</td>
-                    <td class="text-right">LKR {{ number_format($item->unit_amount, 2) }}</td>
-                    <td class="text-right font-bold">LKR {{ number_format($item->total_amount, 2) }}</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+            <div class="section_margin">
+                <div class="main_title">
+                    Invoice details
+                    <div class="divider"></div>
+                </div>
+                <div class="p_title">
+                    Invoice No:<br>
+                    <span>#{{ $order->id }}</span>
+                </div>
+                <div class="p_title">
+                    Invoice Date:<br>
+                    <span>{{ $order->created_at->format('d M Y') }}</span>
+                </div>
+            </div>
 
-        <!-- Totals -->
-        <div class="totals-container">
-            <table class="totals-table">
-                <tr>
-                    <td class="totals-label">Subtotal</td>
-                    <td>LKR {{ number_format($order->grand_total, 2) }}</td>
-                </tr>
-                <tr>
-                    <td class="totals-label">Shipping</td>
-                    <td>Free</td>
-                </tr>
-                <!-- Tax row if needed -->
-                <!--
-                <tr>
-                    <td class="totals-label">Tax</td>
-                    <td>LKR 0.00</td>
-                </tr>
-                -->
-                <tr class="grand-total-row">
-                    <td>TOTAL</td>
-                    <td>LKR {{ number_format($order->grand_total, 2) }}</td>
-                </tr>
-            </table>
-            <div style="clear: both;"></div>
+            <div class="section_margin">
+                <div class="main_title">
+                    Payment Method
+                    <div class="divider"></div>
+                </div>
+                <div class="p_title">
+                    Method:<br>
+                    <span>{{ strtoupper($order->payment_method) }}</span>
+                </div>
+                <div class="p_title">
+                    Status:<br>
+                    <span>{{ strtoupper($order->payment_status) }}</span>
+                </div>
+            </div>
+
+            <div class="section_margin">
+                <div class="main_title">
+                    Total Due
+                    <div class="divider"></div>
+                </div>
+                <div class="p_title">
+                    Amount In LKR:<br>
+                    <span>LKR {{ number_format($order->grand_total, 2) }}</span>
+                </div>
+            </div>
         </div>
 
-        <!-- Footer -->
-        <div class="footer">
-            <p>Thank you for choosing Aaliyah's Collection!</p>
-            <p>If you have any questions concerning this invoice, please contact us at <strong>aaliyahscollection@gmail.com</strong></p>
+        <!-- RIGHT COLUMN -->
+        <div class="invoice_right">
+            <div class="section_margin">
+                <div class="title">
+                    <h1>INVOICE</h1>
+                    <div class="divider" style="width: 120px;"></div>
+                </div>
+            </div>
+
+            <div class="i_table">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead class="i_table_head">
+                        <tr>
+                            <th class="w_55">Description</th>
+                            <th class="w_15 text_center">Qty</th>
+                            <th class="w_15 text_center">Price</th>
+                            <th class="w_15 text_right">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($order_items as $item)
+                        <tr>
+                            <td>
+                                <p style="margin:0; font-weight:700;">{{ $item->product->name }}</p>
+                                <span style="font-size: 10px; color: #666;">SKU: {{ $item->product->id }}</span>
+                            </td>
+                            <td class="text_center">{{ $item->quantity }}</td>
+                            <td class="text_center">LKR {{ number_format($item->unit_amount, 2) }}</td>
+                            <td class="text_right">LKR {{ number_format($item->total_amount, 2) }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
+                <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                    <tr class="i_table_foot">
+                        <td class="w_50">Sub Total</td>
+                        <td class="w_50 text_right">LKR {{ number_format($order->grand_total, 2) }}</td>
+                    </tr>
+                    <tr class="i_table_foot">
+                        <td class="w_50">Shipping</td>
+                        <td class="w_50 text_right">0.00</td>
+                    </tr>
+                    <tr class="i_table_foot">
+                        <td class="w_50">Tax (0%)</td>
+                        <td class="w_50 text_right">0.00</td>
+                    </tr>
+                    <tr class="grand_total_wrap">
+                        <td class="w_50">GRAND TOTAL:</td>
+                        <td class="w_50 text_right">LKR {{ number_format($order->grand_total, 2) }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="terms">
+                <div class="main_title">
+                    Terms and Conditions
+                    <div class="divider"></div>
+                </div>
+                <p style="font-size: 10px; color: #666;">
+                    Thank you for shopping with Aaliyah's Collection. Please note that all sales are final. 
+                    If you have any questions regarding your order, please contact us at aaliyahscollection@gmail.com.
+                </p>
+            </div>
         </div>
     </div>
 </body>

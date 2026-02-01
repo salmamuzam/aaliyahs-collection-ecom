@@ -14,7 +14,7 @@
                         reader.readAsDataURL($refs.photo.files[0]);
                 " />
 
-    <x-label for="photo" value="{{ __('Photo') }}" />
+    <x-shared.label for="photo" value="{{ __('Photo') }}" />
 
     <!-- Current Profile Photo -->
     <div class="mt-2" x-show="! photoPreview">
@@ -29,16 +29,16 @@
     </div>
 
     <div class="flex gap-2 mt-4">
-        <x-secondary-button type="button" x-on:click.prevent="$refs.photo.click()">
+        <x-shared.secondary-button type="button" x-on:click.prevent="$refs.photo.click()">
             {{ __('Select A New Photo') }}
         </x-secondary-button>
 
         @if ($this->user->profile_photo_path)
-            <x-danger-button type="button" wire:click="deleteProfilePhoto">
+            <x-shared.danger-button type="button" wire:click="deleteProfilePhoto">
                 {{ __('Remove Photo') }}
             </x-danger-button>
         @endif
     </div>
 
-    <x-input-error for="photo" class="mt-2" />
+    <x-shared.input-error for="photo" class="mt-2" />
 </div>

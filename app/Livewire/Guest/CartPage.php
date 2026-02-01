@@ -50,11 +50,11 @@ class CartPage extends Component
 
     public function placeholder()
     {
-        return view('livewire.placeholders.cart-skeleton');
+        return view('livewire.guest.cart.skeleton');
     }
 
     public function render()
     {
-        return view('livewire.guest.cart-page');
+        return view('livewire.guest.cart.cart-page');
     }
 }
