@@ -86,7 +86,23 @@ class MyOrderController extends Controller
                 ]);
 
                 $order->items()->createMany($orderItemsData);
-                $order->address()->create(array_merge($validated, ['user_id' => auth()->id(), 'country' => 'Sri Lanka']));
+
+                // Filter address data (remove payment_method and items from the address save)
+                $addressData = $request->only([
+                    'first_name',
+                    'last_name',
+                    'email',
+                    'phone',
+                    'street_address',
+                    'city',
+                    'province',
+                    'postal_code'
+                ]);
+
+                $order->address()->create(array_merge($addressData, [
+                    'user_id' => auth()->id(),
+                    'country' => 'Sri Lanka'
+                ]));
 
                 // Logic for Payment Redirection (Stripe API)
                 $paymentUrl = null;
