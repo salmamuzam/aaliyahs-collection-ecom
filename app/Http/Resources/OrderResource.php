@@ -47,7 +47,7 @@ class OrderResource extends JsonResource
                         'id' => $item->id,
                         'product_id' => $item->product_id,
                         'name' => $item->product->name ?? 'Unknown Product', // Handle deleted products
-                        'image' => (isset($item->product->images[0])) ? asset('storage/' . $item->product->images[0]) : null,
+                        'image' => (isset($item->product->images[0])) ? \App\Helpers\ImageHelper::getUrl($item->product->images[0]) : null,
                         'quantity' => (int) $item->quantity,
                         'unit_amount' => (float) $item->unit_amount,
                         'total_amount' => (float) $item->total_amount,

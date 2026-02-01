@@ -1,49 +1,52 @@
-<div class="px-4 py-8 antialiased md:py-16">
+<div class="px-4 pt-0 pb-0 antialiased md:pt-0 md:pb-0">
     <div class="mx-auto max-w-6xl">
         <div>
             <x-shared.sections.section-header title="CUSTOMER REVIEWS" align="center" />
         </div>
 
         {{-- Ratings & Breakdown --}}
-        <div class="flex lg:items-center sm:justify-between max-lg:flex-col max-lg:items-center gap-x-6 gap-y-8 mt-8">
-            <div class="space-y-2 w-full max-w-sm mx-auto lg:mx-0">
+        <div class="grid lg:grid-cols-3 items-center gap-8 mt-4">
+            {{-- Star Bars --}}
+            <div class="space-y-2 w-full max-w-sm mx-auto">
                 @foreach([5, 4, 3, 2, 1] as $star)
                 <div class="flex items-center">
                     <div class="min-w-9">
-                        <p class="text-sm text-gray-900 font-medium">{{ $star }}.0</p>
+                        <p class="text-xs text-gray-900 font-medium">{{ $star }}.0</p>
                     </div>
-                    <div class="bg-gray-400 rounded w-full h-3">
+                    <div class="bg-gray-400 rounded w-full h-2">
                         <div class="h-full rounded bg-brand-burgundy" style="width: {{ $stats['percentages'][$star] }}%"></div>
                     </div>
-                    <div class="min-w-14">
-                        <p class="text-sm text-gray-900 font-medium ml-4">{{ $stats['percentages'][$star] }}%</p>
+                    <div class="min-w-10 text-right">
+                        <p class="text-xs text-gray-900 font-medium ml-2">{{ $stats['percentages'][$star] }}%</p>
                     </div>
                 </div>
                 @endforeach
             </div>
 
-            <div class="w-full text-center lg:text-left">
-                <h3 class="text-gray-900 text-xl font-semibold">Total Reviews</h3>
-                <h6 class="text-gray-600 text-base mt-3 font-medium">{{ $stats['total'] }} Reviews</h6>
+            {{-- Total Reviews --}}
+            <div class="w-full text-center">
+                <h3 class="text-brand-black text-lg font-bold uppercase tracking-wide">Total Reviews</h3>
+                <p class="text-gray-600 text-sm mt-1 font-medium italic">{{ $stats['total'] }} Reviews</p>
             </div>
 
-            <div class="w-full text-center lg:text-right">
-                <h3 class="text-gray-900 text-xl font-semibold">Average Rating</h3>
-                <div class="flex items-center justify-center lg:justify-end space-x-1 text-brand-burgundy mt-3">
+            {{-- Average Rating --}}
+            <div class="w-full text-center">
+                <h3 class="text-brand-black text-lg font-bold uppercase tracking-wide">Average Rating</h3>
+                <div class="flex items-center justify-center space-x-1 mt-1">
                     @for($i = 1; $i <= 5; $i++)
                         <svg class="w-5 h-5 {{ $i <= round($stats['average']) ? 'fill-brand-burgundy' : 'fill-gray-300' }}" viewBox="0 0 24 24">
                             <path d="M12 17.42L6.25 21.54c-.29.2-.66-.09-.56-.43l2.14-6.74L2.08 10.15c-.26-.2-.13-.6.2-.62l7.07-.05L11.62 2.66c.1-.32.56-.32.66 0l2.24 6.82 7.07.05c.33.01.46.42.2.62l-5.75 4.22 2.14 6.74c.1.34-.27.63-.56.43L12 17.42z" />
                         </svg>
                     @endfor
                 </div>
-                <p class="text-sm text-gray-500 mt-1">{{ $stats['average'] }} out of 5</p>
+                <p class="text-xs text-gray-400 mt-1 uppercase font-bold tracking-tighter">{{ $stats['average'] }} out of 5</p>
             </div>
         </div>
 
-        <div class="my-8 border-t border-black"></div>
+        <div class="my-4 border-t border-black"></div>
 
         {{-- Reviews List --}}
-        <div class="space-y-8 mt-12">
+        <div class="space-y-8 mt-4">
             @forelse($reviews as $review)
             <div class="sm:p-8 p-6 brand-card shadow-sm">
                 <div class="flex items-start justify-between flex-wrap gap-4">
@@ -97,7 +100,7 @@
                 </div>
             </div>
             @empty
-                <div class="text-center py-10">
+                <div class="text-center py-4">
                     <p class="text-gray-500">No reviews yet.</p>
                 </div>
             @endforelse
@@ -111,10 +114,10 @@
         @endif
 
         {{-- Form / Message Section --}}
-        <div class="mt-12">
+        <div class="mt-6">
             @if($canReview)
                 <div id="write-review">
-                    <h3 class="text-gray-900 text-xl font-semibold mb-6">Write Your Review</h3>
+                    <h2 class="mb-6 font-bold font-playfair text-center text-2xl text-brand-teal uppercase">WRITE YOUR REVIEW</h2>
                     <form wire:submit.prevent="submitReview" class="brand-card sm:p-8 p-6 shadow-sm">
                         <div>
                             <label class="mb-2 text-sm text-gray-900 font-medium block">Rate Us</label>
@@ -183,7 +186,7 @@
                         <a href="{{ route('shop') }}" wire:navigate class="inline-block px-6 py-2 bg-brand-teal text-white rounded-md font-bold transition-all hover:bg-opacity-90">Continue Shopping</a>
                     @else
                         <p class="text-gray-600 mb-4">Please login to write a review for a product you've purchased.</p>
-                        <a href="{{ route('login') }}" class="inline-block px-6 py-2 bg-brand-burgundy text-white rounded-md font-bold transition-all hover:bg-opacity-90">Login to Review</a>
+                        <a href="{{ route('login') }}" wire:navigate class="inline-block px-6 py-2 bg-brand-burgundy text-white rounded-md font-bold transition-all hover:bg-opacity-90">Login to Review</a>
                     @endauth
                 </div>
             @endif

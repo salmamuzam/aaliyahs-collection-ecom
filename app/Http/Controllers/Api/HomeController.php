@@ -22,10 +22,20 @@ class HomeController extends Controller
                 return [
                     'categories' => CategoryResource::collection(Category::with('products:id,category_id')->get()),
                     'latest_products' => \App\Http\Resources\ProductResource::collection(
-                        \App\Models\Product::with('category.products:id,category_id')->latest()->take(8)->get()
+                        \App\Models\Product::with('category.products:id,category_id')
+                            ->withCount('reviews')
+                            ->withAvg('reviews', 'rating')
+                            ->latest()
+                            ->take(8)
+                            ->get()
                     ),
                     'featured_products' => \App\Http\Resources\ProductResource::collection(
-                        \App\Models\Product::with('category.products:id,category_id')->inRandomOrder()->take(4)->get()
+                        \App\Models\Product::with('category.products:id,category_id')
+                            ->withCount('reviews')
+                            ->withAvg('reviews', 'rating')
+                            ->inRandomOrder()
+                            ->take(4)
+                            ->get()
                     ),
                     'best_sellers' => \App\Http\Resources\ProductResource::collection(
                         \App\Models\Product::with('category')
@@ -34,6 +44,8 @@ class HomeController extends Controller
                                     $query->select(\Illuminate\Support\Facades\DB::raw('sum(quantity)'));
                                 }
                             ])
+                            ->withCount('reviews')
+                            ->withAvg('reviews', 'rating')
                             ->orderByDesc('total_sold')
                             ->take(6)
                             ->get()

@@ -18,8 +18,10 @@ class ShopController extends Controller
     public function index(Request $request)
     {
         try {
-            // REMOVED 'in_stock' check as column does not exist
-            $query = Product::with('category');
+            // 1. Base Query with relationships & aggregates
+            $query = Product::with('category')
+                ->withCount('reviews')
+                ->withAvg('reviews', 'rating');
 
             // 1. Search (Name/Description)
             if ($request->has('search')) {
@@ -98,7 +100,10 @@ class ShopController extends Controller
     {
         try {
             // REMOVED 'brand' relationship as it does not exist
-            $product = Product::with('category')->findOrFail($id);
+            $product = Product::with('category')
+                ->withCount('reviews')
+                ->withAvg('reviews', 'rating')
+                ->findOrFail($id);
 
             return ResponseHelper::success(message: 'Product details fetched successfully!', data: new ProductResource($product), statusCode: 200);
 

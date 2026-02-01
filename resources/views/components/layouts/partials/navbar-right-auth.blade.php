@@ -25,23 +25,18 @@
 
         <x-slot name="content">
             <!-- Account Management -->
-            <div class="block px-4 py-2 text-xs text-gray-400">
+            <div class="block px-4 py-2 text-sm font-bold text-gray-600 uppercase tracking-wider">
                 {{ __('Manage Account') }}
             </div>
 
             <x-shared.navigation.dropdown-link href="{{ route('profile.show') }}" wire:navigate>
-                {{ __('Profile') }}
-            </x-dropdown-link>
+                {{ __('My Profile') }}
+            </x-shared.navigation.dropdown-link>
 
             <x-shared.navigation.dropdown-link href="/my-orders" wire:navigate>
                 {{ __('My Orders') }}
             </x-dropdown-link>
 
-            @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                <x-shared.navigation.dropdown-link href="{{ route('api-tokens.index') }}">
-                    {{ __('API Tokens') }}
-                </x-dropdown-link>
-            @endif
 
             <div class="border-t border-gray-200 dark:border-gray-600"></div>
 

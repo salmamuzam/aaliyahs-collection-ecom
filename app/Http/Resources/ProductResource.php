@@ -29,6 +29,8 @@ class ProductResource extends JsonResource
             'price' => number_format($this->price, 2),
             'images' => $imageUrls,
             'total_sold' => $this->total_sold ?? 0,
+            'rating_average' => (float) ($this->reviews_avg_rating ?? 0),
+            'review_count' => (int) ($this->reviews_count ?? 0),
             'category' => new CategoryResource($this->whenLoaded('category')),
         ];
     }

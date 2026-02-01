@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\WishlistController;
 use App\Http\Controllers\Api\MyOrderController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\DashboardController;
+use App\Http\Controllers\Api\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,8 @@ Route::prefix('v1')->middleware(['throttle:60,1'])->group(function () {
     Route::get('/products/best-selling', [ProductController::class, 'bestSelling']);
     Route::post('/cart/calculate', [CartController::class, 'calculate']);
     Route::post('/wishlist/fetch', [WishlistController::class, 'index']);
+    Route::get('/products/{id}/reviews', [ReviewController::class, 'index']);
+    Route::get('/products/{id}/reviews/stats', [ReviewController::class, 'stats']);
 
     // --- Authentication Routes ---
     Route::controller(AuthController::class)->group(function () {
@@ -61,11 +64,28 @@ Route::prefix('v1')->middleware(['throttle:60,1'])->group(function () {
             Route::delete('user/profile-photo', 'deleteProfilePhoto');
             Route::delete('user/delete-account', 'deleteAccount');
             Route::post('change-password', 'changePassword');
+            Route::post('confirm-password', 'confirmPassword');
+
+            // Two-Factor Authentication (Jetstream API Sync)
+            Route::prefix('two-factor')->group(function () {
+                Route::post('enable', 'enableTwoFactor');
+                Route::delete('disable', 'disableTwoFactor');
+                Route::get('qr-code', 'getTwoFactorQrCode');
+                Route::get('recovery-codes', 'getRecoveryCodes');
+                Route::post('recovery-codes', 'regenerateRecoveryCodes');
+            });
+
+            // API Token Management (Jetstream API Sync)
+            Route::get('tokens', 'getUserTokens');
+            Route::post('tokens', 'createUserToken');
+            Route::delete('tokens/{id}', 'deleteUserToken');
+            Route::delete('other-browser-sessions', 'revokeOtherTokens');
         });
 
         // Customer Only Routes (Ability: customer:access)
         Route::middleware(['ability:customer:access'])->group(function () {
             Route::apiResource('/orders', MyOrderController::class)->only(['index', 'show', 'store']);
+            Route::post('/reviews', [ReviewController::class, 'store']);
         });
 
         // Admin Only Routes (Ability: admin:access)

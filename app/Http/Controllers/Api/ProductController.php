@@ -26,6 +26,8 @@ class ProductController extends Controller
 
             $products = \Illuminate\Support\Facades\Cache::remember($cacheKey, 600, function () use ($request) {
                 return Product::with('category')
+                    ->withCount('reviews')
+                    ->withAvg('reviews', 'rating')
                     ->when($request->search, function ($query, $search) {
                         $query->where(function ($q) use ($search) {
                             $q->where('name', 'like', "%{$search}%")
@@ -79,7 +81,7 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         try {
-            $product->load('category');
+            $product->loadCount('reviews')->loadAvg('reviews', 'rating')->load('category');
             return ResponseHelper::success(message: 'Product fetched successfully!', data: new ProductResource($product));
         } catch (Exception $e) {
             Log::error('Unable to fetch product: ' . $e->getMessage());
