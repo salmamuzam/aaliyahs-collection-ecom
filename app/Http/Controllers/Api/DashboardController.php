@@ -20,18 +20,26 @@ class DashboardController extends Controller
     public function index()
     {
         try {
+            // Utilizing the Stored Procedure (Advanced SQL Feature)
+            $highValueCustomers = [];
+            try {
+                $highValueCustomers = DB::select('CALL GetHighValueCustomers(?)', [10000]);
+            } catch (Exception $e) {
+                Log::warning('Stored procedure GetHighValueCustomers failed or missing: ' . $e->getMessage());
+            }
+
             $stats = [
                 'revenue' => [
                     'total_paid' => (float) Order::where('payment_status', '=', 'paid')->sum('grand_total'),
                     'pending_amount' => (float) Order::where('payment_status', '=', 'pending')->sum('grand_total'),
-                    'avg_order_value' => (float) Order::where('payment_status', '=', 'paid')->avg('grand_total') ?? 0,
+                    'avg_order_value' => (float) (Order::where('payment_status', '=', 'paid')->avg('grand_total') ?? 0),
                     'currency' => 'LKR'
                 ],
                 'counts' => [
-                    'total_orders' => Order::count('*'),
-                    'total_products' => Product::count('*'),
-                    'total_categories' => Category::count('*'),
-                    'total_customers' => User::where('user_type', '=', 'customer')->count('*'),
+                    'total_orders' => (int) Order::count(),
+                    'total_products' => (int) Product::count(),
+                    'total_categories' => (int) Category::count(),
+                    'total_customers' => (int) User::where('user_type', '=', 'customer')->count(),
                 ],
                 'order_status_breakdown' => Order::query()
                     ->select('status', DB::raw('COUNT(*) as count'))
@@ -49,8 +57,7 @@ class DashboardController extends Controller
                     ->orderByDesc('total_revenue')
                     ->take(5)
                     ->get(),
-                // Utilizing the Stored Procedure (Advanced SQL Feature)
-                'high_value_customers' => DB::select('CALL GetHighValueCustomers(?)', [10000])
+                'high_value_customers' => $highValueCustomers
             ];
 
             return ResponseHelper::success(
@@ -59,7 +66,7 @@ class DashboardController extends Controller
             );
         } catch (Exception $e) {
             Log::error('Dashboard API Error: ' . $e->getMessage());
-            return ResponseHelper::error(message: 'Unable to fetch dashboard data!', statusCode: 500);
+            return ResponseHelper::error(message: 'Unable to fetch dashboard data! ' . $e->getMessage(), statusCode: 500);
         }
     }
 }
