@@ -2,7 +2,7 @@
 
 <div class=" rounded-[20px] sm:p-8 p-6">
     <div class="max-w-screen-xl mx-auto">
-        <x-shared.section-header title="OUR COLLECTIONS" align="center" />
+        <x-shared.sections.section-header title="OUR COLLECTIONS" align="center" />
 
         <div class="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
             @foreach ($categories as $category)

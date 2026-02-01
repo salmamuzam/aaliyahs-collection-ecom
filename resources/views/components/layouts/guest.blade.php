@@ -21,7 +21,7 @@
     @livewireStyles
 </head>
 <body class="font-sans antialiased bg-brand-beige flex flex-col min-h-screen">
-    <x-banner />
+    <x-shared.feedback.banner />
     
     {{-- Include the navbar --}}
     @include('components.layouts.partials.navbar')

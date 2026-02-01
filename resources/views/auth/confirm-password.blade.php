@@ -21,10 +21,10 @@
                 @csrf
 
                 {{-- Password --}}
-                <x-shared.form.password-input label="Password" name="password" required autocomplete="current-password" autofocus placeholder="Enter password" />
+                <x-shared.forms.password-input label="Password" name="password" required autocomplete="current-password" autofocus placeholder="Enter password" />
 
                 <div class="!mt-8">
-                    <x-shared.button.primary>
+                    <x-shared.buttons.primary>
                         Confirm
                     </x-button.primary>
                 </div>

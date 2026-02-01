@@ -23,7 +23,7 @@
                 @csrf
 
                 {{-- Email or Username --}}
-                <x-shared.form.input 
+                <x-shared.forms.input 
                     label="Email or Username" 
                     name="login" 
                     required 
@@ -38,7 +38,7 @@
                 </x-form.input>
 
                 {{-- Password --}}
-                <x-shared.form.password-input 
+                <x-shared.forms.password-input 
                     label="Password" 
                     name="password" 
                     required 
@@ -63,7 +63,7 @@
                 </div>
 
                 <div class="!mt-8">
-                    <x-shared.button.primary class="w-full">
+                    <x-shared.buttons.primary class="w-full">
                         Sign in
                     </x-button.primary>
                 </div>

@@ -1,4 +1,4 @@
-<x-action-section>
+<x-shared.sections.action-section>
     <x-slot name="title">
         {{ __('Two Factor Authentication') }}
     </x-slot>
@@ -33,41 +33,41 @@
 
         <div class="mt-5">
             @if (! $this->enabled)
-                <x-confirms-password wire:then="enableTwoFactorAuthentication">
-                    <x-shared.button type="button" wire:loading.attr="disabled">
+                <x-auth.confirms-password wire:then="enableTwoFactorAuthentication">
+                    <x-shared.buttons.button type="button" wire:loading.attr="disabled">
                         {{ __('Enable') }}
                     </x-button>
                 </x-confirms-password>
             @else
                 @if ($showingRecoveryCodes)
-                    <x-confirms-password wire:then="regenerateRecoveryCodes">
-                        <x-shared.secondary-button class="me-3">
+                    <x-auth.confirms-password wire:then="regenerateRecoveryCodes">
+                        <x-shared.buttons.secondary class="me-3">
                             {{ __('Regenerate Recovery Codes') }}
                         </x-secondary-button>
                     </x-confirms-password>
                 @elseif ($showingConfirmation)
-                    <x-confirms-password wire:then="confirmTwoFactorAuthentication">
-                        <x-shared.button type="button" class="me-3" wire:loading.attr="disabled">
+                    <x-auth.confirms-password wire:then="confirmTwoFactorAuthentication">
+                        <x-shared.buttons.button type="button" class="me-3" wire:loading.attr="disabled">
                             {{ __('Confirm') }}
                         </x-button>
                     </x-confirms-password>
                 @else
-                    <x-confirms-password wire:then="showRecoveryCodes">
-                        <x-shared.secondary-button class="me-3">
+                    <x-auth.confirms-password wire:then="showRecoveryCodes">
+                        <x-shared.buttons.secondary class="me-3">
                             {{ __('Show Recovery Codes') }}
                         </x-secondary-button>
                     </x-confirms-password>
                 @endif
 
                 @if ($showingConfirmation)
-                    <x-confirms-password wire:then="disableTwoFactorAuthentication">
-                        <x-shared.secondary-button wire:loading.attr="disabled">
+                    <x-auth.confirms-password wire:then="disableTwoFactorAuthentication">
+                        <x-shared.buttons.secondary wire:loading.attr="disabled">
                             {{ __('Cancel') }}
                         </x-secondary-button>
                     </x-confirms-password>
                 @else
-                    <x-confirms-password wire:then="disableTwoFactorAuthentication">
-                        <x-shared.danger-button wire:loading.attr="disabled">
+                    <x-auth.confirms-password wire:then="disableTwoFactorAuthentication">
+                        <x-shared.buttons.danger wire:loading.attr="disabled">
                             {{ __('Disable') }}
                         </x-danger-button>
                     </x-confirms-password>

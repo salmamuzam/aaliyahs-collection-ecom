@@ -1,5 +1,5 @@
 <div class="sticky top-0 p-6 h-max brand-card">
-    <x-shared.section-header title="ORDER SUMMARY" size="text-lg" class="mb-0" />
+    <x-shared.sections.section-header title="ORDER SUMMARY" size="text-lg" class="mb-0" />
     <ul class="mt-4 text-sm font-medium divide-y divide-gray-300 text-slate-500">
         <li class="flex items-center justify-between py-3"><span
                 class="font-bold font-sans text-brand-black text-base">Subtotal</span> <span

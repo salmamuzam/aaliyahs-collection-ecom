@@ -1,6 +1,6 @@
 @props(['id' => null, 'maxWidth' => null])
 
-<x-shared.modal :id="$id" :maxWidth="$maxWidth" {{ $attributes }}>
+<x-shared.modals.modal :id="$id" :maxWidth="$maxWidth" {{ $attributes }}>
     <div class="px-4 pt-5 pb-4 bg-white dark:bg-[#1A1A1A] sm:p-6 sm:pb-4">
         <div class="sm:flex sm:items-start">
             <div class="flex items-center justify-center mx-auto rounded-full shrink-0 size-12 bg-rose-100 sm:mx-0 sm:size-10">

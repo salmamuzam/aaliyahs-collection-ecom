@@ -24,7 +24,7 @@
             <div class="mt-8 flex items-center justify-between flex-col gap-4">
                 <form method="POST" action="{{ route('verification.send') }}" novalidate class="w-full">
                     @csrf
-                    <x-shared.button.primary>
+                    <x-shared.buttons.primary>
                         Resend Verification Email
                     </x-button.primary>
                 </form>

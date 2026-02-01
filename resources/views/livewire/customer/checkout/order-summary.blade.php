@@ -1,5 +1,5 @@
 <div class="relative p-6 h-fit brand-card">
-    <x-shared.section-header title="ORDER SUMMARY" size="text-xl" />
+    <x-shared.sections.section-header title="ORDER SUMMARY" size="text-xl" />
     <div class="md:overflow-auto">
       <div class="space-y-4">
         @foreach($cart_items as $item)

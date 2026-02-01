@@ -1,6 +1,6 @@
 <div class="py-10 px-6 sm:px-16 border-y border-gray-100" style="background-color: #ebeeec;">
     <div class="max-w-screen-xl mx-auto">
-        <x-shared.section-header title="CUSTOMER REVIEWS" align="center" />
+        <x-shared.sections.section-header title="CUSTOMER REVIEWS" align="center" />
         <p class="text-[15px] mt-6 leading-relaxed text-slate-600 text-center max-w-2xl mx-auto">Discover why fashion enthusiasts trust Aaliyah Collection. Real feedback from real people experiencing our premium fits.</p>
     </div>
 

@@ -1,7 +1,7 @@
 @props(['submit'])
 
 <div {{ $attributes->merge(['class' => '']) }}>
-    <x-section-title>
+    <x-shared.sections.section-title>
         <x-slot name="title">{{ $title }}</x-slot>
         <x-slot name="description">{{ $description }}</x-slot>
     </x-section-title>

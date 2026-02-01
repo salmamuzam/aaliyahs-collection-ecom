@@ -26,12 +26,12 @@
 
                 {{-- Code --}}
                 <div x-show="! recovery">
-                    <x-shared.form.input label="Code" name="code" type="text" inputmode="numeric" autofocus x-ref="code" autocomplete="one-time-code" placeholder="Enter code" required />
+                    <x-shared.forms.input label="Code" name="code" type="text" inputmode="numeric" autofocus x-ref="code" autocomplete="one-time-code" placeholder="Enter code" required />
                 </div>
 
                 {{-- Recovery Code --}}
                 <div x-show="recovery" style="display: none;">
-                    <x-shared.form.input label="Recovery Code" name="recovery_code" type="text" x-ref="recovery_code" autocomplete="one-time-code" placeholder="Enter recovery code" required />
+                    <x-shared.forms.input label="Recovery Code" name="recovery_code" type="text" x-ref="recovery_code" autocomplete="one-time-code" placeholder="Enter recovery code" required />
                 </div>
 
                 <div class="flex items-center justify-end mt-4">
@@ -56,7 +56,7 @@
                 </div>
 
                 <div class="!mt-8">
-                    <x-shared.button.primary>
+                    <x-shared.buttons.primary>
                         Log in
                     </x-button.primary>
                 </div>

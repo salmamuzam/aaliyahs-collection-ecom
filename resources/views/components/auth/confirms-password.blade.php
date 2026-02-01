@@ -15,7 +15,7 @@
 </span>
 
 @once
-<x-shared.dialog-modal wire:model.live="confirmingPassword">
+<x-shared.modals.dialog wire:model.live="confirmingPassword">
     <x-slot name="title">
         {{ $title }}
     </x-slot>
@@ -25,7 +25,7 @@
 
         <div class="mt-4" x-data="{ show: false }" x-on:confirming-password.window="setTimeout(() => $refs.confirmable_password.focus(), 250)">
             <div class="relative">
-                <x-shared.input class="mt-1 block w-full pr-10" 
+                <x-shared.forms.input class="mt-1 block w-full pr-10" 
                         placeholder="{{ __('Password') }}" 
                         autocomplete="current-password"
                         x-ref="confirmable_password"
@@ -44,16 +44,16 @@
                 </div>
             </div>
 
-            <x-shared.input-error for="confirmable_password" class="mt-2" />
+            <x-shared.forms.input-error for="confirmable_password" class="mt-2" />
         </div>
     </x-slot>
 
     <x-slot name="footer">
-        <x-shared.secondary-button wire:click="stopConfirmingPassword" wire:loading.attr="disabled">
+        <x-shared.buttons.secondary wire:click="stopConfirmingPassword" wire:loading.attr="disabled">
             {{ __('Cancel') }}
         </x-secondary-button>
 
-        <x-shared.button class="ms-3" dusk="confirm-password-button" wire:click="confirmPassword" wire:loading.attr="disabled">
+        <x-shared.buttons.button class="ms-3" dusk="confirm-password-button" wire:click="confirmPassword" wire:loading.attr="disabled">
             {{ $button }}
         </x-button>
     </x-slot>

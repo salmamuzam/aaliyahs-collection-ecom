@@ -6,7 +6,7 @@
 
 <div class="grid gap-4">
     <a href="{{ url('auth/google') }}" class="block w-full">
-        <x-shared.button.social icon="{{ asset('images/icons/google.png') }}" alt="google">
+        <x-shared.buttons.social icon="{{ asset('images/icons/google.png') }}" alt="google">
             Google Account
         </x-button.social>
     </a>

@@ -1,6 +1,6 @@
 <div class="w-full px-3 lg:w-1/4 lg:block">
     <div class="p-4 mb-5 bg-white border border-gray-300 rounded-md">
-        <x-shared.section-header title="CATEGORIES" color="text-brand-black" class="mb-2" />
+        <x-shared.sections.section-header title="CATEGORIES" color="text-brand-black" class="mb-2" />
         <div class="w-16 mb-4 border-b border-brand-burgundy"></div>
         <ul>
             @foreach($categories as $category)
@@ -17,7 +17,7 @@
     </div>
 
     <div class="p-4 mb-5 bg-white border border-gray-300 rounded-md">
-        <x-shared.section-header title="PRICE" color="text-brand-black" class="mb-2" />
+        <x-shared.sections.section-header title="PRICE" color="text-brand-black" class="mb-2" />
         <div class="w-16 mb-4 border-b border-brand-burgundy"></div>
         <div>
             <div class="text-brand-black">LKR {{ number_format($price_range, 2) }}</div>

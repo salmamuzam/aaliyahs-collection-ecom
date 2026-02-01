@@ -2,7 +2,7 @@
     <div class="">
         <div class="p-6 mx-auto max-w-7xl max-lg:max-w-4xl">
             @include('livewire.guest.partials.alerts')
-            <x-shared.section-header title="YOUR SHOPPING CART" />
+            <x-shared.sections.section-header title="YOUR SHOPPING CART" />
 
             <div class="relative grid gap-4 mt-6 lg:grid-cols-3">
                 <div class="space-y-4 lg:col-span-2">

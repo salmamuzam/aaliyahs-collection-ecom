@@ -36,7 +36,7 @@
 
     @if (auth()->user()?->user_type === 'admin' && (request()->routeIs('admin.overview') || (request()->routeIs('profile.show') && request('view') === 'admin') || request()->routeIs('categories*') || request()->routeIs('products*') || request()->is('admin*')))
         <!-- Admin Layout Structure -->
-        <x-banner /> 
+        <x-shared.feedback.banner /> 
         @include('components.layouts.partials.sidebar')
 
         <!-- Hamburger Menu Button -->
@@ -55,7 +55,7 @@
 
     @else
         <!-- Customer Layout Structure -->
-        <x-banner />
+        <x-shared.feedback.banner />
         @include('components.layouts.partials.navbar')
 
         <main class="flex-grow w-full bg-brand-beige">

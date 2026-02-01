@@ -4,18 +4,18 @@
         <div>
         <!-- Offline Message -->
 
-        <x-shared.section-header title="DELIVERY DETAILS" size="text-xl" />
+        <x-shared.sections.section-header title="DELIVERY DETAILS" size="text-xl" />
         <div class="grid gap-y-6 gap-x-4">
-          <x-shared.form.input label="First Name" name="first_name" wire:model.live="first_name" placeholder="Enter First Name" readonly class="bg-gray-100 cursor-not-allowed" />
-          <x-shared.form.input label="Last Name" name="last_name" wire:model.live="last_name" placeholder="Enter Last Name"
+          <x-shared.forms.input label="First Name" name="first_name" wire:model.live="first_name" placeholder="Enter First Name" readonly class="bg-gray-100 cursor-not-allowed" />
+          <x-shared.forms.input label="Last Name" name="last_name" wire:model.live="last_name" placeholder="Enter Last Name"
               :readonly="!empty($last_name)"
               class="{{ !empty($last_name) ? 'bg-gray-100 cursor-not-allowed' : 'bg-white' }}" />
-          <x-shared.form.input label="Email" name="email" wire:model.live="email" type="email" placeholder="Enter Email" readonly class="bg-gray-100 cursor-not-allowed" />
-          <x-shared.form.input label="Phone No." name="phone" wire:model.live="phone" type="number" placeholder="Enter Phone No." />
-          <x-shared.form.input label="Address Line" name="street_address" wire:model.live="street_address" placeholder="Enter Address Line" />
-          <x-shared.form.input label="City" name="city" wire:model.live="city" placeholder="Enter City" />
-          <x-shared.form.input label="Province" name="province" wire:model.live="province" placeholder="Enter Province" />
-          <x-shared.form.input label="Postal Code" name="postal_code" wire:model.live="postal_code" placeholder="Enter Postal Code" />
+          <x-shared.forms.input label="Email" name="email" wire:model.live="email" type="email" placeholder="Enter Email" readonly class="bg-gray-100 cursor-not-allowed" />
+          <x-shared.forms.input label="Phone No." name="phone" wire:model.live="phone" type="number" placeholder="Enter Phone No." />
+          <x-shared.forms.input label="Address Line" name="street_address" wire:model.live="street_address" placeholder="Enter Address Line" />
+          <x-shared.forms.input label="City" name="city" wire:model.live="city" placeholder="Enter City" />
+          <x-shared.forms.input label="Province" name="province" wire:model.live="province" placeholder="Enter Province" />
+          <x-shared.forms.input label="Postal Code" name="postal_code" wire:model.live="postal_code" placeholder="Enter Postal Code" />
            <div>
             <label class="block mb-2 text-base font-medium text-brand-black">Country</label>
             <input type="text" value="Sri Lanka" readonly
@@ -25,7 +25,7 @@
       </div>
 
       <div class="mt-10">
-        <x-shared.section-header title="PAYMENT" size="text-xl" />
+        <x-shared.sections.section-header title="PAYMENT" size="text-xl" />
          <!-- Payment modified to COD only as per user rule -->
         <div class="flex flex-wrap mt-4 mb-8 gap-y-6 gap-x-12">
           <div class="flex items-center">

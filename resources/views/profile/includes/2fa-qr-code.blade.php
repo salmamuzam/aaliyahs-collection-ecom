@@ -21,14 +21,14 @@
 
     @if ($showingConfirmation)
         <div class="mt-6 p-4 bg-brand-teal bg-opacity-5 rounded-md border border-brand-teal border-opacity-10">
-            <x-shared.label for="code" value="{{ __('Verification Code') }}" />
+            <x-shared.forms.label for="code" value="{{ __('Verification Code') }}" />
 
-            <x-shared.input id="code" type="text" name="code" class="block w-full sm:w-1/2 mt-1" inputmode="numeric" autofocus autocomplete="one-time-code"
+            <x-shared.forms.input id="code" type="text" name="code" class="block w-full sm:w-1/2 mt-1" inputmode="numeric" autofocus autocomplete="one-time-code"
                 wire:model="code"
                 wire:keydown.enter="confirmTwoFactorAuthentication" 
                 placeholder="000000" />
 
-            <x-shared.input-error for="code" class="mt-2" />
+            <x-shared.forms.input-error for="code" class="mt-2" />
         </div>
     @endif
 @endif
