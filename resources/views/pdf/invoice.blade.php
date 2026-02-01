@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <title>Invoice #{{ $order->id }}</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
         :root {
             --bg-clr: #004D61;
             --white: #fff;
@@ -13,8 +15,8 @@
         }
 
         body {
-            background: #fff; /* Changed from variable for PDF rendering */
-            font-family: "Helvetica", "Arial", sans-serif;
+            background: #fff;
+            font-family: 'Source Sans 3', 'Helvetica', 'Arial', sans-serif;
             font-size: 12px;
             line-height: 20px;
             color: #2f2929;
@@ -23,6 +25,7 @@
         }
 
         .main_title {
+            font-family: 'Playfair Display', serif;
             font-weight: 700;
             font-size: 16px;
             text-transform: uppercase;
@@ -83,6 +86,7 @@
         }
 
         .logo_text {
+            font-family: 'Playfair Display', serif;
             font-size: 28px;
             line-height: 32px;
             color: #004D61;
@@ -91,6 +95,7 @@
         }
 
         .title h1 {
+            font-family: 'Playfair Display', serif;
             font-size: 32px;
             line-height: 38px;
             color: #004D61;

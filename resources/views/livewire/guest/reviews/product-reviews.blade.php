@@ -26,7 +26,7 @@
             {{-- Total Reviews --}}
             <div class="w-full text-center">
                 <h3 class="text-brand-black text-lg font-bold uppercase tracking-wide">Total Reviews</h3>
-                <p class="text-gray-600 text-sm mt-1 font-medium italic">{{ $stats['total'] }} Reviews</p>
+                <p class="text-gray-600 text-sm mt-1 font-medium italic">{{ $stats['total'] }} {{ $stats['total'] == 1 ? 'review' : 'reviews' }}</p>
             </div>
 
             {{-- Average Rating --}}
@@ -186,7 +186,7 @@
                         <a href="{{ route('shop') }}" wire:navigate class="inline-block px-6 py-2 bg-brand-green text-white rounded-md font-bold transition-all hover:bg-opacity-90">Continue Shopping</a>
                     @else
                         <p class="text-gray-600 mb-4">Please login to write a review for a product you've purchased.</p>
-                        <a href="{{ route('login') }}" wire:navigate class="inline-block px-6 py-2 bg-brand-burgundy text-white rounded-md font-bold transition-all hover:bg-opacity-90">Login to Review</a>
+                        <a href="{{ route('login') }}" wire:navigate class="inline-block px-6 py-2 bg-brand-green text-white rounded-md font-bold transition-all hover:bg-opacity-90">Login to Review</a>
                     @endauth
                 </div>
             @endif
