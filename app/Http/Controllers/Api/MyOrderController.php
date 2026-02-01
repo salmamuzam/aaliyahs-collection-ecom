@@ -130,7 +130,7 @@ class MyOrderController extends Controller
             });
         } catch (Exception $e) {
             Log::error('Unable to place order: ' . $e->getMessage());
-            return ResponseHelper::error(message: 'Unable to place order!', statusCode: 500);
+            return ResponseHelper::error(message: 'Unable to place order! ' . $e->getMessage(), statusCode: 500);
         }
     }
 
