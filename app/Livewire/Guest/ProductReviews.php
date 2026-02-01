@@ -24,7 +24,7 @@ class ProductReviews extends Component
 
     public function mount($product_id)
     {
-        $this->product_id = $product_id;
+        $this->product_id = (int) $product_id;
         if (auth()->check()) {
             $this->name = auth()->user()->first_name . ' ' . auth()->user()->last_name;
             $this->email = auth()->user()->email;
@@ -37,21 +37,20 @@ class ProductReviews extends Component
 
     public function submitReview()
     {
-        if (!auth()->check()) {
-            LivewireAlert::title('Error')->text('Please login to submit a review.')->error()->position('top-end')->timer(3000)->toast()->show();
+        if (!auth()->check() || !$this->canReview) {
+            LivewireAlert::title('Error')->text('You are not authorized to submit a review for this product.')->error()->position('top-end')->timer(3000)->toast()->show();
             return;
         }
 
         $this->validate();
 
         // Check if user has already reviewed this product
-        $existingReview = Review::where('user_id', '=', auth()->id(), 'and')
-            ->where('product_id', '=', $this->product_id, 'and')
+        $existingReview = Review::where('user_id', auth()->id())
+            ->where('product_id', $this->product_id)
             ->first();
 
         if ($existingReview) {
             LivewireAlert::title('Warning')->text('You have already reviewed this product.')->warning()->position('top-end')->timer(3000)->toast()->show();
-            $this->showModal = false; // Close modal if already reviewed
             return;
         }
 
@@ -131,7 +130,7 @@ class ProductReviews extends Component
         }
 
         return Review::where('user_id', auth()->id())
-            ->where('product_id', $this->product_id)
+            ->where('product_id', (int) $this->product_id)
             ->exists();
     }
 

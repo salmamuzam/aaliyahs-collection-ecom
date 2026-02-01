@@ -1,11 +1,11 @@
 <div class="py-10 px-6 sm:px-16 border-y border-gray-100" style="background-color: #ebeeec;">
     <div class="max-w-screen-xl mx-auto">
         <x-shared.sections.section-header title="CUSTOMER REVIEWS" align="center" />
-        <p class="text-2xl mt-6 leading-relaxed text-brand-black text-center max-w-2xl mx-auto italic">Discover why fashion enthusiasts trust Aaliyah Collection. Real feedback from real people experiencing our premium fits.</p>
+        <p class="text-lg mt-4 leading-relaxed text-brand-black text-center max-w-2xl mx-auto italic">Discover why fashion enthusiasts trust Aaliyah Collection. Real feedback from real people experiencing our premium fits.</p>
     </div>
 
     @if($reviews->count() > 0)
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-20 max-w-6xl max-lg:max-w-3xl max-md:max-w-md mx-auto mt-16">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12 max-w-6xl max-lg:max-w-3xl max-md:max-w-md mx-auto mt-12">
         @foreach($reviews as $review)
         <a href="{{ route('product.detail', $review->product->id) }}" wire:navigate class="block w-full p-4 rounded-md mx-auto shadow-sm border border-gray-300 bg-white relative hover:shadow-md transition-shadow duration-200 cursor-pointer">
             <div class="w-[76px] h-[76px] rounded-full overflow-hidden absolute right-0 left-0 mx-auto -top-10 border-2 border-brand-burgundy bg-white shadow-sm z-10">
