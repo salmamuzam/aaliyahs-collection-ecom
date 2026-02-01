@@ -54,11 +54,18 @@ class ProductReviews extends Component
         }
 
         // Check if verified buyer (has a delivered order with this product)
-        $isVerified = Order::where('user_id', '=', auth()->id(), 'and')
-            ->where('status', '=', 'delivered', 'and')
+        $isVerified = Order::where('user_id', '=', auth()->id())
+            ->where('status', '=', 'delivered')
             ->whereHas('items', function ($query) {
-                $query->where('product_id', '=', $this->product_id, 'and');
+                $query->where('product_id', '=', $this->product_id);
             })->exists();
+
+        // RESTRICTION: Only verified buyers can review (Layer 3 Authorization)
+        if (!$isVerified) {
+            LivewireAlert::title('Restricted')->text('You can only review products you have purchased and received.')->warning()->position('top-end')->timer(3000)->toast()->show();
+            $this->showModal = false;
+            return;
+        }
 
         Review::create([
             'product_id' => $this->product_id,
