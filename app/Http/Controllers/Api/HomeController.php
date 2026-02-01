@@ -4,46 +4,45 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Helpers\ResponseHelper;
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\ProductResource;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
     /**
-     * Home Page Data
+     * Home Page Data (Optimized & Robust)
      */
     public function index()
     {
         try {
-            $data = \Illuminate\Support\Facades\Cache::remember('api_home_data_strict_v1', 3600, function () {
+            // Using a specific cache key for the new robust implementation
+            $data = Cache::remember('api_home_data_robust_v2', 3600, function () {
                 return [
-                    'categories' => CategoryResource::collection(Category::with('products:id,category_id')->get()),
-                    'latest_products' => \App\Http\Resources\ProductResource::collection(
-                        \App\Models\Product::with('category.products:id,category_id')
-                            ->withCount('reviews')
+                    'categories' => CategoryResource::collection(
+                        Category::withCount('products')->get()
+                    ),
+                    'latest_products' => ProductResource::collection(
+                        Product::withCount('reviews')
                             ->withAvg('reviews', 'rating')
                             ->latest()
                             ->take(8)
                             ->get()
                     ),
-                    'featured_products' => \App\Http\Resources\ProductResource::collection(
-                        \App\Models\Product::with('category.products:id,category_id')
-                            ->withCount('reviews')
+                    'featured_products' => ProductResource::collection(
+                        Product::withCount('reviews')
                             ->withAvg('reviews', 'rating')
                             ->inRandomOrder()
                             ->take(4)
                             ->get()
                     ),
-                    'best_sellers' => \App\Http\Resources\ProductResource::collection(
-                        \App\Models\Product::with('category')
-                            ->withCount([
-                                'orderItems as total_sold' => function ($query) {
-                                    $query->select(\Illuminate\Support\Facades\DB::raw('sum(quantity)'));
-                                }
-                            ])
+                    'best_sellers' => ProductResource::collection(
+                        Product::withSum('orderItems as total_sold', 'quantity')
                             ->withCount('reviews')
                             ->withAvg('reviews', 'rating')
                             ->orderByDesc('total_sold')
@@ -53,11 +52,18 @@ class HomeController extends Controller
                 ];
             });
 
-            return ResponseHelper::success(message: 'Home data fetched successfully!', data: $data, statusCode: 200);
+            return ResponseHelper::success(
+                message: 'Home data fetched successfully!',
+                data: $data
+            );
 
         } catch (Exception $e) {
-            Log::error('Home Index Error: ' . $e->getMessage() . '-Line No: ' . $e->getLine());
-            return ResponseHelper::error(message: 'Unable to fetch home data! Please try again!', statusCode: 500);
+            Log::error('Home Index Error: ' . $e->getMessage());
+            // Return full error message to user for easier debugging
+            return ResponseHelper::error(
+                message: 'Unable to fetch home data! ' . $e->getMessage(),
+                statusCode: 500
+            );
         }
     }
 }
