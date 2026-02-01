@@ -4,6 +4,7 @@ namespace App\Livewire\Guest;
 
 use App\Models\Category;
 use Livewire\Attributes\Title;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 use App\Helpers\CartManagement;
 use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
@@ -71,21 +72,22 @@ class HomePage extends Component
         return view('livewire.guest.home.skeleton');
     }
 
-    public function getCategoriesProperty()
+    #[Computed]
+    public function categories()
     {
-        return \Illuminate\Support\Facades\Cache::remember('home_categories', 3600, function () {
-            return \App\Models\Category::all();
-        });
+        return \App\Models\Category::all();
     }
 
-    public function getLatestProductsProperty()
+    #[Computed]
+    public function latestProducts()
     {
         return \Illuminate\Support\Facades\Cache::remember('home_latest_products', 600, function () {
             return \App\Models\Product::latest('created_at')->take(4)->get();
         });
     }
 
-    public function getBestSellersProperty()
+    #[Computed]
+    public function bestSellers()
     {
         return \Illuminate\Support\Facades\Cache::remember('home_best_sellers', 3600, function () {
             return \App\Models\Product::withCount('orderItems')
