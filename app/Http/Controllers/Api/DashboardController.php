@@ -28,24 +28,26 @@ class DashboardController extends Controller
                 Log::warning('Stored procedure GetHighValueCustomers failed or missing: ' . $e->getMessage());
             }
 
+            // Innovation: Use withoutGlobalScopes() to prevent "only_full_group_by" SQL errors
             $stats = [
                 'revenue' => [
-                    'total_paid' => (float) Order::where('payment_status', '=', 'paid')->sum('grand_total'),
-                    'pending_amount' => (float) Order::where('payment_status', '=', 'pending')->sum('grand_total'),
-                    'avg_order_value' => (float) (Order::where('payment_status', '=', 'paid')->avg('grand_total') ?? 0),
+                    'total_paid' => (float) Order::withoutGlobalScopes()->where('payment_status', '=', 'paid')->sum('grand_total'),
+                    'pending_amount' => (float) Order::withoutGlobalScopes()->where('payment_status', '=', 'pending')->sum('grand_total'),
+                    'avg_order_value' => (float) (Order::withoutGlobalScopes()->where('payment_status', '=', 'paid')->avg('grand_total') ?? 0),
                     'currency' => 'LKR'
                 ],
                 'counts' => [
-                    'total_orders' => (int) Order::count(),
+                    'total_orders' => (int) Order::withoutGlobalScopes()->count(),
                     'total_products' => (int) Product::count(),
                     'total_categories' => (int) Category::count(),
                     'total_customers' => (int) User::where('user_type', '=', 'customer')->count(),
                 ],
-                'order_status_breakdown' => Order::query()
+                'order_status_breakdown' => Order::withoutGlobalScopes()
                     ->select('status', DB::raw('COUNT(*) as count'))
                     ->groupBy('status')
                     ->get(),
-                'sales_trend' => Order::select(DB::raw('DATE(created_at) as date'), DB::raw('SUM(grand_total) as total'))
+                'sales_trend' => Order::withoutGlobalScopes()
+                    ->select(DB::raw('DATE(created_at) as date'), DB::raw('SUM(grand_total) as total'))
                     ->where('payment_status', '=', 'paid')
                     ->where('created_at', '>=', now()->subDays(30))
                     ->groupBy('date')
