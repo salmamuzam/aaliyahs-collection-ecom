@@ -37,7 +37,7 @@ class ProductReviews extends Component
 
     public function submitReview()
     {
-        if (!auth()->check() || !$this->canReview) {
+        if (!auth()->check() || !$this->canReview()) {
             LivewireAlert::title('Error')->text('You are not authorized to submit a review for this product.')->error()->position('top-end')->timer(3000)->toast()->show();
             return;
         }
@@ -123,7 +123,7 @@ class ProductReviews extends Component
         ];
     }
 
-    public function getHasReviewedProperty()
+    public function hasReviewed()
     {
         if (!auth()->check()) {
             return false;
@@ -134,7 +134,7 @@ class ProductReviews extends Component
             ->exists();
     }
 
-    public function getCanReviewProperty()
+    public function canReview()
     {
         if (!auth()->check()) {
             return false;
@@ -146,7 +146,7 @@ class ProductReviews extends Component
                 $query->where('product_id', $this->product_id);
             })->exists();
 
-        return $hasPurchased && !$this->hasReviewed;
+        return $hasPurchased && !$this->hasReviewed();
     }
 
     public function render()
@@ -154,8 +154,8 @@ class ProductReviews extends Component
         return view('livewire.guest.reviews.product-reviews', [
             'reviews' => $this->reviews,
             'stats' => $this->stats,
-            'canReview' => $this->canReview,
-            'hasReviewed' => $this->hasReviewed,
+            'canReview' => $this->canReview(),
+            'hasReviewed' => $this->hasReviewed(),
         ]);
     }
 }
