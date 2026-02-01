@@ -84,11 +84,11 @@
 
                 <li
                     class="mt-1.5 relative px-1 lg:hover:after:absolute lg:after:bg-white lg:after:w-0 lg:hover:after:w-full lg:hover:after:h-[2px] lg:after:block lg:after:-bottom-4 lg:after:transition-all lg:after:duration-300">
-                    <livewire:guest.navbar.favorites-icon />
+                    <livewire:guest.favorites-icon />
                 </li>
                 <li
                     class="mt-1.5 relative px-1 lg:hover:after:absolute lg:after:bg-white lg:after:w-0 lg:hover:after:w-full lg:hover:after:h-[2px] lg:after:block lg:after:-bottom-4 lg:after:transition-all lg:after:duration-300">
-                    <livewire:guest.navbar.cart-icon />
+                    <livewire:guest.cart-icon />
                 </li>
             </ul>
             <button id="toggleOpen" @click="open = !open" class="ml-6 cursor-pointer lg:hidden">

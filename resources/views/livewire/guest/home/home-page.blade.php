@@ -15,5 +15,5 @@
     @include('livewire.guest.home.why-us')
 
     {{-- INNOVATION: Social Proof (Latest Reviews) --}}
-    <livewire:guest.reviews.latest-reviews />
+    <livewire:guest.latest-reviews />
 </div>

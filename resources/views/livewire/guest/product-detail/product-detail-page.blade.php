@@ -13,7 +13,7 @@
 
     {{-- INNOVATION: Interactive Product Reviews --}}
     <section class="mt-8 border-t border-gray-400">
-        <livewire:guest.reviews.product-reviews :product_id="$product->id" />
+        <livewire:guest.product-reviews :product_id="$product->id" />
     </section>
 
 </div>
