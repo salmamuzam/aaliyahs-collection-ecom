@@ -7,7 +7,7 @@
 
     @include('livewire.admin.orders.desktop-table')
     @if($orders->hasPages())
-        <div class="p-4 border-t border-gray-200 uppercase bg-gray-50 text-sm">
+        <div class="hidden md:block p-4 border-t border-gray-200 uppercase bg-gray-50 text-sm">
             {{ $orders->links() }}
         </div>
     @endif
