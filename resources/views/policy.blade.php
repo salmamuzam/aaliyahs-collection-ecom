@@ -1,7 +1,7 @@
 <x-layouts.guest>
     <div class="bg-brand-beige min-h-screen">
         <div class="max-w-4xl mx-auto px-4 py-16">
-            <div class="bg-white rounded-2xl shadow-xl p-8 brand-card">
+            <div class="bg-white rounded-md shadow-xl p-8 brand-card">
                 <h1 class="text-3xl font-bold text-brand-teal brand-heading-playfair mb-8">Privacy Policy</h1>
 
                 <section class="mb-8">
