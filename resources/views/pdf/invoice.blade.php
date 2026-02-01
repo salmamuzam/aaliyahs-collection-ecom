@@ -5,11 +5,11 @@
     <title>Invoice #{{ $order->id }}</title>
     <style>
         :root {
-            --bg-clr: #df3c5b;
+            --bg-clr: #004D61;
             --white: #fff;
             --invoice-left-bg: #e7e7e9;
             --primary-clr: #2f2929;
-            --secondary-clr: #df3c5b;
+            --secondary-clr: #004D61;
         }
 
         body {
@@ -26,7 +26,7 @@
             font-weight: 700;
             font-size: 16px;
             text-transform: uppercase;
-            color: #df3c5b;
+            color: #004D61;
         }
 
         .p_title {
@@ -51,7 +51,7 @@
         .divider {
             width: 75px;
             height: 3px;
-            background: #df3c5b;
+            background: #004D61;
             margin: 5px 0;
         }
 
@@ -85,7 +85,7 @@
         .logo_text {
             font-size: 28px;
             line-height: 32px;
-            color: #df3c5b;
+            color: #004D61;
             font-weight: bold;
             margin-bottom: 30px;
         }
@@ -93,7 +93,7 @@
         .title h1 {
             font-size: 32px;
             line-height: 38px;
-            color: #df3c5b;
+            color: #004D61;
             margin: 0;
         }
 
@@ -191,7 +191,7 @@
                 </div>
                 <div class="p_title">
                     Method:<br>
-                    <span>{{ strtoupper($order->payment_method) }}</span>
+                    <span>{{ strtolower($order->payment_method) == 'cod' ? 'Cash on Delivery' : (strtolower($order->payment_method) == 'stripe' ? 'Stripe' : strtoupper($order->payment_method)) }}</span>
                 </div>
                 <div class="p_title">
                     Status:<br>
@@ -201,11 +201,11 @@
 
             <div class="section_margin">
                 <div class="main_title">
-                    Total Due
+                    Amount
                     <div class="divider"></div>
                 </div>
                 <div class="p_title">
-                    Amount In LKR:<br>
+                    Amount:<br>
                     <span>LKR {{ number_format($order->grand_total, 2) }}</span>
                 </div>
             </div>
@@ -235,7 +235,6 @@
                         <tr>
                             <td>
                                 <p style="margin:0; font-weight:700;">{{ $item->product->name }}</p>
-                                <span style="font-size: 10px; color: #666;">SKU: {{ $item->product->id }}</span>
                             </td>
                             <td class="text_center">{{ $item->quantity }}</td>
                             <td class="text_center">LKR {{ number_format($item->unit_amount, 2) }}</td>
@@ -252,11 +251,7 @@
                     </tr>
                     <tr class="i_table_foot">
                         <td class="w_50">Shipping</td>
-                        <td class="w_50 text_right">0.00</td>
-                    </tr>
-                    <tr class="i_table_foot">
-                        <td class="w_50">Tax (0%)</td>
-                        <td class="w_50 text_right">0.00</td>
+                        <td class="w_50 text_right">Free</td>
                     </tr>
                     <tr class="grand_total_wrap">
                         <td class="w_50">GRAND TOTAL:</td>

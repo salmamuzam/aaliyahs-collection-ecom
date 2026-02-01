@@ -21,8 +21,7 @@
             <div class="p-4 border-t border-gray-200 uppercase bg-gray-50 text-sm">
                 {{ $categories->links() }}
             </div>
-        @endif
-    </div>
+    @endif
     
     <div class="md:hidden grid grid-cols-2 gap-4">
         @forelse($categories as $category)

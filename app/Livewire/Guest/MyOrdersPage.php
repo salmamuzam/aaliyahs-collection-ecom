@@ -12,7 +12,7 @@ class MyOrdersPage extends Component
     public function render()
     {
         $orders = auth()->check() ? auth()->user()->orders()->latest()->paginate(5) : [];
-        return view('livewire.guest.my-orders-page', [
+        return view('livewire.customer.orders.my-orders-page', [
             'orders' => $orders
         ]);
     }

@@ -18,6 +18,6 @@ class OrderDetailPage extends Component
 
     public function render()
     {
-        return view('livewire.guest.order-detail-page');
+        return view('livewire.customer.orders.my-order-detail-page');
     }
 }

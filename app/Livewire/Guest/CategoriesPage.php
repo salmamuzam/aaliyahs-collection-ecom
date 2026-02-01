@@ -12,7 +12,7 @@ class CategoriesPage extends Component
     public function render()
     {
         $categories = Category::all();
-        return view('livewire.guest.categories-page', [
+        return view('livewire.guest.categories.categories-page', [
             'categories' => $categories
         ]);
     }

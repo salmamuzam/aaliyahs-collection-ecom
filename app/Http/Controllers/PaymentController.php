@@ -50,6 +50,6 @@ class PaymentController extends Controller
         // Terse update for status
         $order->when($request->has('session_id'), fn($o) => $o->update(['payment_status' => 'paid']));
 
-        return view('livewire.guest.success-page', compact('order'));
+        return view('livewire.guest.success.success-page', compact('order'));
     }
 }

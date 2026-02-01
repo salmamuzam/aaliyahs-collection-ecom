@@ -23,6 +23,7 @@ class InvoiceController extends Controller
         $pdf = Pdf::loadView('pdf.invoice', [
             'order' => $order,
             'order_items' => $order->items,
+            'address' => $order->address,
         ]);
 
         return $pdf->download("invoice-order-{$order->id}.pdf");

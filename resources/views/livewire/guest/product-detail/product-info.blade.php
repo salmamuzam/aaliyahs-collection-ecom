@@ -83,8 +83,8 @@
         </div>
         
         {{-- Add to Cart Button --}}
-        <button wire:click.prevent="addToCart({{ $product->id }})" wire:loading.attr="disabled"
-            class="flex-1 flex items-center justify-center space-x-3 bg-brand-green hover:bg-opacity-90 text-white px-8 py-3.5 rounded-md font-bold transition-all active:scale-95 disabled:opacity-50">
+        <button wire:click.prevent="addToCart({{ $product->id }})"
+            class="flex-1 flex items-center justify-center space-x-3 bg-brand-green hover:bg-opacity-90 text-white px-8 py-3.5 rounded-md font-bold transition-all active:scale-95">
             <span wire:loading.remove wire:target="addToCart({{ $product->id }})">Add To Cart</span>
             <span wire:loading wire:target="addToCart({{ $product->id }})">Adding...</span>
         </button>

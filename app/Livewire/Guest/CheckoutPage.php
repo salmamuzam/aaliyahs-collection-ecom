@@ -10,6 +10,6 @@ class CheckoutPage extends Component
 {
     public function render()
     {
-        return view('livewire.guest.checkout-page');
+        return view('livewire.customer.checkout.checkout-page');
     }
 }

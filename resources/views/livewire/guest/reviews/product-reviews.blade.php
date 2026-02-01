@@ -1,9 +1,7 @@
 <div class="px-4 py-8 antialiased md:py-16">
     <div class="mx-auto max-w-6xl">
         <div>
-            <h3 class="text-2xl font-bold text-gray-900 !leading-tight uppercase tracking-widest font-heading">
-                Customer Reviews
-            </h3>
+            <x-shared.sections.section-header title="CUSTOMER REVIEWS" align="center" />
         </div>
 
         {{-- Ratings & Breakdown --}}
@@ -14,7 +12,7 @@
                     <div class="min-w-9">
                         <p class="text-sm text-gray-900 font-medium">{{ $star }}.0</p>
                     </div>
-                    <div class="bg-gray-200 rounded w-full h-3">
+                    <div class="bg-gray-400 rounded w-full h-3">
                         <div class="h-full rounded bg-brand-burgundy" style="width: {{ $stats['percentages'][$star] }}%"></div>
                     </div>
                     <div class="min-w-14">
@@ -42,7 +40,7 @@
             </div>
         </div>
 
-        <div class="my-8 border-t border-gray-200"></div>
+        <div class="my-8 border-t border-black"></div>
 
         {{-- Reviews List --}}
         <div class="space-y-8 mt-12">
@@ -105,9 +103,16 @@
             @endforelse
         </div>
 
+        {{-- Pagination Links --}}
+        @if($reviews->hasPages())
+        <div class="mt-8">
+            {{ $reviews->links() }}
+        </div>
+        @endif
+
         {{-- Form: Only Visible if Can Review --}}
         @if($canReview)
-        <div class="mt-12">
+        <div class="mt-12" id="write-review">
             <h3 class="text-gray-900 text-xl font-semibold mb-6">Write Your Review</h3>
             <form wire:submit.prevent="submitReview" class="bg-gray-50 sm:p-8 p-6 rounded-xl border border-gray-200">
                 <div>
@@ -156,6 +161,29 @@
                 </button>
             </form>
         </div>
+        @elseif($hasReviewed)
+            <div class="mt-12 bg-gray-50 p-8 rounded-xl border border-gray-200 text-center">
+                <svg class="w-12 h-12 text-brand-teal mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                <h3 class="text-brand-black text-xl font-bold mb-2">Thank You!</h3>
+                <p class="text-gray-600 mb-4">You have already shared your experience with this product. We appreciate your feedback!</p>
+                <a href="{{ route('shop') }}" class="inline-block px-6 py-2 bg-brand-teal text-white rounded-md font-bold transition-all hover:bg-opacity-90">Browse More Products</a>
+            </div>
+        @else
+            <div class="mt-12 bg-gray-50 p-8 rounded-xl border border-gray-200 text-center">
+                <svg class="w-12 h-12 text-brand-teal mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04M12 21.48V22m0-10a9 9 0 110-18 9 9 0 010 18z"></path>
+                </svg>
+                <h3 class="text-brand-black text-xl font-bold mb-2">Verified Reviews Only</h3>
+                @auth
+                    <p class="text-gray-600 mb-4">You can only review products that you have purchased.</p>
+                    <a href="{{ route('shop') }}" class="inline-block px-6 py-2 bg-brand-teal text-white rounded-md font-bold transition-all hover:bg-opacity-90">Continue Shopping</a>
+                @else
+                    <p class="text-gray-600 mb-4">Please login to write a review for a product you've purchased.</p>
+                    <a href="{{ route('login') }}" class="inline-block px-6 py-2 bg-brand-burgundy text-white rounded-md font-bold transition-all hover:bg-opacity-90">Login to Review</a>
+                @endauth
+            </div>
         @endif
     </div>
 </div>

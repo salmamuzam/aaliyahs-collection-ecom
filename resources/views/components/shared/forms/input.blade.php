@@ -1,9 +1,10 @@
-@props(['label', 'name', 'type' => 'text', 'hasError' => null, 'errorMessage' => null])
+@props(['label' => null, 'name' => null, 'type' => 'text', 'hasError' => null, 'errorMessage' => null])
 
 @php
+    $name = $name ?? $attributes->get('id');
     // Simple, reliable error detection
-    $fieldHasError = $hasError ?? ($errors->has($name) || ($name === 'login' && ($errors->has('email') || $errors->has('username'))));
-    $displayError = $errorMessage ?? ($errors->first($name) ?: ($name === 'login' ? ($errors->first('email') ?: $errors->first('username')) : null));
+    $fieldHasError = $hasError ?? ($name && ($errors->has($name) || ($name === 'login' && ($errors->has('email') || $errors->has('username')))));
+    $displayError = $errorMessage ?? ($name ? ($errors->first($name) ?: ($name === 'login' ? ($errors->first('email') ?: $errors->first('username')) : null)) : null);
 
     // Clean up technical messages
     if ($displayError) {
@@ -38,7 +39,9 @@
 @endphp
 
 <div>
-    <label class="text-brand-black text-base font-bold font-sans mb-2 block">{{ $label }}</label>
+    @if($label)
+        <label class="text-brand-black text-base font-bold font-sans mb-2 block">{{ $label }}</label>
+    @endif
     <div class="relative flex items-center">
         <input name="{{ $name }}" type="{{ $type }}" {{ $attributes->merge(['class' => $classes]) }} />
         @if ($slot->isNotEmpty())

@@ -5,10 +5,12 @@ namespace App\Livewire\Guest;
 use App\Models\Review;
 use App\Models\Order;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
 
 class ProductReviews extends Component
 {
+    use WithPagination;
     public $product_id;
     public $rating = 5;
     public $comment = '';
@@ -53,16 +55,15 @@ class ProductReviews extends Component
             return;
         }
 
-        // Check if verified buyer (has a delivered order with this product)
+        // Check if verified buyer (has any order with this product)
         $isVerified = Order::where('user_id', '=', auth()->id())
-            ->where('status', '=', 'delivered')
             ->whereHas('items', function ($query) {
                 $query->where('product_id', '=', $this->product_id);
             })->exists();
 
-        // RESTRICTION: Only verified buyers can review (Layer 3 Authorization)
+        // RESTRICTION: Only buyers can review
         if (!$isVerified) {
-            LivewireAlert::title('Restricted')->text('You can only review products you have purchased and received.')->warning()->position('top-end')->timer(3000)->toast()->show();
+            LivewireAlert::title('Restricted')->text('You can only review products you have purchased.')->warning()->position('top-end')->timer(3000)->toast()->show();
             $this->showModal = false;
             return;
         }
@@ -87,13 +88,14 @@ class ProductReviews extends Component
         return Review::with('user')
             ->where('product_id', $this->product_id)
             ->latest()
-            ->get();
+            ->paginate(5);
     }
 
     public function getStatsProperty()
     {
-        $reviews = $this->reviews;
-        $total = $reviews->count();
+        // Get all reviews for stats calculation (not paginated)
+        $allReviews = Review::where('product_id', $this->product_id)->get();
+        $total = $allReviews->count();
         if ($total == 0) {
             return [
                 'average' => 0,
@@ -103,8 +105,10 @@ class ProductReviews extends Component
             ];
         }
 
-        $average = $reviews->avg('rating');
-        $distribution = $reviews->groupBy('rating')->map->count();
+        $average = $allReviews->avg('rating');
+        $distribution = $allReviews->groupBy('rating')->map(function ($group) {
+            return $group->count();
+        });
 
         $percentages = [];
         for ($i = 5; $i >= 1; $i--) {
@@ -120,17 +124,30 @@ class ProductReviews extends Component
         ];
     }
 
+    public function getHasReviewedProperty()
+    {
+        if (!auth()->check()) {
+            return false;
+        }
+
+        return Review::where('user_id', auth()->id())
+            ->where('product_id', $this->product_id)
+            ->exists();
+    }
+
     public function getCanReviewProperty()
     {
         if (!auth()->check()) {
             return false;
         }
 
-        return Order::where('user_id', auth()->id())
-            ->where('status', 'delivered')
+        // Must have purchased the product (any status) AND not reviewed it yet
+        $hasPurchased = Order::where('user_id', auth()->id())
             ->whereHas('items', function ($query) {
                 $query->where('product_id', $this->product_id);
             })->exists();
+
+        return $hasPurchased && !$this->hasReviewed;
     }
 
     public function render()
@@ -139,6 +156,7 @@ class ProductReviews extends Component
             'reviews' => $this->reviews,
             'stats' => $this->stats,
             'canReview' => $this->canReview,
+            'hasReviewed' => $this->hasReviewed,
         ]);
     }
 }

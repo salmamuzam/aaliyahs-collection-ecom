@@ -1,13 +1,13 @@
 <div class="py-10 px-6 sm:px-16 border-y border-gray-100" style="background-color: #ebeeec;">
     <div class="max-w-screen-xl mx-auto">
         <x-shared.sections.section-header title="CUSTOMER REVIEWS" align="center" />
-        <p class="text-[15px] mt-6 leading-relaxed text-slate-600 text-center max-w-2xl mx-auto">Discover why fashion enthusiasts trust Aaliyah Collection. Real feedback from real people experiencing our premium fits.</p>
+        <p class="text-2xl mt-6 leading-relaxed text-brand-black text-center max-w-2xl mx-auto italic">Discover why fashion enthusiasts trust Aaliyah Collection. Real feedback from real people experiencing our premium fits.</p>
     </div>
 
     @if($reviews->count() > 0)
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-20 max-w-6xl max-lg:max-w-3xl max-md:max-w-md mx-auto mt-16">
         @foreach($reviews as $review)
-        <div class="w-full p-4 rounded-md mx-auto shadow-sm border border-gray-300 bg-white relative">
+        <a href="{{ route('product.show', $review->product->slug) }}" wire:navigate class="block w-full p-4 rounded-md mx-auto shadow-sm border border-gray-300 bg-white relative hover:shadow-md transition-shadow duration-200 cursor-pointer">
             <div class="w-[76px] h-[76px] rounded-full overflow-hidden absolute right-0 left-0 mx-auto -top-10 border-2 border-brand-burgundy bg-white shadow-sm z-10">
                 @if($review->user->profile_photo_path)
                     <img src="{{ \App\Helpers\ImageHelper::getUrl($review->user->profile_photo_path) }}" class="w-full h-full object-cover" alt="{{ $review->user->first_name }}" />
@@ -19,15 +19,15 @@
             </div>
 
             <div class="mt-10 text-center">
-                <h4 class="text-brand-black text-[15px] whitespace-nowrap font-semibold uppercase tracking-wide">{{ $review->user->first_name }} {{ $review->user->last_name }}</h4>
+                <h4 class="text-brand-teal text-[15px] whitespace-nowrap font-semibold uppercase tracking-wide">{{ $review->user->first_name }} {{ $review->user->last_name }}</h4>
             </div>
 
             <div class="mt-4 text-center px-2">
                 <p class="text-[15px] text-brand-black font-normal leading-relaxed">"{{ $review->comment }}"</p>
             </div>
 
-            <div class="mt-6 text-center border-t border-gray-100 pt-3">
-                 <p class="text-[15px] text-brand-black font-semibold uppercase tracking-wide truncate">{{ $review->product->name }}</p>
+            <div class="mt-6 text-center border-t border-black pt-3">
+                 <p class="text-[15px] text-brand-burgundy font-semibold uppercase tracking-wide truncate">{{ $review->product->name }}</p>
                  <div class="flex justify-center space-x-1 mt-2">
                     @for($i = 1; $i <= 5; $i++)
                     <svg class="w-3.5 h-3.5 {{ $i <= $review->rating ? 'fill-brand-burgundy' : 'fill-[#CED5D8]' }}" viewBox="0 0 14 13" fill="none"
@@ -37,7 +37,7 @@
                     @endfor
                 </div>
             </div>
-        </div>
+        </a>
         @endforeach
     </div>
     @else
