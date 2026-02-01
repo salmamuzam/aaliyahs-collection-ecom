@@ -52,10 +52,12 @@ class Product extends Model
     {
         static::saved(function () {
             \Illuminate\Support\Facades\Cache::forget('home_latest_products');
+            \Illuminate\Support\Facades\Cache::forget('home_best_sellers');
         });
 
         static::deleted(function () {
             \Illuminate\Support\Facades\Cache::forget('home_latest_products');
+            \Illuminate\Support\Facades\Cache::forget('home_best_sellers');
         });
     }
 }

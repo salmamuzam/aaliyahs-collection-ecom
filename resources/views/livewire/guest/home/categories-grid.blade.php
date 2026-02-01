@@ -1,4 +1,4 @@
-@props(['categories'])
+
 
 <div class=" rounded-[20px] sm:p-8 p-6">
     <div class="max-w-screen-xl mx-auto">
