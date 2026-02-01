@@ -7,7 +7,7 @@
         :root {
             --bg-clr: #004D61;
             --white: #fff;
-            --invoice-left-bg: #e7e7e9;
+            --invoice-left-bg: #f2e9ee;
             --primary-clr: #2f2929;
             --secondary-clr: #004D61;
         }
@@ -66,7 +66,7 @@
         .invoice_left {
             display: table-cell;
             width: 35%;
-            background: #e7e7e9;
+            background: #f2e9ee;
             padding: 40px 30px;
             vertical-align: top;
         }
@@ -104,7 +104,7 @@
         }
 
         .i_table_head {
-            background: #e7e7e9;
+            background: #f2e9ee;
         }
 
         .i_table th {
@@ -116,7 +116,7 @@
 
         .i_table td {
             padding: 10px;
-            border-bottom: 1px solid #e7e7e9;
+            border-bottom: 1px solid #f2e9ee;
         }
 
         .i_table_foot td {
@@ -126,7 +126,7 @@
 
         .grand_total_wrap {
             margin-top: 10px;
-            background: #e7e7e9;
+            background: #f2e9ee;
         }
 
         .grand_total_wrap td {
@@ -195,7 +195,7 @@
                 </div>
                 <div class="p_title">
                     Status:<br>
-                    <span>{{ strtoupper($order->payment_status) }}</span>
+                    <span>{{ ucfirst($order->payment_status) }}</span>
                 </div>
             </div>
 
@@ -237,8 +237,8 @@
                                 <p style="margin:0; font-weight:700;">{{ $item->product->name }}</p>
                             </td>
                             <td class="text_center">{{ $item->quantity }}</td>
-                            <td class="text_center">LKR {{ number_format($item->unit_amount, 2) }}</td>
-                            <td class="text_right">LKR {{ number_format($item->total_amount, 2) }}</td>
+                            <td class="text_center">{{ number_format($item->unit_amount, 2) }}</td>
+                            <td class="text_right">{{ number_format($item->total_amount, 2) }}</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -265,7 +265,7 @@
                     Terms and Conditions
                     <div class="divider"></div>
                 </div>
-                <p style="font-size: 10px; color: #666;">
+                <p style="font-size: 10px; color: #666; text-align: justify;">
                     Thank you for shopping with Aaliyah's Collection. Please note that all sales are final. 
                     If you have any questions regarding your order, please contact us at aaliyahscollection@gmail.com.
                 </p>

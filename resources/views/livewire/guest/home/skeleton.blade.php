@@ -1,4 +1,4 @@
-<div>
+<div class="min-h-screen">
     <section class="px-3 py-5 lg:py-10">
         <div class="grid items-center gap-5 lg:grid-cols-2 justify-items-center">
             <div class="flex flex-col items-center justify-center order-2 lg:order-1">
