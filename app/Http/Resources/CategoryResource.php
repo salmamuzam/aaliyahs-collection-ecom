@@ -18,8 +18,8 @@ class CategoryResource extends JsonResource
             'id' => $this->id,
             'name' => strtoupper($this->name),
             'image' => \App\Helpers\ImageHelper::getUrl($this->image),
-            // Product count - Using a closure to prevent lazy loading
-            'products_count' => $this->when(isset($this->products_count), $this->products_count),
+            // Product count - Safer check to avoid strict mode errors
+            'products_count' => $this->when(isset($this->resource->getAttributes()['products_count']), fn() => (int) $this->products_count),
             'items_count' => $this->when($this->relationLoaded('products'), fn() => $this->products->count())
         ];
     }
