@@ -127,6 +127,7 @@
                                     </button>
                                 @endfor
                             </div>
+                            @error('rating') <p class="mt-2 text-base font-medium text-brand-burgundy">{{ $message }}</p> @enderror
                         </div>
 
                         <div class="grid sm:grid-cols-2 gap-6 mt-6">
@@ -151,7 +152,7 @@
                                         placeholder="Share your experience..."
                                         rows="4"
                                         class="px-4 py-3 w-full text-sm bg-white border border-gray-300 focus:border-brand-burgundy focus:ring-brand-burgundy outline-none transition-all rounded-md text-gray-900"></textarea>
-                                    @error('comment') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
+                                    @error('comment') <p class="mt-2 text-base font-medium text-brand-burgundy">{{ $message }}</p> @enderror
                                 </div>
                             </div>
                         </div>
