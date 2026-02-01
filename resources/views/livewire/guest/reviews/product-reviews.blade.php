@@ -5,8 +5,8 @@
         </div>
 
         {{-- Ratings & Breakdown --}}
-        <div class="flex lg:items-center sm:justify-between max-lg:flex-col gap-x-6 gap-y-8 mt-8">
-            <div class="space-y-2 w-full max-w-sm">
+        <div class="flex lg:items-center sm:justify-between max-lg:flex-col max-lg:items-center gap-x-6 gap-y-8 mt-8">
+            <div class="space-y-2 w-full max-w-sm mx-auto lg:mx-0">
                 @foreach([5, 4, 3, 2, 1] as $star)
                 <div class="flex items-center">
                     <div class="min-w-9">
@@ -22,14 +22,14 @@
                 @endforeach
             </div>
 
-            <div class="w-full lg:text-center">
+            <div class="w-full text-center lg:text-left">
                 <h3 class="text-gray-900 text-xl font-semibold">Total Reviews</h3>
                 <h6 class="text-gray-600 text-base mt-3 font-medium">{{ $stats['total'] }} Reviews</h6>
             </div>
 
-            <div class="w-full lg:text-center">
+            <div class="w-full text-center lg:text-right">
                 <h3 class="text-gray-900 text-xl font-semibold">Average Rating</h3>
-                <div class="flex items-center lg:justify-center space-x-1 text-brand-burgundy mt-3">
+                <div class="flex items-center justify-center lg:justify-end space-x-1 text-brand-burgundy mt-3">
                     @for($i = 1; $i <= 5; $i++)
                         <svg class="w-5 h-5 {{ $i <= round($stats['average']) ? 'fill-brand-burgundy' : 'fill-gray-300' }}" viewBox="0 0 24 24">
                             <path d="M12 17.42L6.25 21.54c-.29.2-.66-.09-.56-.43l2.14-6.74L2.08 10.15c-.26-.2-.13-.6.2-.62l7.07-.05L11.62 2.66c.1-.32.56-.32.66 0l2.24 6.82 7.07.05c.33.01.46.42.2.62l-5.75 4.22 2.14 6.74c.1.34-.27.63-.56.43L12 17.42z" />
@@ -45,7 +45,7 @@
         {{-- Reviews List --}}
         <div class="space-y-8 mt-12">
             @forelse($reviews as $review)
-            <div class="sm:p-8 p-6 bg-gray-50 rounded-xl border border-gray-100">
+            <div class="sm:p-8 p-6 brand-card shadow-sm">
                 <div class="flex items-start justify-between flex-wrap gap-4">
                     <div class="flex items-center gap-4">
                         <div class="shrink-0">
@@ -115,7 +115,7 @@
             @if($canReview)
                 <div id="write-review">
                     <h3 class="text-gray-900 text-xl font-semibold mb-6">Write Your Review</h3>
-                    <form wire:submit.prevent="submitReview" class="bg-gray-50 sm:p-8 p-6 rounded-xl border border-gray-200">
+                    <form wire:submit.prevent="submitReview" class="brand-card sm:p-8 p-6 shadow-sm">
                         <div>
                             <label class="mb-2 text-sm text-gray-900 font-medium block">Rate Us</label>
                             <div class="flex items-center space-x-2 mt-2">
@@ -163,7 +163,7 @@
                     </form>
                 </div>
             @elseif($hasReviewed)
-                <div class="bg-gray-50 p-8 rounded-xl border border-gray-200 text-center">
+                <div class="brand-card p-8 shadow-sm text-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 text-brand-teal mx-auto mb-4">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
                     </svg>
@@ -172,7 +172,7 @@
                     <a href="{{ route('shop') }}" wire:navigate class="inline-block px-6 py-2 bg-brand-teal text-white rounded-md font-bold transition-all hover:bg-opacity-90">Browse More Products</a>
                 </div>
             @else
-                <div class="bg-gray-50 p-8 rounded-xl border border-gray-200 text-center">
+                <div class="brand-card p-8 shadow-sm text-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 text-brand-teal mx-auto mb-4">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
                     </svg>
