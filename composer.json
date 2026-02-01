@@ -21,7 +21,7 @@
         "livewire/livewire": "^3.7",
         "srmklive/paypal": "^3.0",
         "stripe/stripe-php": "*",
-        "symfony/brevo-mailer": "*",
+        "symfony/brevo-mailer": "^7.4",
         "symfony/http-client": "^7.4",
         "symfony/mailtrap-mailer": "^7.4"
     },

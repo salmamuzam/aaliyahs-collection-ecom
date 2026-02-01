@@ -17,7 +17,7 @@ class OrderManagementComponent extends Component
     public $search = '';
     public $activePageNumber = 1;
     public $sortColumn = 'id';
-    public $sortOrder = 'asc';
+    public $sortOrder = 'desc';
 
     public function updatedSearch()
     {

@@ -79,4 +79,51 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Update the user's profile photo.
+     *
+     * @param  \Illuminate\Http\UploadedFile  $photo
+     * @param  string  $storagePath
+     * @return void
+     */
+    public function updateProfilePhoto(\Illuminate\Http\UploadedFile $photo, $storagePath = 'profile-photos')
+    {
+        $url = \App\Helpers\CloudinaryHelper::upload($photo, 'profiles');
+
+        if ($url) {
+            $this->forceFill([
+                'profile_photo_path' => $url,
+            ])->save();
+        }
+    }
+
+    /**
+     * Delete the user's profile photo.
+     *
+     * @return void
+     */
+    public function deleteProfilePhoto()
+    {
+        $this->forceFill([
+            'profile_photo_path' => null,
+        ])->save();
+    }
+
+    /**
+     * Get the URL to the user's profile photo.
+     *
+     * @return string
+     */
+    public function getProfilePhotoUrlAttribute()
+    {
+        if ($this->profile_photo_path) {
+            if (str_starts_with($this->profile_photo_path, 'http')) {
+                return $this->profile_photo_path;
+            }
+            return \Illuminate\Support\Facades\Storage::disk($this->profilePhotoDisk())->url($this->profile_photo_path);
+        }
+
+        return $this->defaultProfilePhotoUrl();
+    }
 }
