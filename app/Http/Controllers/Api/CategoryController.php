@@ -120,9 +120,7 @@ class CategoryController extends Controller
     private function handleImageUpload(Request $request): ?string
     {
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            return $image->storeAs('uploads/categories', $imageName, 'public');
+            return \App\Helpers\CloudinaryHelper::upload($request->file('image'), 'categories');
         }
         return null;
     }

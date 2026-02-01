@@ -202,21 +202,20 @@ class ProductController extends Controller
         $imagePaths = [];
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
-                $imagePaths[] = $image->storeAs('uploads/products', $imageName, 'public');
+                $imagePaths[] = \App\Helpers\CloudinaryHelper::upload($image, 'products');
             }
         }
-        return $imagePaths;
+        return array_filter($imagePaths);
     }
 
     private function processImageUpdates(ProductRequest $request, ?array $currentImages): array
     {
         $updatedImages = $currentImages ?? [];
-        foreach ($request->file('images') as $index => $image) {
-            $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
-            // Append new images to the list (Matches Livewire behavior)
-            $updatedImages[] = $image->storeAs('uploads/products', $imageName, 'public');
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $updatedImages[] = \App\Helpers\CloudinaryHelper::upload($image, 'products');
+            }
         }
-        return $updatedImages;
+        return array_filter($updatedImages);
     }
 }
