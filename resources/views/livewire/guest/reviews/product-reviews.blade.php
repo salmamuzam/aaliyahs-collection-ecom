@@ -164,12 +164,12 @@
                 </div>
             @elseif($hasReviewed)
                 <div class="bg-gray-50 p-8 rounded-xl border border-gray-200 text-center">
-                    <svg class="w-12 h-12 text-brand-teal mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 text-brand-teal mx-auto mb-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
                     </svg>
                     <h3 class="text-brand-black text-xl font-bold mb-2">Thank You!</h3>
                     <p class="text-gray-600 mb-4">You have already shared your experience with this product. We appreciate your feedback!</p>
-                    <a href="{{ route('shop') }}" class="inline-block px-6 py-2 bg-brand-teal text-white rounded-md font-bold transition-all hover:bg-opacity-90">Browse More Products</a>
+                    <a href="{{ route('shop') }}" wire:navigate class="inline-block px-6 py-2 bg-brand-teal text-white rounded-md font-bold transition-all hover:bg-opacity-90">Browse More Products</a>
                 </div>
             @else
                 <div class="bg-gray-50 p-8 rounded-xl border border-gray-200 text-center">
@@ -179,7 +179,7 @@
                     <h3 class="text-brand-black text-xl font-bold mb-2">Verified Reviews Only</h3>
                     @auth
                         <p class="text-gray-600 mb-4">You can only review products that you have purchased.</p>
-                        <a href="{{ route('shop') }}" class="inline-block px-6 py-2 bg-brand-teal text-white rounded-md font-bold transition-all hover:bg-opacity-90">Continue Shopping</a>
+                        <a href="{{ route('shop') }}" wire:navigate class="inline-block px-6 py-2 bg-brand-teal text-white rounded-md font-bold transition-all hover:bg-opacity-90">Continue Shopping</a>
                     @else
                         <p class="text-gray-600 mb-4">Please login to write a review for a product you've purchased.</p>
                         <a href="{{ route('login') }}" class="inline-block px-6 py-2 bg-brand-burgundy text-white rounded-md font-bold transition-all hover:bg-opacity-90">Login to Review</a>
