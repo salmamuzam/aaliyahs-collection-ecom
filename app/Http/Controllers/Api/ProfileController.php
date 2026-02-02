@@ -109,14 +109,21 @@ class ProfileController extends Controller
     {
         try {
             $user = $request->user();
+
+            // API Security: Manually verify password since session-based confirmation doesn't work for stateless APIs
+            if (!$request->has('current_password') || !Hash::check($request->current_password, $user->password)) {
+                return ResponseHelper::error(message: 'Current password is required and must be valid to enable 2FA.', statusCode: 400);
+            }
+
             app(EnableTwoFactorAuthentication::class)($user);
+
             return ResponseHelper::success(message: '2FA Enabled successfully!', data: [
-                'svg' => $user->twoFactorQrCodeSvg(),
+                'svg' => $user->twoFactorQrCodeSvg(), // Note: Requires 'bacon/bacon-qr-code'
                 'recovery_codes' => $user->recoveryCodes(),
             ], statusCode: 200);
         } catch (Exception $e) {
-            Log::error('Unable to enable 2FA: ' . $e->getMessage() . '-Line No: ' . $e->getLine());
-            return ResponseHelper::error(message: 'Unable to enable 2FA! Please try again!', statusCode: 500);
+            Log::error('2FA Enablement Error: ' . $e->getMessage() . ' at ' . $e->getFile() . ':' . $e->getLine());
+            return ResponseHelper::error(message: 'Unable to enable 2FA. Ensure "bacon/bacon-qr-code" is installed and configured.', statusCode: 500);
         }
     }
 
