@@ -117,13 +117,15 @@ class ProfileController extends Controller
 
             app(EnableTwoFactorAuthentication::class)($user);
 
+            $user->refresh();
+
             return ResponseHelper::success(message: '2FA Enabled successfully!', data: [
                 'svg' => $user->twoFactorQrCodeSvg(), // Note: Requires 'bacon/bacon-qr-code'
                 'recovery_codes' => $user->recoveryCodes(),
             ], statusCode: 200);
         } catch (Exception $e) {
             Log::error('2FA Enablement Error: ' . $e->getMessage() . ' at ' . $e->getFile() . ':' . $e->getLine());
-            return ResponseHelper::error(message: 'Unable to enable 2FA. Ensure "bacon/bacon-qr-code" is installed and configured.', statusCode: 500);
+            return ResponseHelper::error(message: 'Unable to enable 2FA: ' . $e->getMessage(), statusCode: 500);
         }
     }
 
