@@ -115,8 +115,8 @@ class ProfileController extends Controller
                 return ResponseHelper::error(message: 'Current password is required and must be valid to enable 2FA.', statusCode: 400);
             }
 
-            // Fix: Fortify expects a 'login' attribute because of your config. We set it dynamically here.
-            $user->login = $user->email;
+            // Fix: Override config temporarily to avoid "attribute login does not exist" error
+            config(['fortify.username' => 'email']);
 
             app(EnableTwoFactorAuthentication::class)($user);
 
