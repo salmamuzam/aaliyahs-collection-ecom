@@ -119,6 +119,7 @@
                 <div id="write-review">
                     <h2 class="mb-6 font-bold font-playfair text-center text-2xl text-brand-teal uppercase">WRITE YOUR REVIEW</h2>
                     <form wire:submit.prevent="submitReview" class="brand-card sm:p-8 p-6 shadow-sm">
+                        @csrf
                         <div>
                             <label class="mb-2 text-sm text-gray-900 font-medium block">Rate Us</label>
                             <div class="flex items-center space-x-2 mt-2">

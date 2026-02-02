@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\URL;
 use App\Models\User;
+use Illuminate\Auth\Notifications\VerifyEmail;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -50,6 +51,14 @@ class AppServiceProvider extends ServiceProvider
             return (new \Symfony\Component\Mailer\Bridge\Brevo\Transport\BrevoTransportFactory)->create(
                 \Symfony\Component\Mailer\Transport\Dsn::fromString("brevo+api://" . config('services.brevo.key') . "@default")
             );
+        });
+
+        // Custom Verification URL for API
+        VerifyEmail::createUrlUsing(function ($notifiable) {
+            return URL::route('api.verification.verify', [
+                'id' => $notifiable->getKey(),
+                'hash' => sha1($notifiable->getEmailForVerification()),
+            ]);
         });
     }
 }

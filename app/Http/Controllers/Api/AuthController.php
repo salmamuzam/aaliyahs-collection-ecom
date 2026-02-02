@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\Verified;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Laravel\Fortify\Contracts\TwoFactorAuthenticationProvider;
 use App\Http\Resources\UserResource;
@@ -39,8 +40,10 @@ class AuthController extends Controller
                 'password' => Hash::make($data['password']),
             ]));
 
+            event(new Registered($user));
+
             return ResponseHelper::success(
-                message: 'User registered successfully!',
+                message: 'User registered successfully! Please verify your email.',
                 data: new UserResource($user),
                 statusCode: 201
             );

@@ -8,6 +8,7 @@
 
     <div class="mt-6">
         <form wire:submit="{{ $submit }}">
+        @csrf
             <div class="px-6 py-8 bg-white brand-card {{ isset($actions) ? 'rounded-b-none border-b-0 shadow-none' : '' }}">
                 <div class="grid grid-cols-6 gap-6">
                     {{ $form }}
