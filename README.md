@@ -1,59 +1,134 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Aaliyah's Collection – Premium SaaS E-Commerce Engine
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Aaliyah's Collection** is a modern, scalable SaaS e-commerce platform built using the **Laravel 12 Framework**. This system serves as a robust backend engine, providing a high-performance RESTful API for mobile/frontend integration while offering a sophisticated web-based management console for admins and customers.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📖 Table of Contents
+- [Core Architecture](#-core-architecture)
+- [Key Features](#-key-features)
+- [Database Mastery (SQL)](#-database-mastery-sql)
+- [Security Implementation](#-security-implementation)
+- [API Documentation (v1)](#-api-documentation-v1)
+- [Tech Stack](#-tech-stack)
+- [Installation & Setup](#-installation--setup)
+- [Folder Structure](#-folder-structure)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🏗️ Core Architecture
+The application is built on the **MVC (Model-View-Controller)** pattern, enhanced by modern Laravel ecosystem tools:
 
-## Learning Laravel
+- **Frontend Logic:** Powered by **Livewire 3** and **Tailwind CSS** for a reactive, "SaaS-feel" user experience without full-page reloads.  
+- **Authentication:** Fully integrated with **Laravel Jetstream (Fortify/Sanctum)** for secure multi-layered access control.  
+- **Service Layer:** Custom Helpers and Http Resources ensure a clean separation between database logic and API responses.  
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## ✨ Key Features
 
-## Laravel Sponsors
+### 🔐 Multi-Layer Authentication
+- **Jetstream Integration:** Secure web-based login, registration, and profile management.  
+- **Two-Factor Authentication (2FA):** Native support for TOTP-based security.  
+- **Sanctum API Mastery:** Token-based authentication for external devices with granular abilities (`admin:access` vs `customer:access`).  
+- **Multi-Device Management:** Users can view and revoke specific active tokens/devices from their dashboard.  
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 🛒 E-Commerce Logic
+- **Dynamic Catalog:** Advanced product filtering by categories, price ranges, and best-sellers.  
+- **Order Management:** Atomic transactions for order placement, ensuring data integrity across `orders` and `order_items`.  
+- **Payment Integration:** Pre-configured for **Stripe** and **PayPal** gateways.  
+- **Automated Notifications:** Event-driven emails for order confirmations using Mailtrap/Brevo (SMTP/API).  
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## 🗄️ Database Mastery (SQL)
+- **Optimized Indexing:** Custom migrations for performance-critical indexes on products and orders.  
+- **Stored Procedures:** Server-side logic utilized for complex data aggregations and analytics.  
+- **Eloquent Relationships:** Masterful use of One-to-Many, BelongsTo, and Eager Loading to eliminate N+1 query performance issues.  
+- **Database Constraints:** Strict foreign key constraints and cascading logic to ensure relational health.  
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🛡️ Security Implementation
+- **SQLi Prevention:** Absolute use of Eloquent ORM and PDO Parameterized Queries for all database interactions.  
+- **Brute Force Protection:** Dedicated RateLimiter logic in the Auth API targets specific IP and login combinations.  
+- **Data Protection:** Sensitive information (Passwords, 2FA Secrets) is always hashed/encrypted using Argon2 or AES-256.  
+- **Cross-Site Protection:** Full CSRF, XSS, and CORS middleware configurations in place.  
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 🌐 API Documentation (v1)
+The system exposes a professional RESTful API under the `/api/v1/` prefix.
 
-## Security Vulnerabilities
+| Method | Endpoint | Access | Purpose |
+| ------ | -------- | ------ | ------- |
+| POST   | `/login` | Public | Authenticate & get bearer token |
+| GET    | `/products` | Public | Fetch catalog with filters |
+| GET    | `/user` | Sanctum | Retrieve authenticated profile |
+| POST   | `/orders` | Customer | Place a new order |
+| GET    | `/admin/stats` | Admin | Dashboard analytics |
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## 🛠️ Tech Stack
+- **Backend:** Laravel 12, PHP 8.2+  
+- **Frontend:** Livewire 3, Tailwind CSS, Alpine.js  
+- **Database:** MySQL / SQLite  
+- **APIs:** Laravel Sanctum (Token-based Auth)  
+- **Payments:** Stripe PHP SDK, srmklive/paypal  
+- **Tools:** Vite, Composer, Artisan  
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## 🚀 Installation & Setup
+
+### 1️⃣ Clone the repository
+```bash
+git clone https://github.com/salmamuzam/aaliyahs-collection-ecom.git
+cd aaliyahs-collection-ecom
+```
+
+### 2️⃣ Install PHP Dependencies
+```bash
+composer install
+```
+
+### 3️⃣ Setup Environment
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+### 4️⃣ Run Migrations & Seeders
+```bash
+php artisan migrate --seed
+```
+
+### 5️⃣ Install Frontend Assets
+```bash
+npm install && npm run build
+```
+
+### 6️⃣ Start the Server
+```bash
+php artisan serve
+```
+
+---
+
+## 📂 Folder Structure
+```text
+app/
+├── Http/Controllers/Api   # RESTful API v1 logic
+├── Livewire/              # Reactive Web Components
+├── Models/                # Eloquent Models & Relationships
+├── Providers/             # App logic, Event Listeners, Gates
+
+database/
+├── migrations/            # SQL Schemas, Indexes, Procedures
+├── seeders/               # Initial Production & Test Data
+
+routes/
+├── api.php                # Sanctum Protected API Routes
+└── web.php                # Jetstream Protected Web Routes
+```
